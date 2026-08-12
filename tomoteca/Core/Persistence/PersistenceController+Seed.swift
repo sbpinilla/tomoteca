@@ -26,12 +26,19 @@ extension PersistenceController {
 
         guard (try? container.viewContext.count(for: request)) == 0 else { return }
 
-        let repository = CoreDataBookRepository(persistence: self)
+        let books = CoreDataBookRepository(persistence: self)
+        let sessions = CoreDataReadingSessionRepository(persistence: self)
 
         do {
             // Oldest first, so the newest-first ordering comes out matching the samples.
             for book in Book.previewCatalog.reversed() {
-                try repository.add(book)
+                try books.add(book)
+            }
+
+            // A week of reading behind the book that is in progress, so the tracking tab has
+            // something to draw.
+            for session in [ReadingSession].previewWeek {
+                try sessions.add(session)
             }
         } catch {
             assertionFailure("Failed to seed sample data: \(error)")

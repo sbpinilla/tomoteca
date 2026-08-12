@@ -37,7 +37,7 @@ struct RootTabView: View {
                     }
                 }
 
-            TrackingView()
+            TrackingView(repository: sessionRepository)
                 .tag(Tab.tracking)
                 .tabItem {
                     Label {

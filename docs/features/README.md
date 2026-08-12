@@ -161,7 +161,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | [4 · Portada](hito-4-portada.md) | Cámara, galería y permisos | ✅ Cerrado |
 | [5 · Pulido del baúl](hito-5-pulido-baul.md) | Búsqueda, filtro, borrado y edición | ✅ Cerrado |
 | [6 · Sesión de lectura](hito-6-sesion-lectura.md) | En curso, cronómetro y notificación | ✅ Cerrado |
-| 7 · Seguimiento | Rango de fechas y gráfica | ⬜ Pendiente |
+| [7 · Seguimiento](hito-7-seguimiento.md) | Rango de fechas y gráfica | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado
 
@@ -227,10 +227,10 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F8 · Modal de página final y actualización del avance
 - [x] Notificación probada en dispositivo real: llega con la app cerrada
 
-**Hito 7 · Seguimiento**
-- [ ] F9 · Selector de rango con atajos de 7/15/30 días
-- [ ] F9 · Gráfica de minutos por día
-- [ ] F9 · Total y promedio del rango
+**Hito 7 · Seguimiento** — ✅ cerrado
+- [x] F9 · Selector de rango con atajos de 7/15/30 días
+- [x] F9 · Gráfica de minutos por día
+- [x] F9 · Total y promedio del rango
 
 **Continuo, en cada hito**
 - [ ] Revisar la pantalla en inglés: es donde se rompen los layouts por longitud de texto

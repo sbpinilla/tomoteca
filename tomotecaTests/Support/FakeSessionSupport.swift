@@ -52,7 +52,11 @@ final class FakeReadingSessionRepository: ReadingSessionRepository {
     var errorToThrow: (any Error)?
     private(set) var added: [ReadingSession] = []
 
-    private let subject = CurrentValueSubject<[ReadingSession], Never>([])
+    private let subject: CurrentValueSubject<[ReadingSession], Never>
+
+    init(seeded: [ReadingSession] = []) {
+        subject = CurrentValueSubject(seeded)
+    }
 
     var sessions: AnyPublisher<[ReadingSession], Never> {
         subject.eraseToAnyPublisher()
