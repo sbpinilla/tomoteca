@@ -18,18 +18,21 @@ enum AppFont {
     /// Screen-level titles, one per screen at most.
     static let largeTitle = Font.system(.largeTitle, design: .rounded, weight: .bold)
 
-    /// Section titles inside a screen.
-    static let title = Font.system(.title, design: .rounded, weight: .semibold)
+    /// Screen titles: "Baúl", "Seguimiento".
+    static let title = Font.system(.title2, design: .rounded, weight: .bold)
 
-    /// Emphasized item titles: a book title in a row, a card heading.
-    static let headline = Font.system(.headline, design: .rounded, weight: .semibold)
+    /// Item titles: a book title in a list row, a card heading.
+    static let headline = Font.system(.subheadline, design: .rounded, weight: .semibold)
 
-    /// Default body copy.
+    /// Default body copy and control labels.
     static let body = Font.system(.body, design: .rounded, weight: .regular)
 
-    /// Secondary copy: an author under a title, a supporting line.
+    /// Secondary copy: a supporting line under a title.
     static let callout = Font.system(.callout, design: .rounded, weight: .regular)
 
-    /// Smallest role: metadata, chip labels, timestamps.
+    /// Metadata: author, genre, page counts, chart labels. Usually in `textSecondary`.
+    static let footnote = Font.system(.footnote, design: .rounded, weight: .regular)
+
+    /// Smallest role: section headers, timestamps.
     static let caption = Font.system(.caption, design: .rounded, weight: .medium)
 }

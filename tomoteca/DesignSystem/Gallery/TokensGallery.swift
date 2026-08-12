@@ -19,6 +19,7 @@ struct TokensGallery: View {
                     swatch("background", AppColor.background)
                     swatch("surface", AppColor.surface)
                     swatch("borderSubtle", AppColor.borderSubtle)
+                    swatch("track", AppColor.track)
                 }
 
                 section("Content") {
@@ -32,10 +33,10 @@ struct TokensGallery: View {
                 }
 
                 section("Status") {
-                    statusRow("wishlist", AppColor.Status.wishlist)
-                    statusRow("owned", AppColor.Status.owned)
-                    statusRow("reading", AppColor.Status.reading)
-                    statusRow("finished", AppColor.Status.finished)
+                    statusRow("quiero comprar", AppColor.Status.wishlist)
+                    statusRow("comprado", AppColor.Status.owned)
+                    statusRow("leyendo", AppColor.Status.reading)
+                    statusRow("leído", AppColor.Status.finished)
                 }
 
                 section("Typography") {
@@ -44,6 +45,7 @@ struct TokensGallery: View {
                     Text("headline").font(AppFont.headline)
                     Text("body").font(AppFont.body)
                     Text("callout").font(AppFont.callout)
+                    Text("footnote").font(AppFont.footnote)
                     Text("caption").font(AppFont.caption)
                 }
                 .foregroundColor(AppColor.textPrimary)
@@ -80,16 +82,15 @@ struct TokensGallery: View {
         }
     }
 
-    /// Renders a status pair exactly as a chip would use it.
-    private func statusRow(_ name: String, _ palette: StatusPalette) -> some View {
-        HStack(spacing: Spacing.md) {
+    /// Renders a status exactly as the design uses it: a dot plus colored text, no fill.
+    private func statusRow(_ name: String, _ color: Color) -> some View {
+        HStack(spacing: Spacing.xs) {
+            Circle()
+                .fill(color)
+                .frame(width: 8, height: 8)
             Text(name)
-                .font(AppFont.caption)
-                .foregroundColor(palette.foreground)
-                .padding(.horizontal, Spacing.sm)
-                .padding(.vertical, Spacing.xs)
-                .background(palette.background)
-                .clipShape(Capsule())
+                .font(AppFont.footnote)
+                .foregroundColor(color)
             Spacer()
         }
     }

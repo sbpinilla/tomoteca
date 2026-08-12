@@ -105,12 +105,14 @@ The UI is built bottom-up from **tokens → components → feature views**. Noth
 
 `DesignSystem/Tokens/` is the **only** place where a color, a font, a spacing value or a corner radius is declared. Everything else consumes them by name.
 
-- `AppColor` — the "Literary Warmth" palette, with semantic names only: `.background`, `.surface`, `.borderSubtle`, `.textPrimary`, `.textSecondary`, `.brandPrimary` (bottle green), `.brandAccent` (coral), plus `AppColor.Status.{wishlist, owned, reading, finished}`, each a `StatusPalette` pairing a tinted `background` with a readable `foreground`. Backed by color sets in `Assets.xcassets/DesignSystem`, each with a light and a dark variant, so appearance switching needs no code.
-- `AppFont` — **SF Pro Rounded** everywhere, reached through `design: .rounded` (a system face: nothing to bundle). Styles by **role**, not by size: `.largeTitle`, `.title`, `.headline`, `.body`, `.callout`, `.caption`. Each one builds on a system text style so Dynamic Type keeps working.
+- `AppColor` — the "Literary Warmth" palette, with semantic names only: `.background`, `.surface`, `.borderSubtle`, `.track`, `.textPrimary`, `.textSecondary`, `.brandPrimary` (bottle green), `.brandAccent` (coral), plus one color per book status in `AppColor.Status.{wishlist, owned, reading, finished}`. Backed by color sets in `Assets.xcassets/DesignSystem`, each with a light and a dark variant, so appearance switching needs no code.
+- `AppFont` — **SF Pro Rounded** everywhere, reached through `design: .rounded` (a system face: nothing to bundle). Styles by **role**, not by size: `.largeTitle`, `.title`, `.headline`, `.body`, `.callout`, `.footnote`, `.caption`. Each one builds on a system text style so Dynamic Type keeps working.
 - `Spacing` — a fixed 4pt-grid scale: `.xs` (4), `.sm` (8), `.md` (16), `.lg` (24), `.xl` (32).
 - `Radius` — `.sm` (8), `.md` (12), `.lg` (16), `.pill`.
 
-The status palettes are deliberately not keyed by a domain type — the design system knows nothing about `Book`. Features map their own status enum onto them.
+The status colors are deliberately not keyed by a domain type — the design system knows nothing about `Book`. Features map their own status enum onto them. Status is rendered as a colored dot plus colored text, never as a filled pill.
+
+Screen designs live in [`docs/design/README.md`](docs/design/README.md); what to build and in what order is in [`docs/features/README.md`](docs/features/README.md).
 
 Banned outside `DesignSystem/Tokens/`:
 
@@ -149,6 +151,36 @@ Before writing any UI element, check `DesignSystem/Components/` and the feature'
 - Variants go through an `enum` (`TMButton.Style.primary / .secondary / .destructive`), not through a pile of booleans.
 - Every component ships with a `PreviewProvider` covering its variants, plus dark mode (the `#Preview` macro is iOS 17+, out of reach here).
 
+## Localization
+
+The app ships in **Spanish and English**. Every string the user can read is localized —
+there are no hardcoded literals in the UI, ever.
+
+Strings live in `tomoteca/Localizable.xcstrings`, a String Catalog with `en` as the source
+language and `es` alongside it. The project has `STRING_CATALOG_GENERATE_SYMBOLS` enabled, so
+Xcode generates a type-safe symbol per key and **the compiler enforces the rule**: a key that
+does not exist does not build.
+
+```swift
+Text(.tabTrunk)                       // ✅ key "tab.trunk", checked at compile time
+Text("Baúl")                          // ❌ hardcoded, and Spanish-only
+Text("tab.trunk")                     // ❌ string key, no compile-time check
+```
+
+- **Keys** use `area.snake_case`: `tab.trunk`, `book_form.title`, `session.finish_button`.
+  Xcode turns them into camelCase symbols (`tab.trunk` → `.tabTrunk`).
+- **Always fill in the `comment`** — it is the only context a translator gets.
+- For a string that needs a runtime value, use the catalog's interpolation rather than
+  building the sentence in Swift: word order differs between the two languages.
+- Plurals go through the catalog's plural variations, never through `if count == 1`.
+- Dates, times and numbers go through `Date.FormatStyle` and `NumberFormatter`, never through
+  a hand-built string.
+- **Permission strings** (camera, photo library, notifications) are localized too, in a
+  separate `InfoPlist.xcstrings`.
+
+The one exception is `DesignSystem/Gallery/`: it is debug-only developer tooling that never
+reaches a user, so its labels stay as plain literals.
+
 ## Core Data
 
 - The current model (`tomoteca.xcdatamodeld`) still holds the `Item` entity from the Xcode template: it must be replaced by `BookEntity`, `TagEntity` and `ReadingSessionEntity`.
@@ -160,7 +192,7 @@ Before writing any UI element, check `DesignSystem/Components/` and the feature'
 
 ## Conventions
 
-- **Code, type names and comments in English.** Documentation under `docs/`, commit messages and UI copy in Spanish.
+- **Code, type names and comments in English.** Documentation under `docs/` and commit messages in Spanish. UI copy is localized in both languages — see the localization section.
 - One type per file, file named after the type.
 - Small, composable views: if a `body` grows past ~50 lines, extract subviews.
 - No business logic in views; no presentation logic in repositories.

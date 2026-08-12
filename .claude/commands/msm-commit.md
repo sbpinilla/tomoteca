@@ -28,7 +28,8 @@ Pasos:
    el qué, eso ya lo muestra el diff). Omite el cuerpo si el cambio es trivial.
    ```
 
-5. Entrega el resultado así:
+5. Entrega el resultado así, y nada más:
    - El mensaje de commit propuesto, en un bloque de código listo para copiar, cubriendo todos los archivos pendientes (modificados + nuevos + eliminados).
    - La lista de archivos que cubre el mensaje, agrupados por estado (nuevo / modificado / eliminado).
-   - El comando `git add <archivos> && git commit -m "..."` (usando `-m` múltiples si hay cuerpo) para que el usuario lo ejecute manualmente.
+
+   No incluyas el comando `git add` ni `git commit` en la respuesta: el usuario stagea y commitea por su cuenta.

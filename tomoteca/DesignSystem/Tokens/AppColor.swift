@@ -21,6 +21,8 @@ enum AppColor {
     static let surface = Color("Surface")
     /// Hairline separators and card outlines.
     static let borderSubtle = Color("BorderSubtle")
+    /// Recessed troughs: the segmented control's track, the unfilled part of a progress bar.
+    static let track = Color("Track")
 
     // MARK: Content
 
@@ -38,32 +40,16 @@ enum AppColor {
 
     // MARK: Book status
 
-    /// Color pairs for the four book statuses, used by status chips and badges.
+    /// One color per book status. Status is shown as colored text and a dot, never as
+    /// a filled pill — that is what the approved design does, so there are no tinted
+    /// background tokens to pair these with.
     ///
-    /// Deliberately not keyed by a domain type: the design system knows nothing
-    /// about `Book`. Features map their own status enum onto these values.
+    /// Deliberately not keyed by a domain type: the design system knows nothing about
+    /// `Book`. Features map their own status enum onto these values.
     enum Status {
-        static let wishlist = StatusPalette(
-            background: Color("StatusWishlistBackground"),
-            foreground: Color("StatusWishlistText")
-        )
-        static let owned = StatusPalette(
-            background: Color("StatusOwnedBackground"),
-            foreground: Color("StatusOwnedText")
-        )
-        static let reading = StatusPalette(
-            background: Color("StatusReadingBackground"),
-            foreground: Color("StatusReadingText")
-        )
-        static let finished = StatusPalette(
-            background: Color("StatusFinishedBackground"),
-            foreground: Color("StatusFinishedText")
-        )
+        static let wishlist = Color("StatusWishlist")
+        static let owned = Color("StatusOwned")
+        static let reading = Color("StatusReading")
+        static let finished = Color("StatusFinished")
     }
-}
-
-/// A status color pair: a tinted fill with the matching readable foreground.
-struct StatusPalette {
-    let background: Color
-    let foreground: Color
 }
