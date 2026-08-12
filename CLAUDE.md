@@ -88,9 +88,12 @@ tomoteca/
 ├── DesignSystem/
 │   ├── Tokens/                 # AppColor, AppFont, Spacing, Radius — the only place values are declared
 │   ├── Components/             # domain-agnostic reusable components (TMButton, TMChip…)
-│   └── Gallery/                # preview-only catalog of every component
-└── Resources/                  # Assets.xcassets, Localizable
+│   └── Gallery/                # TokensGallery + preview-only catalog of every component
+└── Assets.xcassets/
+    └── DesignSystem/           # color sets backing AppColor (light + dark per color)
 ```
+
+Targets use file-system-synchronized groups, so a file created on disk is picked up by Xcode with no `.pbxproj` edit.
 
 A repository shared across features (e.g. `BookRepository`, used by both `BookList` and `ReadingSession`) lives in `Core/`, not duplicated per feature.
 
@@ -102,10 +105,12 @@ The UI is built bottom-up from **tokens → components → feature views**. Noth
 
 `DesignSystem/Tokens/` is the **only** place where a color, a font, a spacing value or a corner radius is declared. Everything else consumes them by name.
 
-- `AppColor` — semantic names, never literal ones: `.textPrimary`, `.textSecondary`, `.background`, `.surface`, `.accent`, `.destructive`, plus one per book status (`.statusWishlist`, `.statusOwned`, `.statusReading`, `.statusFinished`). Backed by color sets in `Assets.xcassets` so light/dark mode comes for free.
-- `AppFont` — styles by **role**, not by size: `.largeTitle`, `.title`, `.headline`, `.body`, `.callout`, `.caption`. Each one builds on a system text style so Dynamic Type keeps working.
-- `Spacing` — a fixed scale: `.xs` (4), `.sm` (8), `.md` (16), `.lg` (24), `.xl` (32).
-- `Radius` — `.sm`, `.md`, `.lg`, `.pill`.
+- `AppColor` — the "Literary Warmth" palette, with semantic names only: `.background`, `.surface`, `.borderSubtle`, `.textPrimary`, `.textSecondary`, `.brandPrimary` (bottle green), `.brandAccent` (coral), plus `AppColor.Status.{wishlist, owned, reading, finished}`, each a `StatusPalette` pairing a tinted `background` with a readable `foreground`. Backed by color sets in `Assets.xcassets/DesignSystem`, each with a light and a dark variant, so appearance switching needs no code.
+- `AppFont` — **SF Pro Rounded** everywhere, reached through `design: .rounded` (a system face: nothing to bundle). Styles by **role**, not by size: `.largeTitle`, `.title`, `.headline`, `.body`, `.callout`, `.caption`. Each one builds on a system text style so Dynamic Type keeps working.
+- `Spacing` — a fixed 4pt-grid scale: `.xs` (4), `.sm` (8), `.md` (16), `.lg` (24), `.xl` (32).
+- `Radius` — `.sm` (8), `.md` (12), `.lg` (16), `.pill`.
+
+The status palettes are deliberately not keyed by a domain type — the design system knows nothing about `Book`. Features map their own status enum onto them.
 
 Banned outside `DesignSystem/Tokens/`:
 
