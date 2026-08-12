@@ -160,7 +160,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | [3 · Detalle y estado](hito-3-detalle-estado.md) | Pantalla de detalle y sheet de avance | ✅ Cerrado |
 | [4 · Portada](hito-4-portada.md) | Cámara, galería y permisos | ✅ Cerrado |
 | [5 · Pulido del baúl](hito-5-pulido-baul.md) | Búsqueda, filtro, borrado y edición | ✅ Cerrado |
-| 6 · Sesión de lectura | En curso, cronómetro y notificación | ⬜ Pendiente |
+| [6 · Sesión de lectura](hito-6-sesion-lectura.md) | En curso, cronómetro y notificación | ✅ Cerrado |
 | 7 · Seguimiento | Rango de fechas y gráfica | ⬜ Pendiente |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado
@@ -218,13 +218,14 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F5 · Edición de libro, sin tocar el estado
 - [x] `delete` en el repositorio
 
-**Hito 6 · Sesión de lectura**
-- [ ] F1 · `ReadingSessionEntity` y su repositorio
-- [ ] F7 · Listado de libros en curso
-- [ ] F8 · Selector de duración
-- [ ] F8 · Cuenta atrás con pausa y fin anticipado
-- [ ] F8 · Continuidad en segundo plano y notificación local
-- [ ] F8 · Modal de página final y actualización del avance
+**Hito 6 · Sesión de lectura** — ✅ cerrado
+- [x] F1 · `ReadingSessionEntity` y su repositorio
+- [x] F7 · Listado de libros en curso
+- [x] F8 · Selector de duración
+- [x] F8 · Cuenta atrás con pausa y fin anticipado
+- [x] F8 · Continuidad en segundo plano y notificación local
+- [x] F8 · Modal de página final y actualización del avance
+- [x] Notificación probada en dispositivo real: llega con la app cerrada
 
 **Hito 7 · Seguimiento**
 - [ ] F9 · Selector de rango con atajos de 7/15/30 días

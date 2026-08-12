@@ -5,19 +5,30 @@
 
 import SwiftUI
 
-/// The book's file card, reached from any of the three tabs.
-///
-/// Editing arrives in Hito 5 and the reading session in Hito 6; neither is drawn until it works.
+/// The book's file card, reached from any of the three tabs. Everything that can be done to a
+/// book starts here: change its cover, edit it, advance its status, or read it.
 struct BookDetailView: View {
 
     @StateObject private var viewModel: BookDetailViewModel
     @State private var isChoosingCover = false
     @State private var isEditing = false
 
-    private let repository: BookRepository
+    @State private var isChoosingDuration = false
+    @State private var sessionMinutes: Int?
 
-    init(book: Book, repository: BookRepository) {
+    private let repository: BookRepository
+    private let sessionRepository: ReadingSessionRepository
+    private let notifications: any SessionNotificationScheduling
+
+    init(
+        book: Book,
+        repository: BookRepository,
+        sessionRepository: ReadingSessionRepository,
+        notifications: any SessionNotificationScheduling
+    ) {
         self.repository = repository
+        self.sessionRepository = sessionRepository
+        self.notifications = notifications
         _viewModel = StateObject(
             wrappedValue: BookDetailViewModel(book: book, repository: repository)
         )
@@ -44,6 +55,11 @@ struct BookDetailView: View {
                 progress
 
                 statusRow
+
+                // Only a book actually being read can have a session started on it.
+                if viewModel.book.status == .reading {
+                    TMButton(title: .sessionStart) { isChoosingDuration = true }
+                }
             }
             .padding(Spacing.md)
         }
@@ -63,6 +79,29 @@ struct BookDetailView: View {
             onPick: viewModel.setCover,
             onRemove: viewModel.removeCover
         )
+        .sheet(isPresented: $isChoosingDuration) {
+            SessionDurationSheet(book: viewModel.book) { minutes in
+                isChoosingDuration = false
+                sessionMinutes = minutes
+            }
+            .presentationDetents([.height(320)])
+        }
+        .fullScreenCover(item: $sessionMinutes) { minutes in
+            ActiveSessionView(
+                viewModel: ReadingSessionViewModel(
+                    book: viewModel.book,
+                    plannedMinutes: minutes,
+                    repository: repository,
+                    sessionRepository: sessionRepository,
+                    notifications: notifications
+                ),
+                onFinished: { sessionMinutes = nil }
+            )
+        }
+        .task(id: isChoosingDuration) {
+            // Asked next to the feature that needs it, not at launch.
+            if isChoosingDuration { await notifications.requestAuthorization() }
+        }
         .sheet(isPresented: $viewModel.isChangingStatus) {
             StatusChangeSheet(
                 book: viewModel.book,
@@ -144,15 +183,25 @@ struct BookDetailView: View {
 struct BookDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            BookDetailView(book: .previewReading, repository: PreviewBookRepository.populated)
+            BookDetailView(
+                book: .previewReading,
+                repository: PreviewBookRepository.populated,
+                sessionRepository: PreviewReadingSessionRepository(),
+                notifications: PreviewNotificationScheduler()
+            )
         }
-        .previewDisplayName("Light")
+        .previewDisplayName("Leyendo")
 
         NavigationStack {
-            BookDetailView(book: .previewFinished, repository: PreviewBookRepository.populated)
+            BookDetailView(
+                book: .previewFinished,
+                repository: PreviewBookRepository.populated,
+                sessionRepository: PreviewReadingSessionRepository(),
+                notifications: PreviewNotificationScheduler()
+            )
         }
         .preferredColorScheme(.dark)
-        .previewDisplayName("Dark")
+        .previewDisplayName("Leído")
     }
 }
 #endif

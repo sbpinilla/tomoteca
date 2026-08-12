@@ -12,9 +12,17 @@ struct TrunkView: View {
     @State private var isAddingBook = Self.opensAddingBook
 
     private let repository: BookRepository
+    private let sessionRepository: ReadingSessionRepository
+    private let notifications: any SessionNotificationScheduling
 
-    init(repository: BookRepository) {
+    init(
+        repository: BookRepository,
+        sessionRepository: ReadingSessionRepository,
+        notifications: any SessionNotificationScheduling
+    ) {
         self.repository = repository
+        self.sessionRepository = sessionRepository
+        self.notifications = notifications
         _viewModel = StateObject(wrappedValue: BookListViewModel(repository: repository))
     }
 
@@ -24,7 +32,12 @@ struct TrunkView: View {
                 .background(AppColor.background)
                 .navigationTitle(Text(.tabTrunk))
                 .navigationDestination(for: Book.self) { book in
-                    BookDetailView(book: book, repository: repository)
+                    BookDetailView(
+                        book: book,
+                        repository: repository,
+                        sessionRepository: sessionRepository,
+                        notifications: notifications
+                    )
                 }
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
@@ -145,11 +158,19 @@ struct TrunkView: View {
 #if DEBUG
 struct TrunkView_Previews: PreviewProvider {
     static var previews: some View {
-        TrunkView(repository: PreviewBookRepository.populated)
-            .previewDisplayName("Con libros")
+        TrunkView(
+            repository: PreviewBookRepository.populated,
+            sessionRepository: PreviewReadingSessionRepository(),
+            notifications: PreviewNotificationScheduler()
+        )
+        .previewDisplayName("Con libros")
 
-        TrunkView(repository: PreviewBookRepository.empty)
-            .previewDisplayName("Vacío")
+        TrunkView(
+            repository: PreviewBookRepository.empty,
+            sessionRepository: PreviewReadingSessionRepository(),
+            notifications: PreviewNotificationScheduler()
+        )
+        .previewDisplayName("Vacío")
     }
 }
 #endif

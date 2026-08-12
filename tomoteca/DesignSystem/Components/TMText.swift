@@ -13,6 +13,7 @@ import SwiftUI
 struct TMText: View {
 
     enum Style {
+        case largeTitle
         case title
         case headline
         case body
@@ -61,6 +62,7 @@ struct TMText: View {
 
     private var font: Font {
         switch style {
+        case .largeTitle: return AppFont.largeTitle
         case .title: return AppFont.title
         case .headline: return AppFont.headline
         case .body: return AppFont.body

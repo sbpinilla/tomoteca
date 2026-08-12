@@ -5,15 +5,64 @@
 
 import SwiftUI
 
-/// Books currently being read, and the entry point to a reading session.
-/// Placeholder until Hito 6.
+/// Books currently being read, and the way into a reading session.
 struct InProgressView: View {
+
+    @StateObject private var viewModel: InProgressViewModel
+
+    private let bookRepository: BookRepository
+    private let sessionRepository: ReadingSessionRepository
+    private let notifications: any SessionNotificationScheduling
+
+    init(
+        bookRepository: BookRepository,
+        sessionRepository: ReadingSessionRepository,
+        notifications: any SessionNotificationScheduling
+    ) {
+        self.bookRepository = bookRepository
+        self.sessionRepository = sessionRepository
+        self.notifications = notifications
+        _viewModel = StateObject(wrappedValue: InProgressViewModel(repository: bookRepository))
+    }
 
     var body: some View {
         NavigationStack {
-            AppColor.background
-                .ignoresSafeArea()
+            content
+                .background(AppColor.background)
                 .navigationTitle(Text(.tabInProgress))
+                .navigationDestination(for: Book.self) { book in
+                    BookDetailView(
+                        book: book,
+                        repository: bookRepository,
+                        sessionRepository: sessionRepository,
+                        notifications: notifications
+                    )
+                }
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isEmpty {
+            VStack {
+                Spacer()
+                TMEmptyState(
+                    systemImage: "book",
+                    title: .inProgressEmptyTitle,
+                    message: .inProgressEmptyMessage
+                )
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            List(viewModel.books) { book in
+                NavigationLink(value: book) {
+                    InProgressRowView(book: book)
+                }
+                .listRowBackground(AppColor.surface)
+            }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
         }
     }
 }
@@ -21,7 +70,11 @@ struct InProgressView: View {
 #if DEBUG
 struct InProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        InProgressView()
+        InProgressView(
+            bookRepository: PreviewBookRepository.populated,
+            sessionRepository: PreviewReadingSessionRepository(),
+            notifications: PreviewNotificationScheduler()
+        )
     }
 }
 #endif

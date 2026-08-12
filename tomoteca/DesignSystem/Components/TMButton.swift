@@ -15,6 +15,9 @@ struct TMButton: View {
     enum Style {
         case primary
         case secondary
+        /// Outlined in the accent color: a secondary action that still carries weight, like
+        /// ending a session in progress.
+        case secondaryAccent
     }
 
     let title: LocalizedStringResource
@@ -37,20 +40,26 @@ struct TMButton: View {
         switch style {
         case .primary: return AppColor.background
         case .secondary: return AppColor.textPrimary
+        case .secondaryAccent: return AppColor.brandAccent
         }
     }
 
     private var fill: Color {
         switch style {
         case .primary: return AppColor.brandAccent
-        case .secondary: return AppColor.surface
+        case .secondary, .secondaryAccent: return AppColor.surface
         }
     }
 
     @ViewBuilder
     private var border: some View {
-        if style == .secondary {
+        switch style {
+        case .primary:
+            EmptyView()
+        case .secondary:
             Capsule().stroke(AppColor.borderSubtle, lineWidth: 1)
+        case .secondaryAccent:
+            Capsule().stroke(AppColor.brandAccent, lineWidth: 1)
         }
     }
 }

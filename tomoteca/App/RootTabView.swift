@@ -16,12 +16,18 @@ struct RootTabView: View {
     }
 
     let bookRepository: BookRepository
+    let sessionRepository: ReadingSessionRepository
+    let notifications: any SessionNotificationScheduling
 
     @State private var selection: Tab = Self.initialTab
 
     var body: some View {
         TabView(selection: $selection) {
-            InProgressView()
+            InProgressView(
+                bookRepository: bookRepository,
+                sessionRepository: sessionRepository,
+                notifications: notifications
+            )
                 .tag(Tab.inProgress)
                 .tabItem {
                     Label {
@@ -41,7 +47,11 @@ struct RootTabView: View {
                     }
                 }
 
-            TrunkView(repository: bookRepository)
+            TrunkView(
+                repository: bookRepository,
+                sessionRepository: sessionRepository,
+                notifications: notifications
+            )
                 .tag(Tab.trunk)
                 .tabItem {
                     Label {
@@ -69,13 +79,12 @@ struct RootTabView: View {
 #if DEBUG
 struct RootTabView_Previews: PreviewProvider {
     static var previews: some View {
-        RootTabView(bookRepository: PreviewBookRepository.populated)
-            .preferredColorScheme(.light)
-            .previewDisplayName("Light")
-
-        RootTabView(bookRepository: PreviewBookRepository.populated)
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Dark")
+        RootTabView(
+            bookRepository: PreviewBookRepository.populated,
+            sessionRepository: PreviewReadingSessionRepository(),
+            notifications: PreviewNotificationScheduler()
+        )
+        .previewDisplayName("Light")
     }
 }
 #endif
