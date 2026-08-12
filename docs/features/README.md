@@ -147,44 +147,87 @@ construya añade sus dos traducciones en el mismo commit, no después.
 - [x] Mockups de las nueve pantallas en modo claro y oscuro, en `docs/design/`
 - [x] Catálogo de strings con español e inglés, y símbolos verificados en compilación
 
-### Pendiente
+### Hitos
 
-**Cimientos**
-- [ ] F1 · Entidades de Core Data y eliminación de `Item`
-- [ ] F1 · Modelos de dominio y protocolos de repositorio
-- [ ] F1 · Implementación de los repositorios sobre Core Data
+Las features se construyen en rebanadas verticales: cada hito llega hasta la pantalla y se
+puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
+
+| Hito | Qué entra | Estado |
+|---|---|---|
+| [0 · Andamio](hito-0-andamio.md) | Estructura de carpetas y las tres pestañas vacías | ✅ Cerrado |
+| 1 · Baúl con datos reales | Core Data, repositorio y el listado | ⬜ Pendiente |
+| 2 · Alta de libro | Formulario, sin portada todavía | ⬜ Pendiente |
+| 3 · Detalle y estado | Pantalla de detalle y sheet de avance | ⬜ Pendiente |
+| 4 · Portada | Cámara, galería y permisos | ⬜ Pendiente |
+| 5 · Pulido del baúl | Búsqueda, filtro, borrado y edición | ⬜ Pendiente |
+| 6 · Sesión de lectura | En curso, cronómetro y notificación | ⬜ Pendiente |
+| 7 · Seguimiento | Rango de fechas y gráfica | ⬜ Pendiente |
+
+Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado
+
+**Un hito solo se marca cerrado** cuando sus tareas están tachadas, se ha visto funcionando en
+el simulador **en los dos idiomas y los dos modos**, tiene tests de sus ViewModels y
+repositorios, y está commiteado.
+
+Cada hito abre su propio archivo en esta carpeta (`hito-0-andamio.md`…) al empezarlo, con sus
+criterios de aceptación concretos, y se cierra anotando cómo se validó.
+
+### Tareas
+
+**Hito 0 · Andamio** — ✅ cerrado
+- [x] Reorganizar el proyecto a `App/`, `Core/`, `Features/` según `CLAUDE.md`
+- [x] Eliminar los restos de la plantilla: `ContentView`, la entidad `Item` y sus strings
+      auto-extraídos del catálogo
+- [x] F3 · `TabView` raíz con las tres pestañas y sus SF Symbols
+- [x] Títulos de pestaña localizados en español e inglés
+
+**Hito 1 · Baúl con datos reales**
+- [ ] F1 · `BookEntity` en el modelo de Core Data
+- [ ] F1 · Modelo de dominio `Book` y protocolo `BookRepository`
+- [ ] F1 · `CoreDataBookRepository`
 - [ ] F1 · Lista precargada de géneros
-- [ ] F3 · `TabView` raíz con las tres pestañas
-- [ ] Reorganizar el proyecto según la estructura de `CLAUDE.md` (`App/`, `Core/`, `Features/`)
+- [ ] F2 · `TMText`, `TMCard`, `TMStatusChip`, `TMEmptyState`
+- [ ] F4 · Listado del baúl con su estado vacío
+- [ ] Datos de ejemplo en `PersistenceController.preview`
 
-**Baúl**
-- [ ] F2 · `TMEmptyState`, `TMStatusChip`, `TMCard`, `TMText`
-- [ ] F4 · Listado con estado vacío
+**Hito 2 · Alta de libro**
+- [ ] F2 · `TMTextField`, `TMButton`
+- [ ] F5 · Formulario de alta con su ViewModel
+- [ ] F5 · Selector de género en dos secciones más "Otros"
+- [ ] F5 · Selector de estado inicial
+
+**Hito 3 · Detalle y estado**
+- [ ] F6 · Pantalla de detalle, compartida por las tres pestañas
+- [ ] F6 · Barra de progreso y porcentaje de avance
+- [ ] F6 · Sheet que ofrece solo el siguiente estado
+
+**Hito 4 · Portada**
+- [ ] F5 · Captura desde cámara y selección desde galería
+- [ ] F5 · Almacenamiento de la imagen
+- [ ] `InfoPlist.xcstrings` con los textos de permisos en ambos idiomas
+
+**Hito 5 · Pulido del baúl**
 - [ ] F4 · Búsqueda por título y autor
 - [ ] F4 · Filtro por estado
 - [ ] F4 · Borrado con swipe
-- [ ] F5 · Formulario de alta
-- [ ] F5 · Captura de portada desde cámara y galería
-- [ ] F5 · Edición de libro
-- [ ] F6 · Pantalla de detalle
-- [ ] F6 · Sheet de cambio de estado
+- [ ] F5 · Edición de libro, sin tocar el estado
 
-**Lectura**
+**Hito 6 · Sesión de lectura**
+- [ ] F1 · `ReadingSessionEntity` y su repositorio
 - [ ] F7 · Listado de libros en curso
 - [ ] F8 · Selector de duración
 - [ ] F8 · Cuenta atrás con pausa y fin anticipado
 - [ ] F8 · Continuidad en segundo plano y notificación local
 - [ ] F8 · Modal de página final y actualización del avance
 
-**Seguimiento**
+**Hito 7 · Seguimiento**
 - [ ] F9 · Selector de rango con atajos de 7/15/30 días
 - [ ] F9 · Gráfica de minutos por día
-- [ ] F9 · Promedio del rango
+- [ ] F9 · Total y promedio del rango
 
-**Transversal**
-- [ ] `InfoPlist.xcstrings` con los textos de permisos en ambos idiomas
-- [ ] Revisar cada pantalla en inglés: es donde se rompen los layouts por longitud de texto
-- [ ] Revisión de accesibilidad y Dynamic Type
+**Continuo, en cada hito**
+- [ ] Revisar la pantalla en inglés: es donde se rompen los layouts por longitud de texto
+- [ ] Revisar accesibilidad y Dynamic Type
 - [ ] Tests de ViewModels y repositorios
 
 ---
