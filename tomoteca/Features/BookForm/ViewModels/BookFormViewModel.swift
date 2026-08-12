@@ -17,6 +17,8 @@ final class BookFormViewModel: ObservableObject {
     @Published var genre: Genre?
     @Published var pageCountText = ""
     @Published var status: BookStatus = .wishlist
+    /// Optional, and usually added later: a book on the wishlist is rarely at hand to photograph.
+    @Published var coverImageData: Data?
 
     private let repository: BookRepository
 
@@ -50,7 +52,8 @@ final class BookFormViewModel: ObservableObject {
             author: trimmedAuthor.isEmpty ? nil : trimmedAuthor,
             genre: genre,
             pageCount: pageCount,
-            status: status
+            status: status,
+            coverImageData: coverImageData
         )
 
         // No assertion here: a failed write is a real runtime condition — a full disk, a locked

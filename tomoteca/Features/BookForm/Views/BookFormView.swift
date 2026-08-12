@@ -12,6 +12,7 @@ import SwiftUI
 struct BookFormView: View {
 
     @StateObject private var viewModel: BookFormViewModel
+    @State private var isChoosingCover = false
     @Environment(\.dismiss) private var dismiss
 
     init(repository: BookRepository) {
@@ -21,6 +22,11 @@ struct BookFormView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    coverButton
+                }
+                .listRowBackground(Color.clear)
+
                 Section {
                     TMTextField(
                         label: .bookFormFieldTitle,
@@ -55,6 +61,12 @@ struct BookFormView: View {
             }
             .scrollContentBackground(.hidden)
             .background(AppColor.background)
+            .coverPicker(
+                isPresented: $isChoosingCover,
+                hasCover: viewModel.coverImageData != nil,
+                onPick: { viewModel.coverImageData = $0 },
+                onRemove: { viewModel.coverImageData = nil }
+            )
             .navigationTitle(Text(.bookFormNewTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -72,6 +84,31 @@ struct BookFormView: View {
                 }
             }
         }
+    }
+
+    /// Offered here as a shortcut, not as the only chance: the cover can also be added later
+    /// from the detail screen, which is when most people actually have the book in hand.
+    private var coverButton: some View {
+        Button {
+            isChoosingCover = true
+        } label: {
+            HStack(spacing: Spacing.md) {
+                TMBookCover(data: viewModel.coverImageData, width: 60, height: 84)
+
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    TMText(
+                        viewModel.coverImageData == nil ? .coverAdd : .coverChange,
+                        style: .body,
+                        color: AppColor.brandAccent
+                    )
+                    TMText(.coverAddHint, style: .footnote, color: AppColor.textSecondary)
+                }
+
+                Spacer()
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("coverButton")
     }
 
     private var genrePicker: some View {

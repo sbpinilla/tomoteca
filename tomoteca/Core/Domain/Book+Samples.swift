@@ -5,6 +5,7 @@
 
 #if DEBUG
 import Foundation
+import UIKit
 
 /// Sample books for previews, tests and the seeded simulator run. Debug-only: never shipped.
 extension Book {
@@ -16,6 +17,8 @@ extension Book {
         pageCount: 340,
         currentPage: 210,
         status: .reading,
+        // Only some samples carry a cover, so both states show up on screen at once.
+        coverImageData: UIImage.sampleCover(color: .systemOrange).coverData(),
         createdAt: Date(timeIntervalSince1970: 1_700_000_000)
     )
 
@@ -25,6 +28,7 @@ extension Book {
         genre: .history,
         pageCount: 512,
         status: .owned,
+        coverImageData: UIImage.sampleCover(color: .systemTeal).coverData(),
         createdAt: Date(timeIntervalSince1970: 1_699_000_000)
     )
 

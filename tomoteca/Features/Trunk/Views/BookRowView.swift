@@ -36,14 +36,7 @@ struct BookRowView: View {
     }
 
     private var cover: some View {
-        RoundedRectangle(cornerRadius: Radius.sm, style: .continuous)
-            .fill(AppColor.track)
-            .frame(width: 44, height: 62)
-            .overlay(
-                Image(systemName: "book.closed")
-                    .foregroundColor(AppColor.textSecondary)
-            )
-            .accessibilityHidden(true)
+        TMBookCover(data: book.coverImageData, width: 44, height: 62)
     }
 
     /// "Author · Genre", or just the genre when the author is unknown.

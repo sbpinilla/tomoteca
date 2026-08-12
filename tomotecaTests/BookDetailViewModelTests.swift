@@ -3,6 +3,7 @@
 //  tomotecaTests
 //
 
+import Foundation
 import Testing
 @testable import tomoteca
 
@@ -93,6 +94,50 @@ struct BookDetailViewModelTests {
 
         #expect(viewModel.isChangingStatus)
         #expect(viewModel.book.status == .owned)
+    }
+
+    // MARK: Cover
+
+    @Test("A cover can be added to a book that has none")
+    func addsACover() {
+        let (viewModel, repository) = makeViewModel(for: .previewWishlist)
+        #expect(viewModel.book.coverImageData == nil)
+
+        viewModel.setCover(Data([0x01, 0x02]))
+
+        #expect(viewModel.book.coverImageData == Data([0x01, 0x02]))
+        #expect(repository.updateCount == 1)
+    }
+
+    @Test("A new cover replaces the previous one")
+    func replacesTheCover() {
+        let (viewModel, _) = makeViewModel(for: .previewReading)
+
+        viewModel.setCover(Data([0xAA]))
+
+        #expect(viewModel.book.coverImageData == Data([0xAA]))
+    }
+
+    @Test("Removing the cover leaves the rest of the book untouched")
+    func removesTheCover() {
+        let (viewModel, _) = makeViewModel(for: .previewReading)
+
+        viewModel.removeCover()
+
+        #expect(viewModel.book.coverImageData == nil)
+        #expect(viewModel.book.title == Book.previewReading.title)
+        #expect(viewModel.book.status == .reading)
+    }
+
+    @Test("A cover can be added at any point in the book's life, not only when it is registered")
+    func coverCanBeAddedAfterAdvancing() {
+        let (viewModel, _) = makeViewModel(for: .previewWishlist)
+
+        viewModel.advanceStatus()
+        viewModel.setCover(Data([0x07]))
+
+        #expect(viewModel.book.status == .owned)
+        #expect(viewModel.book.coverImageData == Data([0x07]))
     }
 
     @Test("Picks up a change made elsewhere instead of holding its own copy")

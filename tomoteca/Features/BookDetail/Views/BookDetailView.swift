@@ -11,6 +11,7 @@ import SwiftUI
 struct BookDetailView: View {
 
     @StateObject private var viewModel: BookDetailViewModel
+    @State private var isChoosingCover = false
 
     init(book: Book, repository: BookRepository) {
         _viewModel = StateObject(
@@ -44,6 +45,12 @@ struct BookDetailView: View {
         }
         .background(AppColor.background)
         .navigationBarTitleDisplayMode(.inline)
+        .coverPicker(
+            isPresented: $isChoosingCover,
+            hasCover: viewModel.book.coverImageData != nil,
+            onPick: viewModel.setCover,
+            onRemove: viewModel.removeCover
+        )
         .sheet(isPresented: $viewModel.isChangingStatus) {
             StatusChangeSheet(
                 book: viewModel.book,
@@ -54,16 +61,22 @@ struct BookDetailView: View {
         }
     }
 
+    /// Tapping the cover is the main way to add one: most books are registered before their
+    /// photo is at hand, and this saves a trip through the edit form later.
     private var cover: some View {
-        RoundedRectangle(cornerRadius: Radius.lg, style: .continuous)
-            .fill(AppColor.track)
-            .frame(width: 160, height: 230)
-            .overlay(
-                Image(systemName: "book.closed")
-                    .font(AppFont.largeTitle)
-                    .foregroundColor(AppColor.textSecondary)
+        Button {
+            isChoosingCover = true
+        } label: {
+            TMBookCover(
+                data: viewModel.book.coverImageData,
+                width: 160,
+                height: 230,
+                cornerRadius: Radius.lg
             )
-            .accessibilityHidden(true)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(viewModel.book.coverImageData == nil ? .coverAdd : .coverChange))
+        .accessibilityIdentifier("coverButton")
     }
 
     private var progress: some View {

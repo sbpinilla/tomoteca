@@ -200,6 +200,132 @@
         }
       }
     },
+    "common.cancel": {
+      "comment": "Dismisses a menu without choosing",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "cover.add": {
+      "comment": "Button that starts adding a book cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add cover"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar portada"
+          }
+        }
+      }
+    },
+    "cover.add_hint": {
+      "comment": "Hint under the add-cover button",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "camera or library"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cámara o galería"
+          }
+        }
+      }
+    },
+    "cover.change": {
+      "comment": "Action that replaces the current cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change cover"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambiar portada"
+          }
+        }
+      }
+    },
+    "cover.remove": {
+      "comment": "Menu option that deletes the current cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove cover"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitar portada"
+          }
+        }
+      }
+    },
+    "cover.source_camera": {
+      "comment": "Menu option: take the cover with the camera",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take photo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hacer foto"
+          }
+        }
+      }
+    },
+    "cover.source_library": {
+      "comment": "Menu option: pick the cover from the photo library",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose from library"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elegir de la galería"
+          }
+        }
+      }
+    },
     "genre.adventure": {
       "comment": "Book genre: Adventure",
       "extractionState": "manual",

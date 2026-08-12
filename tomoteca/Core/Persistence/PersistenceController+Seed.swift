@@ -15,27 +15,24 @@ extension PersistenceController {
     static let seedArgument = "-seedSampleData"
 
     /// Inserts the sample catalog, but only when the store has no books yet.
+    ///
+    /// Writes through the repository rather than building entities here: the mapping from
+    /// domain to store belongs in one place, and a second copy of it drifts the moment a field
+    /// is added — as happened with the cover.
+    @MainActor
     func seedSampleDataIfNeeded() {
-        let context = container.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "BookEntity")
         request.fetchLimit = 1
 
-        guard (try? context.count(for: request)) == 0 else { return }
+        guard (try? container.viewContext.count(for: request)) == 0 else { return }
 
-        for book in Book.previewCatalog {
-            let entity = BookEntity(context: context)
-            entity.id = book.id
-            entity.title = book.title
-            entity.author = book.author
-            entity.genreRawValue = book.genre.rawValue
-            entity.pageCount = Int32(book.pageCount)
-            entity.currentPage = Int32(book.currentPage)
-            entity.statusRawValue = book.status.rawValue
-            entity.createdAt = book.createdAt
-        }
+        let repository = CoreDataBookRepository(persistence: self)
 
         do {
-            try context.save()
+            // Oldest first, so the newest-first ordering comes out matching the samples.
+            for book in Book.previewCatalog.reversed() {
+                try repository.add(book)
+            }
         } catch {
             assertionFailure("Failed to seed sample data: \(error)")
         }

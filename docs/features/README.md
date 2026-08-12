@@ -158,7 +158,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | [1 · Baúl con datos reales](hito-1-baul.md) | Core Data, repositorio y el listado | ✅ Cerrado |
 | [2 · Alta de libro](hito-2-alta-libro.md) | Formulario, sin portada todavía | ✅ Cerrado |
 | [3 · Detalle y estado](hito-3-detalle-estado.md) | Pantalla de detalle y sheet de avance | ✅ Cerrado |
-| 4 · Portada | Cámara, galería y permisos | ⬜ Pendiente |
+| [4 · Portada](hito-4-portada.md) | Cámara, galería y permisos | ✅ Cerrado |
 | 5 · Pulido del baúl | Búsqueda, filtro, borrado y edición | ⬜ Pendiente |
 | 6 · Sesión de lectura | En curso, cronómetro y notificación | ⬜ Pendiente |
 | 7 · Seguimiento | Rango de fechas y gráfica | ⬜ Pendiente |
@@ -204,10 +204,12 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F6 · Sheet que ofrece solo el siguiente estado
 - [x] `update` en el repositorio y navegación desde el Baúl
 
-**Hito 4 · Portada**
-- [ ] F5 · Captura desde cámara y selección desde galería
-- [ ] F5 · Almacenamiento de la imagen
-- [ ] `InfoPlist.xcstrings` con los textos de permisos en ambos idiomas
+**Hito 4 · Portada** — ✅ cerrado
+- [x] F5 · Captura desde cámara y selección desde galería
+- [x] F5 · Almacenamiento de la imagen, reducida y comprimida
+- [x] F6 · Portada editable desde el detalle, en cualquier momento
+- [x] `InfoPlist.xcstrings` con el texto de permiso de cámara en ambos idiomas
+- [ ] Probar la cámara en un dispositivo real: el simulador no tiene
 
 **Hito 5 · Pulido del baúl**
 - [ ] F4 · Búsqueda por título y autor

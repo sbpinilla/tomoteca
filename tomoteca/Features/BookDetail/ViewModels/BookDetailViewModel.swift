@@ -32,6 +32,28 @@ final class BookDetailViewModel: ObservableObject {
     /// The one status this book can move to, or `nil` when it is finished.
     var nextStatus: BookStatus? { book.status.next }
 
+    /// Stores a cover, replacing any previous one.
+    func setCover(_ data: Data) {
+        var updated = book
+        updated.coverImageData = data
+        persist(updated)
+    }
+
+    /// Drops the cover, leaving the placeholder in its place.
+    func removeCover() {
+        var updated = book
+        updated.coverImageData = nil
+        persist(updated)
+    }
+
+    private func persist(_ updated: Book) {
+        do {
+            try repository.update(updated)
+        } catch {
+            // TODO: surface the failure once the screen can show an error.
+        }
+    }
+
     /// Moves the book one step along the cycle. Does nothing on a finished book.
     func advanceStatus() {
         guard let nextStatus else { return }
