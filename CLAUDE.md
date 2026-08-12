@@ -75,6 +75,7 @@ tomoteca/
 │   ├── Domain/                 # shared domain models (Book, Tag, ReadingSession)
 │   └── Extensions/             # cross-cutting helpers
 ├── Features/
+│   ├── Shared/                 # domain-aware UI shared by features (status → color + label)
 │   ├── BookList/
 │   │   ├── Views/              # BookListView, BookRowView…
 │   │   ├── ViewModels/         # BookListViewModel

@@ -1,60 +1,708 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "tab.in_progress" : {
-      "comment" : "Title of the first tab: books currently being read",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In progress"
+  "sourceLanguage": "en",
+  "strings": {
+    "genre.adventure": {
+      "comment": "Book genre: Adventure",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adventure"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En curso"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aventura"
           }
         }
       }
     },
-    "tab.tracking" : {
-      "comment" : "Title of the second tab: reading time charts",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tracking"
+    "genre.art": {
+      "comment": "Book genre: Art & photography",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Art & photography"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seguimiento"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arte y fotografía"
           }
         }
       }
     },
-    "tab.trunk" : {
-      "comment" : "Title of the third tab: the full book registry",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trunk"
+    "genre.biography": {
+      "comment": "Book genre: Biography & memoir",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biography & memoir"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Baúl"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biografía y memorias"
+          }
+        }
+      }
+    },
+    "genre.business": {
+      "comment": "Book genre: Business & economics",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Business & economics"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Negocios y economía"
+          }
+        }
+      }
+    },
+    "genre.children_young_adult": {
+      "comment": "Book genre: Children & young adult",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children & young adult"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Infantil y juvenil"
+          }
+        }
+      }
+    },
+    "genre.comics": {
+      "comment": "Book genre: Comics & graphic novels",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comics & graphic novels"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómic y novela gráfica"
+          }
+        }
+      }
+    },
+    "genre.cooking": {
+      "comment": "Book genre: Cooking",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cocina"
+          }
+        }
+      }
+    },
+    "genre.essay": {
+      "comment": "Book genre: Essay",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Essay"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ensayo"
+          }
+        }
+      }
+    },
+    "genre.fantasy": {
+      "comment": "Book genre: Fantasy",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fantasy"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fantasía"
+          }
+        }
+      }
+    },
+    "genre.health": {
+      "comment": "Book genre: Health & wellbeing",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health & wellbeing"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salud y bienestar"
+          }
+        }
+      }
+    },
+    "genre.historical_fiction": {
+      "comment": "Book genre: Historical fiction",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historical fiction"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novela histórica"
+          }
+        }
+      }
+    },
+    "genre.history": {
+      "comment": "Book genre: History",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historia"
+          }
+        }
+      }
+    },
+    "genre.horror": {
+      "comment": "Book genre: Horror",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horror"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terror"
+          }
+        }
+      }
+    },
+    "genre.mystery_thriller": {
+      "comment": "Book genre: Mystery & thriller",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mystery & thriller"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Misterio y suspense"
+          }
+        }
+      }
+    },
+    "genre.novel": {
+      "comment": "Book genre: Novel",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novela"
+          }
+        }
+      }
+    },
+    "genre.other": {
+      "comment": "Book genre: Other",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otros"
+          }
+        }
+      }
+    },
+    "genre.personal_development": {
+      "comment": "Book genre: Personal development",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal development"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desarrollo personal"
+          }
+        }
+      }
+    },
+    "genre.philosophy": {
+      "comment": "Book genre: Philosophy",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philosophy"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filosofía"
+          }
+        }
+      }
+    },
+    "genre.poetry": {
+      "comment": "Book genre: Poetry",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poetry"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poesía"
+          }
+        }
+      }
+    },
+    "genre.psychology": {
+      "comment": "Book genre: Psychology",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Psychology"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Psicología"
+          }
+        }
+      }
+    },
+    "genre.religion": {
+      "comment": "Book genre: Religion & spirituality",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Religion & spirituality"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Religión y espiritualidad"
+          }
+        }
+      }
+    },
+    "genre.romance": {
+      "comment": "Book genre: Romance",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romántica"
+          }
+        }
+      }
+    },
+    "genre.science": {
+      "comment": "Book genre: Science",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Science"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ciencia"
+          }
+        }
+      }
+    },
+    "genre.science_fiction": {
+      "comment": "Book genre: Science fiction",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Science fiction"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ciencia ficción"
+          }
+        }
+      }
+    },
+    "genre.section.fiction": {
+      "comment": "Picker section grouping fiction genres",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fiction"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ficción"
+          }
+        }
+      }
+    },
+    "genre.section.non_fiction": {
+      "comment": "Picker section grouping non-fiction genres",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non-fiction"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No ficción"
+          }
+        }
+      }
+    },
+    "genre.section.other": {
+      "comment": "Picker section for the catch-all genre",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otros"
+          }
+        }
+      }
+    },
+    "genre.technology": {
+      "comment": "Book genre: Technology",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Technology"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tecnología"
+          }
+        }
+      }
+    },
+    "genre.theatre": {
+      "comment": "Book genre: Theatre",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Theatre"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teatro"
+          }
+        }
+      }
+    },
+    "genre.travel": {
+      "comment": "Book genre: Travel",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viajes"
+          }
+        }
+      }
+    },
+    "status.finished": {
+      "comment": "Book status: finished",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finished"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leído"
+          }
+        }
+      }
+    },
+    "status.owned": {
+      "comment": "Book status: bought but not started",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bought"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprado"
+          }
+        }
+      }
+    },
+    "status.reading": {
+      "comment": "Book status: currently being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leyendo"
+          }
+        }
+      }
+    },
+    "status.wishlist": {
+      "comment": "Book status: the reader wants to buy it",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Want to buy"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiero comprar"
+          }
+        }
+      }
+    },
+    "tab.in_progress": {
+      "comment": "Title of the first tab: books currently being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In progress"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
+          }
+        }
+      }
+    },
+    "tab.tracking": {
+      "comment": "Title of the second tab: reading time charts",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguimiento"
+          }
+        }
+      }
+    },
+    "tab.trunk": {
+      "comment": "Title of the third tab: the full book registry",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trunk"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baúl"
+          }
+        }
+      }
+    },
+    "trunk.empty_message": {
+      "comment": "Message shown when the trunk has no books yet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first book to start your library."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade tu primer libro para empezar tu biblioteca."
+          }
+        }
+      }
+    },
+    "trunk.empty_title": {
+      "comment": "Title shown when the trunk has no books yet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No books yet"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin libros"
           }
         }
       }
     }
   },
-  "version" : "1.1"
+  "version": "1.1"
 }

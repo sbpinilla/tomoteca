@@ -24,8 +24,11 @@ Pasos:
    ```
    tipo(alcance opcional): título breve en español, en minúscula, sin punto final
 
-   Cuerpo opcional en español explicando el porqué del cambio (no repitas
-   el qué, eso ya lo muestra el diff). Omite el cuerpo si el cambio es trivial.
+   Cuerpo opcional en español, ligado al código: qué archivo, tipo, función o símbolo
+   cambia y qué hace ahora distinto (moved/renamed/added/removed, con nombres concretos
+   del diff). Nada de narrativa de proceso ni justificación de por qué se decidió hacer
+   el trabajo — eso va en la descripción del PR o en docs, no en el commit. Omite el
+   cuerpo si el cambio es trivial o un solo archivo evidente por el título.
    ```
 
 5. Entrega el resultado así, y nada más:

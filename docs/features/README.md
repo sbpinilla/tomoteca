@@ -155,7 +155,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | Hito | Qué entra | Estado |
 |---|---|---|
 | [0 · Andamio](hito-0-andamio.md) | Estructura de carpetas y las tres pestañas vacías | ✅ Cerrado |
-| 1 · Baúl con datos reales | Core Data, repositorio y el listado | ⬜ Pendiente |
+| [1 · Baúl con datos reales](hito-1-baul.md) | Core Data, repositorio y el listado | ✅ Cerrado |
 | 2 · Alta de libro | Formulario, sin portada todavía | ⬜ Pendiente |
 | 3 · Detalle y estado | Pantalla de detalle y sheet de avance | ⬜ Pendiente |
 | 4 · Portada | Cámara, galería y permisos | ⬜ Pendiente |
@@ -181,14 +181,14 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F3 · `TabView` raíz con las tres pestañas y sus SF Symbols
 - [x] Títulos de pestaña localizados en español e inglés
 
-**Hito 1 · Baúl con datos reales**
-- [ ] F1 · `BookEntity` en el modelo de Core Data
-- [ ] F1 · Modelo de dominio `Book` y protocolo `BookRepository`
-- [ ] F1 · `CoreDataBookRepository`
-- [ ] F1 · Lista precargada de géneros
-- [ ] F2 · `TMText`, `TMCard`, `TMStatusChip`, `TMEmptyState`
-- [ ] F4 · Listado del baúl con su estado vacío
-- [ ] Datos de ejemplo en `PersistenceController.preview`
+**Hito 1 · Baúl con datos reales** — ✅ cerrado
+- [x] F1 · `BookEntity` en el modelo de Core Data
+- [x] F1 · Modelo de dominio `Book` y protocolo `BookRepository`
+- [x] F1 · `CoreDataBookRepository`
+- [x] F1 · Lista precargada de géneros
+- [x] F2 · `TMText`, `TMCard`, `TMStatusChip`, `TMEmptyState`
+- [x] F4 · Listado del baúl con su estado vacío
+- [x] Datos de ejemplo, sembrados bajo `-seedSampleData`
 
 **Hito 2 · Alta de libro**
 - [ ] F2 · `TMTextField`, `TMButton`

@@ -8,15 +8,26 @@ import SwiftUI
 @main
 struct tomotecaApp: App {
 
-    /// Loads the Core Data stack at launch. It is deliberately **not** pushed into the
-    /// SwiftUI environment: views never touch a managed object context, they talk to a
-    /// ViewModel, which talks to a repository. The repositories are the only holders
-    /// of this container.
+    /// Composition root: the stack is built here, wrapped in repositories, and only those
+    /// travel down. Views never see a managed object context.
     private let persistenceController = PersistenceController.shared
+    private let bookRepository: BookRepository
+
+    init() {
+        AppAppearance.configure()
+
+        #if DEBUG
+        if CommandLine.arguments.contains(PersistenceController.seedArgument) {
+            persistenceController.seedSampleDataIfNeeded()
+        }
+        #endif
+
+        bookRepository = CoreDataBookRepository(persistence: persistenceController)
+    }
 
     var body: some Scene {
         WindowGroup {
-            RootTabView()
+            RootTabView(bookRepository: bookRepository)
         }
     }
 }
