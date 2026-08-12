@@ -26,5 +26,14 @@ final class PreviewBookRepository: BookRepository {
     func add(_ book: Book) throws {
         subject.send([book] + subject.value)
     }
+
+    func update(_ book: Book) throws {
+        guard let index = subject.value.firstIndex(where: { $0.id == book.id }) else {
+            throw RepositoryError.bookNotFound
+        }
+        var books = subject.value
+        books[index] = book
+        subject.send(books)
+    }
 }
 #endif

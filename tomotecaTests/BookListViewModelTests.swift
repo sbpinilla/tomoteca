@@ -3,27 +3,8 @@
 //  tomotecaTests
 //
 
-import Combine
 import Testing
 @testable import tomoteca
-
-/// Repository fake: lets a test push catalogs without a store behind it.
-private final class FakeBookRepository: BookRepository {
-
-    private let subject = CurrentValueSubject<[Book], Never>([])
-
-    var books: AnyPublisher<[Book], Never> {
-        subject.eraseToAnyPublisher()
-    }
-
-    func emit(_ books: [Book]) {
-        subject.send(books)
-    }
-
-    func add(_ book: Book) throws {
-        subject.send([book] + subject.value)
-    }
-}
 
 @MainActor
 struct BookListViewModelTests {

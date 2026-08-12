@@ -49,7 +49,24 @@ final class CoreDataBookRepository: BookRepository {
     }
 
     func add(_ book: Book) throws {
-        let entity = BookEntity(context: context)
+        try write(book, into: BookEntity(context: context))
+    }
+
+    func update(_ book: Book) throws {
+        guard let entity = try entity(withID: book.id) else {
+            throw RepositoryError.bookNotFound
+        }
+        try write(book, into: entity)
+    }
+
+    private func entity(withID id: UUID) throws -> BookEntity? {
+        let request = NSFetchRequest<BookEntity>(entityName: "BookEntity")
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        return try context.fetch(request).first
+    }
+
+    private func write(_ book: Book, into entity: BookEntity) throws {
         entity.id = book.id
         entity.title = book.title
         entity.author = book.author

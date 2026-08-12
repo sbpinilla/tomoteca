@@ -4,6 +4,14 @@
 //
 
 import Combine
+import Foundation
+
+/// What can go wrong reaching the store.
+enum RepositoryError: Error {
+    /// Asked to update a book that is no longer there — deleted from another screen, most
+    /// likely, while this one still held it.
+    case bookNotFound
+}
 
 /// The only door between the app and stored books.
 ///
@@ -16,4 +24,7 @@ protocol BookRepository {
 
     /// Stores a new book. `books` re-emits with it included.
     func add(_ book: Book) throws
+
+    /// Overwrites the stored book with the same `id`. `books` re-emits with the new version.
+    func update(_ book: Book) throws
 }

@@ -131,6 +131,33 @@ struct CoreDataBookRepositoryTests {
         #expect(books.map(\.title) == [Book.previewWishlist.title])
     }
 
+    @Test("Updating overwrites the stored book instead of adding a second one")
+    func updateOverwritesInPlace() throws {
+        let persistence = makeStack()
+        let repository = CoreDataBookRepository(persistence: persistence)
+        try repository.add(.previewOwned)
+
+        var advanced = Book.previewOwned
+        advanced.status = .reading
+        advanced.currentPage = 40
+        try repository.update(advanced)
+
+        let books = firstValue(of: CoreDataBookRepository(persistence: persistence))
+        #expect(books.count == 1)
+        #expect(books.first?.status == .reading)
+        #expect(books.first?.currentPage == 40)
+    }
+
+    @Test("Updating a book that is not there reports it rather than creating one")
+    func updateOfMissingBookThrows() {
+        let repository = CoreDataBookRepository(persistence: makeStack())
+
+        #expect(throws: RepositoryError.self) {
+            try repository.update(.previewOwned)
+        }
+        #expect(firstValue(of: repository).isEmpty)
+    }
+
     @Test("A row with an unknown genre is skipped instead of breaking the list")
     func skipsRowsWithUnreadableFields() throws {
         let persistence = makeStack()

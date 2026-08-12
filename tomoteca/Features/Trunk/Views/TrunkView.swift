@@ -64,11 +64,16 @@ struct TrunkView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             List(viewModel.books) { book in
-                BookRowView(book: book)
-                    .listRowBackground(AppColor.surface)
+                NavigationLink(value: book) {
+                    BookRowView(book: book)
+                }
+                .listRowBackground(AppColor.surface)
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
+            .navigationDestination(for: Book.self) { book in
+                BookDetailView(book: book, repository: repository)
+            }
         }
     }
 }

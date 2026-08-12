@@ -3,33 +3,14 @@
 //  tomotecaTests
 //
 
-import Combine
 import Testing
 @testable import tomoteca
-
-/// Records what gets stored, so a test can check the book that was actually built.
-private final class RecordingBookRepository: BookRepository {
-
-    private(set) var added: [Book] = []
-    var errorToThrow: (any Error)?
-
-    var books: AnyPublisher<[Book], Never> {
-        Just(added).eraseToAnyPublisher()
-    }
-
-    func add(_ book: Book) throws {
-        if let errorToThrow { throw errorToThrow }
-        added.append(book)
-    }
-}
-
-private struct StubError: Error {}
 
 @MainActor
 struct BookFormViewModelTests {
 
-    private func makeViewModel() -> (BookFormViewModel, RecordingBookRepository) {
-        let repository = RecordingBookRepository()
+    private func makeViewModel() -> (BookFormViewModel, FakeBookRepository) {
+        let repository = FakeBookRepository()
         return (BookFormViewModel(repository: repository), repository)
     }
 

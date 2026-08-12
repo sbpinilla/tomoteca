@@ -157,7 +157,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | [0 · Andamio](hito-0-andamio.md) | Estructura de carpetas y las tres pestañas vacías | ✅ Cerrado |
 | [1 · Baúl con datos reales](hito-1-baul.md) | Core Data, repositorio y el listado | ✅ Cerrado |
 | [2 · Alta de libro](hito-2-alta-libro.md) | Formulario, sin portada todavía | ✅ Cerrado |
-| 3 · Detalle y estado | Pantalla de detalle y sheet de avance | ⬜ Pendiente |
+| [3 · Detalle y estado](hito-3-detalle-estado.md) | Pantalla de detalle y sheet de avance | ✅ Cerrado |
 | 4 · Portada | Cámara, galería y permisos | ⬜ Pendiente |
 | 5 · Pulido del baúl | Búsqueda, filtro, borrado y edición | ⬜ Pendiente |
 | 6 · Sesión de lectura | En curso, cronómetro y notificación | ⬜ Pendiente |
@@ -197,11 +197,12 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F5 · Selector de estado inicial
 - [x] `add` en el repositorio y botón de añadir en el Baúl
 
-**Hito 3 · Detalle y estado**
-- [ ] F2 · `TMButton`, que aparece por primera vez en "Iniciar sesión de lectura"
-- [ ] F6 · Pantalla de detalle, compartida por las tres pestañas
-- [ ] F6 · Barra de progreso y porcentaje de avance
-- [ ] F6 · Sheet que ofrece solo el siguiente estado
+**Hito 3 · Detalle y estado** — ✅ cerrado
+- [x] F2 · `TMButton` y `TMProgressBar`
+- [x] F6 · Pantalla de detalle, compartida por las tres pestañas
+- [x] F6 · Barra de progreso y porcentaje de avance
+- [x] F6 · Sheet que ofrece solo el siguiente estado
+- [x] `update` en el repositorio y navegación desde el Baúl
 
 **Hito 4 · Portada**
 - [ ] F5 · Captura desde cámara y selección desde galería
