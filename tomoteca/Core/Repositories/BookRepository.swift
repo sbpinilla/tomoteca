@@ -27,4 +27,8 @@ protocol BookRepository {
 
     /// Overwrites the stored book with the same `id`. `books` re-emits with the new version.
     func update(_ book: Book) throws
+
+    /// Removes the book with this `id`. Deleting one that is already gone is not an error:
+    /// the desired end state has been reached either way.
+    func delete(id: UUID) throws
 }

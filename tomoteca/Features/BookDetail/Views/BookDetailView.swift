@@ -12,8 +12,12 @@ struct BookDetailView: View {
 
     @StateObject private var viewModel: BookDetailViewModel
     @State private var isChoosingCover = false
+    @State private var isEditing = false
+
+    private let repository: BookRepository
 
     init(book: Book, repository: BookRepository) {
+        self.repository = repository
         _viewModel = StateObject(
             wrappedValue: BookDetailViewModel(book: book, repository: repository)
         )
@@ -45,6 +49,14 @@ struct BookDetailView: View {
         }
         .background(AppColor.background)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button { isEditing = true } label: { Text(.bookDetailEdit) }
+            }
+        }
+        .sheet(isPresented: $isEditing) {
+            BookFormView(mode: .edit(viewModel.book), repository: repository)
+        }
         .coverPicker(
             isPresented: $isChoosingCover,
             hasCover: viewModel.book.coverImageData != nil,

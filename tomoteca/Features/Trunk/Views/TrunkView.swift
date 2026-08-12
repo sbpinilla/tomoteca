@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-/// The full book registry. Search, filters, adding and detail arrive in later milestones.
+/// The full book registry: search, filter, add, open and delete.
 struct TrunkView: View {
 
     @StateObject private var viewModel: BookListViewModel
@@ -23,6 +23,9 @@ struct TrunkView: View {
             content
                 .background(AppColor.background)
                 .navigationTitle(Text(.tabTrunk))
+                .navigationDestination(for: Book.self) { book in
+                    BookDetailView(book: book, repository: repository)
+                }
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         Button {
@@ -34,9 +37,15 @@ struct TrunkView: View {
                     }
                 }
                 .sheet(isPresented: $isAddingBook) {
-                    BookFormView(repository: repository)
+                    BookFormView(mode: .add, repository: repository)
                 }
         }
+        // Attached outside the branch so the field does not disappear when a search empties the
+        // list — which would leave no way to undo the search.
+        .searchable(
+            text: $viewModel.searchText,
+            prompt: Text(.trunkSearchPrompt)
+        )
     }
 
     /// Opens straight into the form when a debug run passes `-startAddingBook`, so the sheet can
@@ -52,29 +61,84 @@ struct TrunkView: View {
     @ViewBuilder
     private var content: some View {
         if viewModel.isEmpty {
-            VStack {
-                Spacer()
+            centered {
                 TMEmptyState(
                     systemImage: "books.vertical",
                     title: .trunkEmptyTitle,
                     message: .trunkEmptyMessage
                 )
-                Spacer()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
-            List(viewModel.books) { book in
+            VStack(spacing: 0) {
+                filterMenu
+
+                if viewModel.hasNoResults {
+                    centered {
+                        TMEmptyState(
+                            systemImage: "magnifyingglass",
+                            title: .trunkNoResultsTitle,
+                            message: .trunkNoResultsMessage
+                        )
+                    }
+                } else {
+                    list
+                }
+            }
+        }
+    }
+
+    private var list: some View {
+        List {
+            ForEach(viewModel.visibleBooks) { book in
                 NavigationLink(value: book) {
                     BookRowView(book: book)
                 }
                 .listRowBackground(AppColor.surface)
             }
-            .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .navigationDestination(for: Book.self) { book in
-                BookDetailView(book: book, repository: repository)
-            }
+            .onDelete(perform: viewModel.delete(atOffsets:))
         }
+        .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+    }
+
+    /// Five options counting "All" — too many for a segmented control, so a menu it is.
+    private var filterMenu: some View {
+        HStack {
+            Menu {
+                Picker(selection: $viewModel.filter) {
+                    ForEach(BookListViewModel.Filter.allCases) { filter in
+                        Text(filter.title).tag(filter)
+                    }
+                } label: {
+                    EmptyView()
+                }
+            } label: {
+                HStack(spacing: Spacing.xs) {
+                    TMText(viewModel.filter.title, style: .body)
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(AppColor.textSecondary)
+                }
+                .padding(.horizontal, Spacing.md)
+                .padding(.vertical, Spacing.sm)
+                .background(AppColor.surface)
+                .clipShape(Capsule())
+            }
+            .accessibilityLabel(Text(.trunkFilterLabel))
+            .accessibilityIdentifier("statusFilter")
+
+            Spacer()
+        }
+        .padding(.horizontal, Spacing.md)
+        .padding(.bottom, Spacing.sm)
+    }
+
+    private func centered<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack {
+            Spacer()
+            content()
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

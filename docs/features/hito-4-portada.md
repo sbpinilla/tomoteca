@@ -56,9 +56,8 @@ ViewModel, añadir, reemplazar y quitar portada, y hacerlo después de avanzar e
 **En simulador:** el Baúl con portadas reales en dos libros y marcador de posición en los otros
 dos, y el formulario con "Agregar portada · cámara o galería".
 
-**Sin validar:** la captura desde cámara. El simulador no tiene una, así que ese camino solo
-está comprobado por lectura de código. Hay que probarlo en un dispositivo real antes de dar la
-portada por terminada.
+**En dispositivo real:** la captura desde cámara, probada a mano por Sergio. El simulador no
+tiene cámara, así que ese camino no podía comprobarse de otra forma.
 
 ## Hallazgos
 

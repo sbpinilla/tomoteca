@@ -5,18 +5,19 @@
 
 import SwiftUI
 
-/// The add-book form, presented as a sheet from the trunk.
-///
-/// The cover picker arrives in Hito 4; showing a dead control here would promise something the
-/// screen cannot do yet.
+/// The book form, presented as a sheet. Serves both adding a book from the trunk and editing
+/// one from its detail; the mode decides the title, whether the status is offered, and whether
+/// saving creates or overwrites.
 struct BookFormView: View {
 
     @StateObject private var viewModel: BookFormViewModel
     @State private var isChoosingCover = false
     @Environment(\.dismiss) private var dismiss
 
-    init(repository: BookRepository) {
-        _viewModel = StateObject(wrappedValue: BookFormViewModel(repository: repository))
+    init(mode: BookFormMode, repository: BookRepository) {
+        _viewModel = StateObject(
+            wrappedValue: BookFormViewModel(mode: mode, repository: repository)
+        )
     }
 
     var body: some View {
@@ -47,17 +48,23 @@ struct BookFormView: View {
                 }
                 .listRowBackground(AppColor.surface)
 
-                Section {
-                    TMSegmentedPicker(
-                        options: BookStatus.allCases,
-                        title: \.shortTitle,
-                        selection: $viewModel.status
-                    )
-                    .listRowInsets(EdgeInsets())
-                } header: {
-                    TMText(.bookFormInitialStatus, style: .footnote, color: AppColor.textSecondary)
+                if viewModel.showsStatusPicker {
+                    Section {
+                        TMSegmentedPicker(
+                            options: BookStatus.allCases,
+                            title: \.shortTitle,
+                            selection: $viewModel.status
+                        )
+                        .listRowInsets(EdgeInsets())
+                    } header: {
+                        TMText(
+                            .bookFormInitialStatus,
+                            style: .footnote,
+                            color: AppColor.textSecondary
+                        )
+                    }
+                    .listRowBackground(Color.clear)
                 }
-                .listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
             .background(AppColor.background)
@@ -67,7 +74,7 @@ struct BookFormView: View {
                 onPick: { viewModel.coverImageData = $0 },
                 onRemove: { viewModel.coverImageData = nil }
             )
-            .navigationTitle(Text(.bookFormNewTitle))
+            .navigationTitle(Text(viewModel.navigationTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -143,13 +150,11 @@ struct BookFormView: View {
 #if DEBUG
 struct BookFormView_Previews: PreviewProvider {
     static var previews: some View {
-        BookFormView(repository: PreviewBookRepository.empty)
-            .preferredColorScheme(.light)
-            .previewDisplayName("Light")
+        BookFormView(mode: .add, repository: PreviewBookRepository.empty)
+            .previewDisplayName("Alta")
 
-        BookFormView(repository: PreviewBookRepository.empty)
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Dark")
+        BookFormView(mode: .edit(.previewReading), repository: PreviewBookRepository.populated)
+            .previewDisplayName("Edición")
     }
 }
 #endif

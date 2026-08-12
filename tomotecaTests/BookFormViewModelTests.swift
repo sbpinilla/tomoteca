@@ -3,15 +3,18 @@
 //  tomotecaTests
 //
 
+import Foundation
 import Testing
 @testable import tomoteca
 
 @MainActor
 struct BookFormViewModelTests {
 
-    private func makeViewModel() -> (BookFormViewModel, FakeBookRepository) {
-        let repository = FakeBookRepository()
-        return (BookFormViewModel(repository: repository), repository)
+    private func makeViewModel(
+        mode: BookFormMode = .add
+    ) -> (BookFormViewModel, FakeBookRepository) {
+        let repository = FakeBookRepository(books: Book.previewCatalog)
+        return (BookFormViewModel(mode: mode, repository: repository), repository)
     }
 
     // MARK: Validation
@@ -131,5 +134,66 @@ struct BookFormViewModelTests {
         viewModel.pageCountText = "512"
 
         #expect(viewModel.save() == false)
+    }
+
+    // MARK: Editing
+
+    @Test("Editing starts from the book's current values")
+    func editingPrefillsTheForm() {
+        let (viewModel, _) = makeViewModel(mode: .edit(.previewReading))
+
+        #expect(viewModel.title == Book.previewReading.title)
+        #expect(viewModel.author == Book.previewReading.author)
+        #expect(viewModel.genre == Book.previewReading.genre)
+        #expect(viewModel.pageCountText == "340")
+        #expect(viewModel.canSave)
+    }
+
+    @Test("Editing does not offer the status, so the one-way rule has no back door")
+    func editingHidesTheStatusPicker() {
+        let (adding, _) = makeViewModel()
+        let (editing, _) = makeViewModel(mode: .edit(.previewReading))
+
+        #expect(adding.showsStatusPicker)
+        #expect(editing.showsStatusPicker == false)
+    }
+
+    @Test("Saving an edit overwrites the book instead of creating a second one")
+    func savingAnEditUpdates() throws {
+        let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
+        viewModel.title = "Cien años de soledad (edición revisada)"
+
+        #expect(viewModel.save())
+
+        #expect(repository.added.isEmpty)
+        let stored = try #require(repository.updated.first)
+        #expect(stored.id == Book.previewReading.id)
+        #expect(stored.title == "Cien años de soledad (edición revisada)")
+    }
+
+    @Test("An edit preserves what the form never shows: status, progress and creation date")
+    func editingPreservesHiddenFields() throws {
+        let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
+        viewModel.title = "Otro título"
+
+        #expect(viewModel.save())
+
+        let stored = try #require(repository.updated.first)
+        #expect(stored.status == Book.previewReading.status)
+        #expect(stored.currentPage == Book.previewReading.currentPage)
+        #expect(stored.createdAt == Book.previewReading.createdAt)
+        #expect(stored.coverImageData == Book.previewReading.coverImageData)
+    }
+
+    @Test("An edit can change the cover without touching anything else")
+    func editingCanReplaceTheCover() throws {
+        let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
+        viewModel.coverImageData = Data([0x09])
+
+        #expect(viewModel.save())
+
+        let stored = try #require(repository.updated.first)
+        #expect(stored.coverImageData == Data([0x09]))
+        #expect(stored.title == Book.previewReading.title)
     }
 }

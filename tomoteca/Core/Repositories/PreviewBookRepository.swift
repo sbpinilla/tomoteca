@@ -5,6 +5,7 @@
 
 #if DEBUG
 import Combine
+import Foundation
 
 /// In-memory `BookRepository` for SwiftUI previews. No Core Data involved, so a preview never
 /// depends on a store loading correctly.
@@ -25,6 +26,10 @@ final class PreviewBookRepository: BookRepository {
 
     func add(_ book: Book) throws {
         subject.send([book] + subject.value)
+    }
+
+    func delete(id: UUID) throws {
+        subject.send(subject.value.filter { $0.id != id })
     }
 
     func update(_ book: Book) throws {

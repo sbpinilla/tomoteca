@@ -6,7 +6,14 @@
 import Combine
 import Foundation
 
-/// Backs the add-book form: holds what is typed, decides when it is valid, and saves.
+/// What the form is for. The same screen serves both, because two parallel forms drift apart
+/// the moment a field is added to one of them.
+enum BookFormMode {
+    case add
+    case edit(Book)
+}
+
+/// Backs the book form: holds what is typed, decides when it is valid, and saves.
 @MainActor
 final class BookFormViewModel: ObservableObject {
 
@@ -21,9 +28,34 @@ final class BookFormViewModel: ObservableObject {
     @Published var coverImageData: Data?
 
     private let repository: BookRepository
+    private let mode: BookFormMode
 
-    init(repository: BookRepository) {
+    init(mode: BookFormMode, repository: BookRepository) {
+        self.mode = mode
         self.repository = repository
+
+        if case .edit(let book) = mode {
+            title = book.title
+            author = book.author ?? ""
+            genre = book.genre
+            pageCountText = String(book.pageCount)
+            status = book.status
+            coverImageData = book.coverImageData
+        }
+    }
+
+    /// Editing never offers the status. Advancing is the status sheet's job alone, so that the
+    /// one-way rule has no back door through the edit form.
+    var showsStatusPicker: Bool {
+        if case .add = mode { return true }
+        return false
+    }
+
+    var navigationTitle: LocalizedStringResource {
+        switch mode {
+        case .add: return .bookFormNewTitle
+        case .edit: return .bookFormEditTitle
+        }
     }
 
     /// Pages as a number, or `nil` when what was typed is not a usable page count.
@@ -46,21 +78,37 @@ final class BookFormViewModel: ObservableObject {
         guard let genre, let pageCount, canSave else { return false }
 
         let trimmedAuthor = author.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        let book = Book(
-            title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-            author: trimmedAuthor.isEmpty ? nil : trimmedAuthor,
-            genre: genre,
-            pageCount: pageCount,
-            status: status,
-            coverImageData: coverImageData
-        )
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanAuthor = trimmedAuthor.isEmpty ? nil : trimmedAuthor
 
         // No assertion here: a failed write is a real runtime condition — a full disk, a locked
         // store — not a programming mistake, and crashing debug builds over it helps nobody.
         // TODO: surface the failure to the reader once the form can show an error.
         do {
-            try repository.add(book)
+            switch mode {
+            case .add:
+                try repository.add(
+                    Book(
+                        title: trimmedTitle,
+                        author: cleanAuthor,
+                        genre: genre,
+                        pageCount: pageCount,
+                        status: status,
+                        coverImageData: coverImageData
+                    )
+                )
+
+            case .edit(let original):
+                // Rebuilt from the original so everything the form does not show — the id, the
+                // creation date, the current page, the status — survives the edit untouched.
+                var updated = original
+                updated.title = trimmedTitle
+                updated.author = cleanAuthor
+                updated.genre = genre
+                updated.pageCount = pageCount
+                updated.coverImageData = coverImageData
+                try repository.update(updated)
+            }
             return true
         } catch {
             return false

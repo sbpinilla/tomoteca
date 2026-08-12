@@ -3,6 +3,7 @@
 //  tomotecaTests
 //
 
+import Foundation
 import Testing
 @testable import tomoteca
 
@@ -48,5 +49,110 @@ struct BookListViewModelTests {
         repository.emit([])
 
         #expect(viewModel.isEmpty)
+    }
+
+    // MARK: Search
+
+    @Test("Searching narrows the list by title")
+    func searchesByTitle() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.searchText = "Sapiens"
+
+        #expect(viewModel.visibleBooks.map(\.title) == ["Sapiens"])
+    }
+
+    @Test("Searching also looks at the author")
+    func searchesByAuthor() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.searchText = "Andy Weir"
+
+        #expect(viewModel.visibleBooks.map(\.title) == ["Project Hail Mary"])
+    }
+
+    @Test("Searching ignores case and accents", arguments: ["garcía", "GARCIA", "garcia", "Márquez", "marquez"])
+    func searchIgnoresCaseAndAccents(_ query: String) {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.searchText = query
+
+        #expect(viewModel.visibleBooks.map(\.title) == ["Cien años de soledad"])
+    }
+
+    @Test("Blank search text shows everything")
+    func blankSearchShowsEverything() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.searchText = "   "
+
+        #expect(viewModel.visibleBooks.count == Book.previewCatalog.count)
+    }
+
+    @Test("A search matching nothing is reported as no results, not as an empty library")
+    func distinguishesNoResultsFromEmptyLibrary() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.searchText = "nothing matches this"
+
+        #expect(viewModel.visibleBooks.isEmpty)
+        #expect(viewModel.hasNoResults)
+        #expect(viewModel.isEmpty == false, "The library still has books; only the search is empty")
+    }
+
+    // MARK: Filter
+
+    @Test("Filtering by status narrows the list")
+    func filtersByStatus() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.filter = .status(.reading)
+
+        #expect(viewModel.visibleBooks.map(\.status) == [.reading])
+    }
+
+    @Test("The 'all' filter shows every book")
+    func allFilterShowsEverything() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.filter = .all
+
+        #expect(viewModel.visibleBooks.count == Book.previewCatalog.count)
+    }
+
+    @Test("Search runs inside the filtered subset, not over the whole library")
+    func searchAndFilterCombine() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
+
+        viewModel.filter = .status(.reading)
+        viewModel.searchText = "Sapiens"  // exists, but it is a bought book
+
+        #expect(viewModel.visibleBooks.isEmpty)
+        #expect(viewModel.hasNoResults)
+    }
+
+    // MARK: Delete
+
+    @Test("Deleting removes the book from the store")
+    func deletesABook() {
+        let repository = FakeBookRepository(books: Book.previewCatalog)
+        let viewModel = BookListViewModel(repository: repository)
+
+        viewModel.delete(.previewOwned)
+
+        #expect(repository.deletedIDs == [Book.previewOwned.id])
+        #expect(viewModel.books.contains { $0.id == Book.previewOwned.id } == false)
+    }
+
+    @Test("Swiping deletes the row that was swiped, even with a filter narrowing the list")
+    func deletesTheSwipedRowWhileFiltered() {
+        let repository = FakeBookRepository(books: Book.previewCatalog)
+        let viewModel = BookListViewModel(repository: repository)
+        viewModel.filter = .status(.reading)
+
+        // Offset 0 of the *visible* list, which is not offset 0 of the catalog.
+        viewModel.delete(atOffsets: IndexSet(integer: 0))
+
+        #expect(repository.deletedIDs == [Book.previewReading.id])
     }
 }

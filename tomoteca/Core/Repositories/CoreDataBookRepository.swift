@@ -59,6 +59,21 @@ final class CoreDataBookRepository: BookRepository {
         try write(book, into: entity)
     }
 
+    func delete(id: UUID) throws {
+        guard let entity = try entity(withID: id) else { return }
+
+        context.delete(entity)
+
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw error
+        }
+
+        reload()
+    }
+
     private func entity(withID id: UUID) throws -> BookEntity? {
         let request = NSFetchRequest<BookEntity>(entityName: "BookEntity")
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)

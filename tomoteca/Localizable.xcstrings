@@ -2,6 +2,24 @@
   "sourceLanguage": "en",
   "strings": {
     "": {},
+    "book_detail.edit": {
+      "comment": "Opens the form to edit the book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar"
+          }
+        }
+      }
+    },
     "book_detail.page_progress": {
       "comment": "Current page out of the book's total. Both numbers are positional so the order can change per language.",
       "extractionState": "manual",
@@ -52,6 +70,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "book_form.edit_title": {
+      "comment": "Navigation title when editing an existing book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit book"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar libro"
           }
         }
       }
@@ -214,6 +250,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "common.delete": {
+      "comment": "Swipe action that deletes a book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
           }
         }
       }
@@ -1222,6 +1276,96 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sin libros"
+          }
+        }
+      }
+    },
+    "trunk.filter_all": {
+      "comment": "Filter option that shows every book, whatever its status",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos"
+          }
+        }
+      }
+    },
+    "trunk.filter_label": {
+      "comment": "Accessibility label of the status filter menu",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter by status"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrar por estado"
+          }
+        }
+      }
+    },
+    "trunk.no_results_message": {
+      "comment": "Message shown when a search or filter matches no book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try another search or change the filter."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prueba con otra búsqueda o cambia el filtro."
+          }
+        }
+      }
+    },
+    "trunk.no_results_title": {
+      "comment": "Title shown when a search or filter matches no book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin resultados"
+          }
+        }
+      }
+    },
+    "trunk.search_prompt": {
+      "comment": "Placeholder in the trunk's search field",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search by title or author"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar por título o autor"
           }
         }
       }

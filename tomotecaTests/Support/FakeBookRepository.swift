@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 @testable import tomoteca
 
 /// The single `BookRepository` double for the whole test target.
@@ -18,6 +19,8 @@ final class FakeBookRepository: BookRepository {
     var errorToThrow: (any Error)?
 
     private(set) var added: [Book] = []
+    private(set) var updated: [Book] = []
+    private(set) var deletedIDs: [UUID] = []
     private(set) var updateCount = 0
 
     private let subject: CurrentValueSubject<[Book], Never>
@@ -42,9 +45,16 @@ final class FakeBookRepository: BookRepository {
             throw RepositoryError.bookNotFound
         }
         updateCount += 1
+        updated.append(book)
         var books = subject.value
         books[index] = book
         subject.send(books)
+    }
+
+    func delete(id: UUID) throws {
+        if let errorToThrow { throw errorToThrow }
+        deletedIDs.append(id)
+        subject.send(subject.value.filter { $0.id != id })
     }
 
     /// Replaces the catalog outright, standing in for a change made somewhere else.

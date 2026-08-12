@@ -159,7 +159,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 | [2 · Alta de libro](hito-2-alta-libro.md) | Formulario, sin portada todavía | ✅ Cerrado |
 | [3 · Detalle y estado](hito-3-detalle-estado.md) | Pantalla de detalle y sheet de avance | ✅ Cerrado |
 | [4 · Portada](hito-4-portada.md) | Cámara, galería y permisos | ✅ Cerrado |
-| 5 · Pulido del baúl | Búsqueda, filtro, borrado y edición | ⬜ Pendiente |
+| [5 · Pulido del baúl](hito-5-pulido-baul.md) | Búsqueda, filtro, borrado y edición | ✅ Cerrado |
 | 6 · Sesión de lectura | En curso, cronómetro y notificación | ⬜ Pendiente |
 | 7 · Seguimiento | Rango de fechas y gráfica | ⬜ Pendiente |
 
@@ -209,13 +209,14 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F5 · Almacenamiento de la imagen, reducida y comprimida
 - [x] F6 · Portada editable desde el detalle, en cualquier momento
 - [x] `InfoPlist.xcstrings` con el texto de permiso de cámara en ambos idiomas
-- [ ] Probar la cámara en un dispositivo real: el simulador no tiene
+- [x] Cámara probada en dispositivo real: el simulador no tiene
 
-**Hito 5 · Pulido del baúl**
-- [ ] F4 · Búsqueda por título y autor
-- [ ] F4 · Filtro por estado
-- [ ] F4 · Borrado con swipe
-- [ ] F5 · Edición de libro, sin tocar el estado
+**Hito 5 · Pulido del baúl** — ✅ cerrado
+- [x] F4 · Búsqueda por título y autor
+- [x] F4 · Filtro por estado
+- [x] F4 · Borrado con swipe
+- [x] F5 · Edición de libro, sin tocar el estado
+- [x] `delete` en el repositorio
 
 **Hito 6 · Sesión de lectura**
 - [ ] F1 · `ReadingSessionEntity` y su repositorio
