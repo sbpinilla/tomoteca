@@ -13,4 +13,7 @@ protocol BookRepository {
 
     /// The whole catalog, newest first. Re-emits on every change, and always on the main queue.
     var books: AnyPublisher<[Book], Never> { get }
+
+    /// Stores a new book. `books` re-emits with it included.
+    func add(_ book: Book) throws
 }

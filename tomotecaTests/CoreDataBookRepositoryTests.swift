@@ -95,6 +95,42 @@ struct CoreDataBookRepositoryTests {
         #expect(received.last?.count == 1)
     }
 
+    @Test("An added book is stored and published straight away")
+    func addStoresAndPublishes() throws {
+        let repository = CoreDataBookRepository(persistence: makeStack())
+
+        try repository.add(.previewOwned)
+
+        let books = firstValue(of: repository)
+        #expect(books.count == 1)
+        #expect(books.first?.title == Book.previewOwned.title)
+    }
+
+    @Test("An added book reaches subscribers that were already listening")
+    func addNotifiesExistingSubscribers() throws {
+        let repository = CoreDataBookRepository(persistence: makeStack())
+
+        var received: [[Book]] = []
+        var cancellables = Set<AnyCancellable>()
+        repository.books
+            .sink { received.append($0) }
+            .store(in: &cancellables)
+
+        try repository.add(.previewReading)
+
+        #expect(received.last?.count == 1)
+    }
+
+    @Test("Adding survives a round trip through a second repository on the same store")
+    func addPersistsBeyondTheRepository() throws {
+        let persistence = makeStack()
+        try CoreDataBookRepository(persistence: persistence).add(.previewWishlist)
+
+        // A fresh repository reads the store again: proves the book was written, not cached.
+        let books = firstValue(of: CoreDataBookRepository(persistence: persistence))
+        #expect(books.map(\.title) == [Book.previewWishlist.title])
+    }
+
     @Test("A row with an unknown genre is skipped instead of breaking the list")
     func skipsRowsWithUnreadableFields() throws {
         let persistence = makeStack()

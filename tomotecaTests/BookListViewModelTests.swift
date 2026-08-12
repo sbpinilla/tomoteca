@@ -19,6 +19,10 @@ private final class FakeBookRepository: BookRepository {
     func emit(_ books: [Book]) {
         subject.send(books)
     }
+
+    func add(_ book: Book) throws {
+        subject.send([book] + subject.value)
+    }
 }
 
 @MainActor

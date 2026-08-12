@@ -21,6 +21,17 @@ extension BookStatus {
         }
     }
 
+    /// Shorter label for tight controls. Four statuses have to share the width of one
+    /// segmented control, where "Quiero comprar" does not fit.
+    var shortTitle: LocalizedStringResource {
+        switch self {
+        case .wishlist: return .statusShortWishlist
+        case .owned: return .statusShortOwned
+        case .reading: return .statusShortReading
+        case .finished: return .statusShortFinished
+        }
+    }
+
     var color: Color {
         switch self {
         case .wishlist: return AppColor.Status.wishlist

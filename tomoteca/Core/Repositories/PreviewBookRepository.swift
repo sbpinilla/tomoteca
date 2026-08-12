@@ -8,19 +8,23 @@ import Combine
 
 /// In-memory `BookRepository` for SwiftUI previews. No Core Data involved, so a preview never
 /// depends on a store loading correctly.
-struct PreviewBookRepository: BookRepository {
+final class PreviewBookRepository: BookRepository {
 
-    static let populated = PreviewBookRepository(books: Book.previewCatalog)
-    static let empty = PreviewBookRepository(books: [])
+    static var populated: PreviewBookRepository { PreviewBookRepository(books: Book.previewCatalog) }
+    static var empty: PreviewBookRepository { PreviewBookRepository(books: []) }
 
-    private let value: [Book]
+    private let subject: CurrentValueSubject<[Book], Never>
 
     init(books: [Book]) {
-        self.value = books
+        subject = CurrentValueSubject(books)
     }
 
     var books: AnyPublisher<[Book], Never> {
-        Just(value).eraseToAnyPublisher()
+        subject.eraseToAnyPublisher()
+    }
+
+    func add(_ book: Book) throws {
+        subject.send([book] + subject.value)
     }
 }
 #endif

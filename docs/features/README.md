@@ -156,7 +156,7 @@ puede ver funcionando. **No se avanza al siguiente hasta cerrar el anterior.**
 |---|---|---|
 | [0 · Andamio](hito-0-andamio.md) | Estructura de carpetas y las tres pestañas vacías | ✅ Cerrado |
 | [1 · Baúl con datos reales](hito-1-baul.md) | Core Data, repositorio y el listado | ✅ Cerrado |
-| 2 · Alta de libro | Formulario, sin portada todavía | ⬜ Pendiente |
+| [2 · Alta de libro](hito-2-alta-libro.md) | Formulario, sin portada todavía | ✅ Cerrado |
 | 3 · Detalle y estado | Pantalla de detalle y sheet de avance | ⬜ Pendiente |
 | 4 · Portada | Cámara, galería y permisos | ⬜ Pendiente |
 | 5 · Pulido del baúl | Búsqueda, filtro, borrado y edición | ⬜ Pendiente |
@@ -190,13 +190,15 @@ criterios de aceptación concretos, y se cierra anotando cómo se validó.
 - [x] F4 · Listado del baúl con su estado vacío
 - [x] Datos de ejemplo, sembrados bajo `-seedSampleData`
 
-**Hito 2 · Alta de libro**
-- [ ] F2 · `TMTextField`, `TMButton`
-- [ ] F5 · Formulario de alta con su ViewModel
-- [ ] F5 · Selector de género en dos secciones más "Otros"
-- [ ] F5 · Selector de estado inicial
+**Hito 2 · Alta de libro** — ✅ cerrado
+- [x] F2 · `TMTextField` y `TMSegmentedPicker`
+- [x] F5 · Formulario de alta con su ViewModel
+- [x] F5 · Selector de género en dos secciones más "Otros"
+- [x] F5 · Selector de estado inicial
+- [x] `add` en el repositorio y botón de añadir en el Baúl
 
 **Hito 3 · Detalle y estado**
+- [ ] F2 · `TMButton`, que aparece por primera vez en "Iniciar sesión de lectura"
 - [ ] F6 · Pantalla de detalle, compartida por las tres pestañas
 - [ ] F6 · Barra de progreso y porcentaje de avance
 - [ ] F6 · Sheet que ofrece solo el siguiente estado

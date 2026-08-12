@@ -9,8 +9,12 @@ import SwiftUI
 struct TrunkView: View {
 
     @StateObject private var viewModel: BookListViewModel
+    @State private var isAddingBook = Self.opensAddingBook
+
+    private let repository: BookRepository
 
     init(repository: BookRepository) {
+        self.repository = repository
         _viewModel = StateObject(wrappedValue: BookListViewModel(repository: repository))
     }
 
@@ -19,7 +23,30 @@ struct TrunkView: View {
             content
                 .background(AppColor.background)
                 .navigationTitle(Text(.tabTrunk))
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            isAddingBook = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .accessibilityLabel(Text(.trunkAddBook))
+                        }
+                    }
+                }
+                .sheet(isPresented: $isAddingBook) {
+                    BookFormView(repository: repository)
+                }
         }
+    }
+
+    /// Opens straight into the form when a debug run passes `-startAddingBook`, so the sheet can
+    /// be captured without tapping through the app.
+    private static var opensAddingBook: Bool {
+        #if DEBUG
+        return UserDefaults.standard.bool(forKey: "startAddingBook")
+        #else
+        return false
+        #endif
     }
 
     @ViewBuilder

@@ -48,6 +48,31 @@ final class CoreDataBookRepository: BookRepository {
         subject.eraseToAnyPublisher()
     }
 
+    func add(_ book: Book) throws {
+        let entity = BookEntity(context: context)
+        entity.id = book.id
+        entity.title = book.title
+        entity.author = book.author
+        entity.genreRawValue = book.genre.rawValue
+        entity.pageCount = Int32(book.pageCount)
+        entity.currentPage = Int32(book.currentPage)
+        entity.statusRawValue = book.status.rawValue
+        entity.coverImageData = book.coverImageData
+        entity.createdAt = book.createdAt
+
+        do {
+            try context.save()
+        } catch {
+            // Leave no half-written book behind for the next save to pick up.
+            context.rollback()
+            throw error
+        }
+
+        // The save notification fires on the main queue, but reload here too so a caller that
+        // saves and reads back in the same turn does not see a stale catalog.
+        reload()
+    }
+
     private func reload() {
         let request = NSFetchRequest<BookEntity>(entityName: "BookEntity")
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
