@@ -35,6 +35,10 @@ pantallas) y toda la interfaz localizada en español e inglés.
 
 ## Compilar y probar
 
+**Requiere Xcode 26 o superior.** La interfaz se localiza con los símbolos generados del String
+Catalog (`STRING_CATALOG_GENERATE_SYMBOLS`), que no existen en versiones anteriores: con un Xcode
+más antiguo el proyecto no compila.
+
 ```bash
 # Compilar
 xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' build
@@ -59,3 +63,7 @@ lanza a mano desde la pestaña Actions.
 | Cómo se construyó la v1, hito a hito | `docs/features/hito-*.md` |
 | Diseño de pantallas y mockups | [`docs/design/README.md`](docs/design/README.md) |
 | Arquitectura y reglas de código | [`CLAUDE.md`](CLAUDE.md) |
+
+## Licencia
+
+[MIT](LICENSE) © 2026 Sergio Pinilla
