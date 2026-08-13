@@ -14,6 +14,7 @@ struct RootTabView: View {
         case inProgress
         case tracking
         case trunk
+        case profile
     }
 
     let bookRepository: BookRepository
@@ -66,6 +67,17 @@ struct RootTabView: View {
                         Text(.tabTrunk)
                     } icon: {
                         Image(systemName: "archivebox")
+                    }
+                }
+
+            ProfileView(repository: bookRepository)
+                .activeSessionBanner(sessionController)
+                .tag(Tab.profile)
+                .tabItem {
+                    Label {
+                        Text(.tabProfile)
+                    } icon: {
+                        Image(systemName: "person.crop.circle")
                     }
                 }
         }

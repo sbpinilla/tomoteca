@@ -2,6 +2,312 @@
   "sourceLanguage": "en",
   "strings": {
     "": {},
+    "archive.error_unreadable": {
+      "comment": "Shown when the chosen file is not a readable archive",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That file is not a Tomoteca library."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ese archivo no es una biblioteca de Tomoteca."
+          }
+        }
+      }
+    },
+    "archive.error_version": {
+      "comment": "Shown when the file was written by a newer version of the app",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That file was made by a newer version of the app."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ese archivo lo generó una versión más nueva de la app."
+          }
+        }
+      }
+    },
+    "archive.export_button": {
+      "comment": "Button that generates the file and opens the share sheet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export books"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar libros"
+          }
+        }
+      }
+    },
+    "archive.export_message": {
+      "comment": "Explains what the exported file contains",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creates a file with your %lld books. Covers and reading sessions are not included."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genera un archivo con tus %lld libros. No incluye portadas ni sesiones de lectura."
+          }
+        }
+      }
+    },
+    "archive.export_title": {
+      "comment": "Heading of the export block",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar"
+          }
+        }
+      }
+    },
+    "archive.import_button": {
+      "comment": "Button that opens the file picker",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import books"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar libros"
+          }
+        }
+      }
+    },
+    "archive.import_message": {
+      "comment": "Explains what importing does",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds books from a file. Books already in your library are not repeated."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade libros desde un archivo. Los que ya estén no se repiten."
+          }
+        }
+      }
+    },
+    "archive.import_title": {
+      "comment": "Heading of the import block",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar"
+          }
+        }
+      }
+    },
+    "archive.skip.already_present": {
+      "comment": "Skip reason",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "already in your library"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ya en tu biblioteca"
+          }
+        }
+      }
+    },
+    "archive.skip.invalid_numbers": {
+      "comment": "Skip reason",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "with impossible page numbers"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "con páginas imposibles"
+          }
+        }
+      }
+    },
+    "archive.skip.missing_fields": {
+      "comment": "Skip reason",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "missing required fields"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sin campos obligatorios"
+          }
+        }
+      }
+    },
+    "archive.skip.unknown_genre": {
+      "comment": "Skip reason",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "with an unknown genre"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "con género desconocido"
+          }
+        }
+      }
+    },
+    "archive.skip.unknown_status": {
+      "comment": "Skip reason",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "with an unknown status"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "con estado desconocido"
+          }
+        }
+      }
+    },
+    "archive.skipped_line": {
+      "comment": "One reason books were skipped, with how many",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld %2$@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld %2$@"
+          }
+        }
+      }
+    },
+    "archive.summary": {
+      "comment": "Result of an import: how many went in and how many were left out",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld imported · %2$lld skipped"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld importados · %2$lld omitidos"
+          }
+        }
+      }
+    },
+    "archive.summary_none_skipped": {
+      "comment": "Result of an import where every book went in",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld imported"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld importados"
+          }
+        }
+      }
+    },
+    "archive.title": {
+      "comment": "Title of the import and export screen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Libros"
+          }
+        }
+      }
+    },
     "book_detail.edit": {
       "comment": "Opens the form to edit the book",
       "extractionState": "manual",
@@ -1108,6 +1414,24 @@
         }
       }
     },
+    "profile.books_row": {
+      "comment": "Row in Profile that opens import and export",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Libros"
+          }
+        }
+      }
+    },
     "session.active_title": {
       "comment": "Title of the running session screen",
       "extractionState": "manual",
@@ -1590,6 +1914,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "En curso"
+          }
+        }
+      }
+    },
+    "tab.profile": {
+      "comment": "Title of the fourth tab",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil"
           }
         }
       }

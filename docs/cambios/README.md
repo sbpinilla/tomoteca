@@ -26,5 +26,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C02 · Retomar una sesión interrumpida](C02-retomar-sesion.md) | Corrección | ✅ Cerrado |
 | [C03 · Campos más cómodos de enfocar](C03-campos-comodos.md) | Mejora | ✅ Cerrado |
 | [C04 · Tests más rápidos de ejecutar](C04-tests-mas-rapidos.md) | Mejora | ✅ Cerrado |
+| [C05 · Perfil, con importar y exportar libros](C05-perfil-importar-exportar.md) | Feature | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado

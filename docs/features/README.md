@@ -14,13 +14,14 @@ búsqueda en catálogos externos, préstamos, etiquetas libres, recomendaciones,
 
 ## Estructura de la app
 
-Una `TabView` con tres pestañas:
+Una `TabView` con cuatro pestañas:
 
 | Pestaña | Contenido |
 |---|---|
 | **En curso** | Los libros en estado *leyendo*. Punto de entrada a la sesión de lectura. |
 | **Seguimiento** | Gráfica de tiempo leído por día, con rango de fechas. |
 | **Baúl** | El registro completo de libros: lista, búsqueda, alta, detalle. |
+| **Perfil** | Lo que actúa sobre la biblioteca entera. Hoy, importar y exportar. |
 
 ## Diseño
 
@@ -273,5 +274,11 @@ Para no volver a discutirlas:
     desde un aviso sobre la barra de pestañas ([C02](../cambios/C02-retomar-sesion.md)).
 24. Una sesión que venció hace más de 24 horas se descarta sola: preguntar por su página ya no
     tendría respuesta útil ([C02](../cambios/C02-retomar-sesion.md)).
+25. Existe una cuarta pestaña, **Perfil**, para lo que actúa sobre la biblioteca entera. Se
+    llama así porque ahí vivirá el inicio de sesión ([C05](../cambios/C05-perfil-importar-exportar.md)).
+26. **Importar añade, nunca reemplaza**, y un libro con errores se omite sin detener el resto
+    del archivo ([C05](../cambios/C05-perfil-importar-exportar.md)).
+27. **Una exportación cubre libros, no portadas ni sesiones de lectura.** No es una copia de
+    seguridad completa, y la pantalla lo dice ([C05](../cambios/C05-perfil-importar-exportar.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).
