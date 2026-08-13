@@ -51,6 +51,35 @@ final class AddBookFlowUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["No books yet"].exists)
     }
 
+    /// The point of C03: the row takes the tap, not only the line of text inside it.
+    func testTappingTheLabelFocusesTheField() {
+        app.buttons["Add book"].tap()
+        XCTAssertTrue(app.navigationBars["New book"].waitForExistence(timeout: 5))
+
+        // The label, not the field: before the change this touch did nothing at all.
+        app.staticTexts["Title"].tap()
+        app.typeText("Dune")
+
+        XCTAssertEqual(app.textFields["Title"].value as? String, "Dune")
+    }
+
+    /// The empty space beside the label is part of the row too.
+    func testTappingBesideTheLabelFocusesTheField() {
+        app.buttons["Add book"].tap()
+        XCTAssertTrue(app.navigationBars["New book"].waitForExistence(timeout: 5))
+
+        let label = app.staticTexts["Number of pages"]
+        XCTAssertTrue(label.waitForExistence(timeout: 5))
+
+        // Off to the right of the label, in the gap that used to swallow touches. Anchored to
+        // the label rather than to the text field, which already spanned the row before C03 and
+        // would prove nothing.
+        label.coordinate(withNormalizedOffset: CGVector(dx: 2.5, dy: 0.5)).tap()
+        app.typeText("412")
+
+        XCTAssertEqual(app.textFields["Number of pages"].value as? String, "412")
+    }
+
     func testCancellingDiscardsTheBook() {
         app.buttons["Add book"].tap()
 
