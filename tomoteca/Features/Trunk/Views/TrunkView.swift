@@ -10,19 +10,22 @@ struct TrunkView: View {
 
     @StateObject private var viewModel: BookListViewModel
     @State private var isAddingBook = Self.opensAddingBook
+    /// The book a swipe is asking to delete, if any. Holding the book rather than a flag keeps
+    /// the alert naming the right one even as the list changes underneath.
+    @State private var bookPendingDeletion: Book?
 
     private let repository: BookRepository
-    private let sessionRepository: ReadingSessionRepository
     private let notifications: any SessionNotificationScheduling
+    private let sessionController: ActiveSessionController
 
     init(
         repository: BookRepository,
-        sessionRepository: ReadingSessionRepository,
-        notifications: any SessionNotificationScheduling
+        notifications: any SessionNotificationScheduling,
+        sessionController: ActiveSessionController
     ) {
         self.repository = repository
-        self.sessionRepository = sessionRepository
         self.notifications = notifications
+        self.sessionController = sessionController
         _viewModel = StateObject(wrappedValue: BookListViewModel(repository: repository))
     }
 
@@ -35,8 +38,8 @@ struct TrunkView: View {
                     BookDetailView(
                         book: book,
                         repository: repository,
-                        sessionRepository: sessionRepository,
-                        notifications: notifications
+                        notifications: notifications,
+                        sessionController: sessionController
                     )
                 }
                 .toolbar {
@@ -51,6 +54,16 @@ struct TrunkView: View {
                 }
                 .sheet(isPresented: $isAddingBook) {
                     BookFormView(mode: .add, repository: repository)
+                }
+                .alert(item: $bookPendingDeletion) { book in
+                    Alert(
+                        title: Text(.deleteBookTitle(book.title)),
+                        message: Text(.deleteBookMessage),
+                        primaryButton: .destructive(Text(.commonDelete)) {
+                            viewModel.delete(book)
+                        },
+                        secondaryButton: .cancel(Text(.commonCancel))
+                    )
                 }
         }
         // Attached outside the branch so the field does not disappear when a search empties the
@@ -108,7 +121,12 @@ struct TrunkView: View {
                 }
                 .listRowBackground(AppColor.surface)
             }
-            .onDelete(perform: viewModel.delete(atOffsets:))
+            // Kept as `onDelete` rather than a hand-rolled swipe action, so the row keeps the
+            // system's own delete affordance. It no longer deletes on the spot: it names the
+            // book for the alert, and the row springs back if the answer is no.
+            .onDelete { offsets in
+                bookPendingDeletion = viewModel.book(atOffsets: offsets)
+            }
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
@@ -160,15 +178,15 @@ struct TrunkView_Previews: PreviewProvider {
     static var previews: some View {
         TrunkView(
             repository: PreviewBookRepository.populated,
-            sessionRepository: PreviewReadingSessionRepository(),
-            notifications: PreviewNotificationScheduler()
+            notifications: PreviewNotificationScheduler(),
+            sessionController: .preview
         )
         .previewDisplayName("Con libros")
 
         TrunkView(
             repository: PreviewBookRepository.empty,
-            sessionRepository: PreviewReadingSessionRepository(),
-            notifications: PreviewNotificationScheduler()
+            notifications: PreviewNotificationScheduler(),
+            sessionController: .preview
         )
         .previewDisplayName("Vacío")
     }

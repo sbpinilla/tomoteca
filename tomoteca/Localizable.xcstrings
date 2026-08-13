@@ -1,1835 +1,1905 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "" : {
-
+  "sourceLanguage": "en",
+  "strings": {
+    "": {},
+    "book_detail.edit": {
+      "comment": "Opens the form to edit the book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar"
+          }
+        }
+      }
+    },
+    "book_detail.page_progress": {
+      "comment": "Current page out of the book's total. Both numbers are positional so the order can change per language.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Page %1$lld of %2$lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Página %1$lld de %2$lld"
+          }
+        }
+      }
     },
-    "book_detail.edit" : {
-      "comment" : "Opens the form to edit the book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
+    "book_detail.status_row": {
+      "comment": "Label of the row that opens the status sheet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado"
           }
         }
       }
     },
-    "book_detail.page_progress" : {
-      "comment" : "Current page out of the book's total. Both numbers are positional so the order can change per language.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Page %1$lld of %2$lld"
+    "book_form.cancel": {
+      "comment": "Button that discards the form",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Página %1$lld de %2$lld"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
           }
         }
       }
     },
-    "book_detail.status_row" : {
-      "comment" : "Label of the row that opens the status sheet",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
+    "book_form.edit_title": {
+      "comment": "Navigation title when editing an existing book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit book"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar libro"
           }
         }
       }
     },
-    "book_form.cancel" : {
-      "comment" : "Button that discards the form",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "book_form.field_author": {
+      "comment": "Form field label for the book author",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Author"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancelar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autor"
           }
         }
       }
     },
-    "book_form.edit_title" : {
-      "comment" : "Navigation title when editing an existing book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit book"
+    "book_form.field_genre": {
+      "comment": "Form field label for the book genre",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genre"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editar libro"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Género"
           }
         }
       }
     },
-    "book_form.field_author" : {
-      "comment" : "Form field label for the book author",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Author"
+    "book_form.field_pages": {
+      "comment": "Form field label for the page count",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of pages"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autor"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Número de páginas"
           }
         }
       }
     },
-    "book_form.field_genre" : {
-      "comment" : "Form field label for the book genre",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Genre"
+    "book_form.field_title": {
+      "comment": "Form field label for the book title",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Género"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Título"
           }
         }
       }
     },
-    "book_form.field_pages" : {
-      "comment" : "Form field label for the page count",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Number of pages"
+    "book_form.genre_placeholder": {
+      "comment": "Shown in the genre row before one is chosen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Número de páginas"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elegir"
           }
         }
       }
     },
-    "book_form.field_title" : {
-      "comment" : "Form field label for the book title",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Title"
+    "book_form.initial_status": {
+      "comment": "Section header above the initial status picker",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Initial status"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Título"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado inicial"
           }
         }
       }
     },
-    "book_form.genre_placeholder" : {
-      "comment" : "Shown in the genre row before one is chosen",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose"
+    "book_form.new_title": {
+      "comment": "Navigation title of the add-book form",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New book"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elegir"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo libro"
           }
         }
       }
     },
-    "book_form.initial_status" : {
-      "comment" : "Section header above the initial status picker",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Initial status"
+    "book_form.save": {
+      "comment": "Button that saves the new book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado inicial"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar"
           }
         }
       }
     },
-    "book_form.new_title" : {
-      "comment" : "Navigation title of the add-book form",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New book"
+    "common.cancel": {
+      "comment": "Dismisses a menu without choosing",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nuevo libro"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
           }
         }
       }
     },
-    "book_form.save" : {
-      "comment" : "Button that saves the new book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
+    "common.delete": {
+      "comment": "Swipe action that deletes a book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
           }
         }
       }
     },
-    "common.cancel" : {
-      "comment" : "Dismisses a menu without choosing",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "cover.add": {
+      "comment": "Button that starts adding a book cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add cover"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancelar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar portada"
           }
         }
       }
     },
-    "common.delete" : {
-      "comment" : "Swipe action that deletes a book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
+    "cover.add_hint": {
+      "comment": "Hint under the add-cover button",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "camera or library"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cámara o galería"
           }
         }
       }
     },
-    "cover.add" : {
-      "comment" : "Button that starts adding a book cover",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add cover"
+    "cover.change": {
+      "comment": "Action that replaces the current cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change cover"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agregar portada"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambiar portada"
           }
         }
       }
     },
-    "cover.add_hint" : {
-      "comment" : "Hint under the add-cover button",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "camera or library"
+    "cover.remove": {
+      "comment": "Menu option that deletes the current cover",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove cover"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "cámara o galería"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitar portada"
           }
         }
       }
     },
-    "cover.change" : {
-      "comment" : "Action that replaces the current cover",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change cover"
+    "cover.source_camera": {
+      "comment": "Menu option: take the cover with the camera",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take photo"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambiar portada"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hacer foto"
           }
         }
       }
     },
-    "cover.remove" : {
-      "comment" : "Menu option that deletes the current cover",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove cover"
+    "cover.source_library": {
+      "comment": "Menu option: pick the cover from the photo library",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose from library"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quitar portada"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elegir de la galería"
           }
         }
       }
     },
-    "cover.source_camera" : {
-      "comment" : "Menu option: take the cover with the camera",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Take photo"
+    "day": {
+      "comment": "Label for the x-axis in the tracking chart.",
+      "isCommentAutoGenerated": true
+    },
+    "delete_book.message": {
+      "comment": "Explains that deleting a book cannot be undone",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This cannot be undone."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hacer foto"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta acción no se puede deshacer."
           }
         }
       }
     },
-    "cover.source_library" : {
-      "comment" : "Menu option: pick the cover from the photo library",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose from library"
+    "delete_book.title": {
+      "comment": "Title of the confirmation alert before deleting a book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete “%@”?"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elegir de la galería"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar «%@»?"
           }
         }
       }
     },
-    "day" : {
-      "comment" : "Label for the x-axis in the tracking chart.",
-      "isCommentAutoGenerated" : true
+    "final_page.hint": {
+      "comment": "Explains why the page cannot be skipped",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You need to enter the page to continue."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Debes ingresar la página para continuar."
+          }
+        }
+      }
     },
-    "final_page.hint" : {
-      "comment" : "Explains why the page cannot be skipped",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You need to enter the page to continue."
+    "final_page.out_of_range": {
+      "comment": "Shown when the typed page is beyond the book's length",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This book has %lld pages."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debes ingresar la página para continuar."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este libro tiene %lld páginas."
           }
         }
       }
     },
-    "final_page.out_of_range" : {
-      "comment" : "Shown when the typed page is beyond the book's length",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This book has %lld pages."
+    "final_page.save": {
+      "comment": "Stores the page and the session",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save progress"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este libro tiene %lld páginas."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar progreso"
           }
         }
       }
     },
-    "final_page.save" : {
-      "comment" : "Stores the page and the session",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save progress"
+    "final_page.title": {
+      "comment": "Question asked when the session ends",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What page are you on?"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar progreso"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿En qué página vas?"
           }
         }
       }
     },
-    "final_page.title" : {
-      "comment" : "Question asked when the session ends",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What page are you on?"
+    "genre.adventure": {
+      "comment": "Book genre: Adventure",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adventure"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿En qué página vas?"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aventura"
           }
         }
       }
     },
-    "genre.adventure" : {
-      "comment" : "Book genre: Adventure",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adventure"
+    "genre.art": {
+      "comment": "Book genre: Art & photography",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Art & photography"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aventura"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arte y fotografía"
           }
         }
       }
     },
-    "genre.art" : {
-      "comment" : "Book genre: Art & photography",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Art & photography"
+    "genre.biography": {
+      "comment": "Book genre: Biography & memoir",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biography & memoir"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arte y fotografía"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biografía y memorias"
           }
         }
       }
     },
-    "genre.biography" : {
-      "comment" : "Book genre: Biography & memoir",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Biography & memoir"
+    "genre.business": {
+      "comment": "Book genre: Business & economics",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Business & economics"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Biografía y memorias"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Negocios y economía"
           }
         }
       }
     },
-    "genre.business" : {
-      "comment" : "Book genre: Business & economics",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Business & economics"
+    "genre.children_young_adult": {
+      "comment": "Book genre: Children & young adult",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children & young adult"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Negocios y economía"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Infantil y juvenil"
           }
         }
       }
     },
-    "genre.children_young_adult" : {
-      "comment" : "Book genre: Children & young adult",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Children & young adult"
+    "genre.comics": {
+      "comment": "Book genre: Comics & graphic novels",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comics & graphic novels"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Infantil y juvenil"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómic y novela gráfica"
           }
         }
       }
     },
-    "genre.comics" : {
-      "comment" : "Book genre: Comics & graphic novels",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comics & graphic novels"
+    "genre.cooking": {
+      "comment": "Book genre: Cooking",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooking"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cómic y novela gráfica"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cocina"
           }
         }
       }
     },
-    "genre.cooking" : {
-      "comment" : "Book genre: Cooking",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cooking"
+    "genre.essay": {
+      "comment": "Book genre: Essay",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Essay"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cocina"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ensayo"
           }
         }
       }
     },
-    "genre.essay" : {
-      "comment" : "Book genre: Essay",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Essay"
+    "genre.fantasy": {
+      "comment": "Book genre: Fantasy",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fantasy"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ensayo"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fantasía"
           }
         }
       }
     },
-    "genre.fantasy" : {
-      "comment" : "Book genre: Fantasy",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fantasy"
+    "genre.health": {
+      "comment": "Book genre: Health & wellbeing",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health & wellbeing"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fantasía"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salud y bienestar"
           }
         }
       }
     },
-    "genre.health" : {
-      "comment" : "Book genre: Health & wellbeing",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Health & wellbeing"
+    "genre.historical_fiction": {
+      "comment": "Book genre: Historical fiction",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historical fiction"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salud y bienestar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novela histórica"
           }
         }
       }
     },
-    "genre.historical_fiction" : {
-      "comment" : "Book genre: Historical fiction",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Historical fiction"
+    "genre.history": {
+      "comment": "Book genre: History",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Novela histórica"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historia"
           }
         }
       }
     },
-    "genre.history" : {
-      "comment" : "Book genre: History",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "History"
+    "genre.horror": {
+      "comment": "Book genre: Horror",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horror"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Historia"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terror"
           }
         }
       }
     },
-    "genre.horror" : {
-      "comment" : "Book genre: Horror",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Horror"
+    "genre.mystery_thriller": {
+      "comment": "Book genre: Mystery & thriller",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mystery & thriller"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terror"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Misterio y suspense"
           }
         }
       }
     },
-    "genre.mystery_thriller" : {
-      "comment" : "Book genre: Mystery & thriller",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mystery & thriller"
+    "genre.novel": {
+      "comment": "Book genre: Novel",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novel"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Misterio y suspense"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novela"
           }
         }
       }
     },
-    "genre.novel" : {
-      "comment" : "Book genre: Novel",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Novel"
+    "genre.other": {
+      "comment": "Book genre: Other",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Novela"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otros"
           }
         }
       }
     },
-    "genre.other" : {
-      "comment" : "Book genre: Other",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Other"
+    "genre.personal_development": {
+      "comment": "Book genre: Personal development",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal development"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otros"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desarrollo personal"
           }
         }
       }
     },
-    "genre.personal_development" : {
-      "comment" : "Book genre: Personal development",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Personal development"
+    "genre.philosophy": {
+      "comment": "Book genre: Philosophy",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Philosophy"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desarrollo personal"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filosofía"
           }
         }
       }
     },
-    "genre.philosophy" : {
-      "comment" : "Book genre: Philosophy",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Philosophy"
+    "genre.poetry": {
+      "comment": "Book genre: Poetry",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poetry"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filosofía"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poesía"
           }
         }
       }
     },
-    "genre.poetry" : {
-      "comment" : "Book genre: Poetry",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poetry"
+    "genre.psychology": {
+      "comment": "Book genre: Psychology",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Psychology"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poesía"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Psicología"
           }
         }
       }
     },
-    "genre.psychology" : {
-      "comment" : "Book genre: Psychology",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Psychology"
+    "genre.religion": {
+      "comment": "Book genre: Religion & spirituality",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Religion & spirituality"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Psicología"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Religión y espiritualidad"
           }
         }
       }
     },
-    "genre.religion" : {
-      "comment" : "Book genre: Religion & spirituality",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Religion & spirituality"
+    "genre.romance": {
+      "comment": "Book genre: Romance",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romance"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Religión y espiritualidad"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romántica"
           }
         }
       }
     },
-    "genre.romance" : {
-      "comment" : "Book genre: Romance",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Romance"
+    "genre.science": {
+      "comment": "Book genre: Science",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Science"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Romántica"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ciencia"
           }
         }
       }
     },
-    "genre.science" : {
-      "comment" : "Book genre: Science",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Science"
+    "genre.science_fiction": {
+      "comment": "Book genre: Science fiction",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Science fiction"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ciencia"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ciencia ficción"
           }
         }
       }
     },
-    "genre.science_fiction" : {
-      "comment" : "Book genre: Science fiction",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Science fiction"
+    "genre.section.fiction": {
+      "comment": "Picker section grouping fiction genres",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fiction"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ciencia ficción"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ficción"
           }
         }
       }
     },
-    "genre.section.fiction" : {
-      "comment" : "Picker section grouping fiction genres",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fiction"
+    "genre.section.non_fiction": {
+      "comment": "Picker section grouping non-fiction genres",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non-fiction"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ficción"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No ficción"
           }
         }
       }
     },
-    "genre.section.non_fiction" : {
-      "comment" : "Picker section grouping non-fiction genres",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non-fiction"
+    "genre.section.other": {
+      "comment": "Picker section for the catch-all genre",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No ficción"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otros"
           }
         }
       }
     },
-    "genre.section.other" : {
-      "comment" : "Picker section for the catch-all genre",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Other"
+    "genre.technology": {
+      "comment": "Book genre: Technology",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Technology"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otros"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tecnología"
           }
         }
       }
     },
-    "genre.technology" : {
-      "comment" : "Book genre: Technology",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Technology"
+    "genre.theatre": {
+      "comment": "Book genre: Theatre",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Theatre"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tecnología"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teatro"
           }
         }
       }
     },
-    "genre.theatre" : {
-      "comment" : "Book genre: Theatre",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Theatre"
+    "genre.travel": {
+      "comment": "Book genre: Travel",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teatro"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viajes"
           }
         }
       }
     },
-    "genre.travel" : {
-      "comment" : "Book genre: Travel",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Travel"
+    "in_progress.empty_message": {
+      "comment": "Message when no book is being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move a book to Reading to start a session."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Viajes"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasa un libro a Leyendo para empezar una sesión."
           }
         }
       }
     },
-    "in_progress.empty_message" : {
-      "comment" : "Message when no book is being read",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Move a book to Reading to start a session."
+    "in_progress.empty_title": {
+      "comment": "Title when no book is being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing on the go"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pasa un libro a Leyendo para empezar una sesión."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada en curso"
           }
         }
       }
     },
-    "in_progress.empty_title" : {
-      "comment" : "Title when no book is being read",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nothing on the go"
+    "minutes": {
+      "comment": "Label for the vertical axis in the tracking chart.",
+      "isCommentAutoGenerated": true
+    },
+    "notification.session_ended.body": {
+      "comment": "Body of the session-ended notification",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your reading session for %@ has finished."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nada en curso"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu sesión de lectura de %@ ha terminado."
           }
         }
       }
     },
-    "minutes" : {
-      "comment" : "Label for the vertical axis in the tracking chart.",
-      "isCommentAutoGenerated" : true
+    "notification.session_ended.title": {
+      "comment": "Local notification when the session time is up",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time's up"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se acabó el tiempo"
+          }
+        }
+      }
     },
-    "notification.session_ended.body" : {
-      "comment" : "Body of the session-ended notification",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your reading session for %@ has finished."
+    "session.active_title": {
+      "comment": "Title of the running session screen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session in progress"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tu sesión de lectura de %@ ha terminado."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión en curso"
           }
         }
       }
     },
-    "notification.session_ended.title" : {
-      "comment" : "Local notification when the session time is up",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time's up"
+    "session.banner_finished": {
+      "comment": "Shown in the banner when the session's time already ran out",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session finished"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se acabó el tiempo"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión terminada"
           }
         }
       }
     },
-    "session.active_title" : {
-      "comment" : "Title of the running session screen",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Session in progress"
+    "session.banner_resume": {
+      "comment": "Label of the banner that reopens a running session",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume session"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sesión en curso"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retomar sesión"
           }
         }
       }
     },
-    "session.begin" : {
-      "comment" : "Button that starts the countdown",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start session"
+    "session.begin": {
+      "comment": "Button that starts the countdown",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start session"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comenzar sesión"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comenzar sesión"
           }
         }
       }
     },
-    "session.duration" : {
-      "comment" : "Label above the duration options",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Duration"
+    "session.duration": {
+      "comment": "Label above the duration options",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Duración"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duración"
           }
         }
       }
     },
-    "session.duration_minutes" : {
-      "comment" : "A duration option, in minutes",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld min"
+    "session.duration_minutes": {
+      "comment": "A duration option, in minutes",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld min"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
           }
         }
       }
     },
-    "session.finish" : {
-      "comment" : "Ends the session before its time is up",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finish"
+    "session.finish": {
+      "comment": "Ends the session before its time is up",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terminar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminar"
           }
         }
       }
     },
-    "session.new_title" : {
-      "comment" : "Title of the duration sheet",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New session"
+    "session.new_title": {
+      "comment": "Title of the duration sheet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New session"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva sesión"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva sesión"
           }
         }
       }
     },
-    "session.pause" : {
-      "comment" : "Pauses the countdown",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pause"
+    "session.pause": {
+      "comment": "Pauses the countdown",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pausar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausar"
           }
         }
       }
     },
-    "session.remaining" : {
-      "comment" : "Label under the countdown",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "remaining"
+    "session.remaining": {
+      "comment": "Label under the countdown",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "remaining"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "restante"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "restante"
           }
         }
       }
     },
-    "session.resume" : {
-      "comment" : "Resumes a paused countdown",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resume"
+    "session.resume": {
+      "comment": "Resumes a paused countdown",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reanudar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reanudar"
           }
         }
       }
     },
-    "session.start" : {
-      "comment" : "Button on the book detail that opens the duration picker",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start reading session"
+    "session.start": {
+      "comment": "Button on the book detail that opens the duration picker",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start reading session"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sesión de lectura"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión de lectura"
           }
         }
       }
     },
-    "status_change.action.finished" : {
-      "comment" : "Button that advances a book to 'finished'",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mark as finished"
+    "status.finished": {
+      "comment": "Book status: finished",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finished"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar como leído"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leído"
           }
         }
       }
     },
-    "status_change.action.owned" : {
-      "comment" : "Button that advances a book to 'bought'",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mark as bought"
+    "status.owned": {
+      "comment": "Book status: bought but not started",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bought"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar como comprado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprado"
           }
         }
       }
     },
-    "status_change.action.reading" : {
-      "comment" : "Button that advances a book to 'reading'",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start reading"
+    "status.reading": {
+      "comment": "Book status: currently being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar como leyendo"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leyendo"
           }
         }
       }
     },
-    "status_change.current" : {
-      "comment" : "Label before the book's current status",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current status:"
+    "status.short.finished": {
+      "comment": "Short label for the 'finished' status in a segmented control",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finished"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado actual:"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leído"
           }
         }
       }
     },
-    "status_change.footnote" : {
-      "comment" : "Explains that the status flow is one-way",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Statuses only move forward, they cannot be reverted."
+    "status.short.owned": {
+      "comment": "Short label for the 'bought' status in a segmented control",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bought"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los estados solo avanzan, no se pueden revertir."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprado"
           }
         }
       }
     },
-    "status_change.title" : {
-      "comment" : "Title of the sheet that advances a book's status",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change status"
+    "status.short.reading": {
+      "comment": "Short label for the 'reading' status in a segmented control",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambiar estado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leyendo"
           }
         }
       }
     },
-    "status.finished" : {
-      "comment" : "Book status: finished",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finished"
+    "status.short.wishlist": {
+      "comment": "Short label for the 'want to buy' status in a segmented control",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To buy"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Leído"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprar"
           }
         }
       }
     },
-    "status.owned" : {
-      "comment" : "Book status: bought but not started",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bought"
+    "status.wishlist": {
+      "comment": "Book status: the reader wants to buy it",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Want to buy"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiero comprar"
           }
         }
       }
     },
-    "status.reading" : {
-      "comment" : "Book status: currently being read",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reading"
+    "status_change.action.finished": {
+      "comment": "Button that advances a book to 'finished'",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as finished"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Leyendo"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar como leído"
           }
         }
       }
     },
-    "status.short.finished" : {
-      "comment" : "Short label for the 'finished' status in a segmented control",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finished"
+    "status_change.action.owned": {
+      "comment": "Button that advances a book to 'bought'",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as bought"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Leído"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar como comprado"
           }
         }
       }
     },
-    "status.short.owned" : {
-      "comment" : "Short label for the 'bought' status in a segmented control",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bought"
+    "status_change.action.reading": {
+      "comment": "Button that advances a book to 'reading'",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start reading"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar como leyendo"
           }
         }
       }
     },
-    "status.short.reading" : {
-      "comment" : "Short label for the 'reading' status in a segmented control",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reading"
+    "status_change.current": {
+      "comment": "Label before the book's current status",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current status:"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Leyendo"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado actual:"
           }
         }
       }
     },
-    "status.short.wishlist" : {
-      "comment" : "Short label for the 'want to buy' status in a segmented control",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "To buy"
+    "status_change.footnote": {
+      "comment": "Explains that the status flow is one-way",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Statuses only move forward, they cannot be reverted."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los estados solo avanzan, no se pueden revertir."
           }
         }
       }
     },
-    "status.wishlist" : {
-      "comment" : "Book status: the reader wants to buy it",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Want to buy"
+    "status_change.title": {
+      "comment": "Title of the sheet that advances a book's status",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change status"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quiero comprar"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambiar estado"
           }
         }
       }
     },
-    "tab.in_progress" : {
-      "comment" : "Title of the first tab: books currently being read",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In progress"
+    "tab.in_progress": {
+      "comment": "Title of the first tab: books currently being read",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In progress"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En curso"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
           }
         }
       }
     },
-    "tab.tracking" : {
-      "comment" : "Title of the second tab: reading time charts",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tracking"
+    "tab.tracking": {
+      "comment": "Title of the second tab: reading time charts",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracking"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seguimiento"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguimiento"
           }
         }
       }
     },
-    "tab.trunk" : {
-      "comment" : "Title of the third tab: the full book registry",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trunk"
+    "tab.trunk": {
+      "comment": "Title of the third tab: the full book registry",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trunk"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Baúl"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baúl"
           }
         }
       }
     },
-    "tracking.average" : {
-      "comment" : "Label of the tile showing the daily average",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per day"
+    "tracking.average": {
+      "comment": "Label of the tile showing the daily average",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per day"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Promedio / día"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Promedio / día"
           }
         }
       }
     },
-    "tracking.chart_label" : {
-      "comment" : "Accessibility label of the chart",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minutes read per day"
+    "tracking.chart_label": {
+      "comment": "Accessibility label of the chart",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minutes read per day"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minutos leídos por día"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minutos leídos por día"
           }
         }
       }
     },
-    "tracking.empty_message" : {
-      "comment" : "Message when no session has been recorded in the range",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your reading sessions will show up here."
+    "tracking.empty_message": {
+      "comment": "Message when no session has been recorded in the range",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your reading sessions will show up here."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aquí aparecerán tus sesiones de lectura."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aquí aparecerán tus sesiones de lectura."
           }
         }
       }
     },
-    "tracking.empty_title" : {
-      "comment" : "Title when no session has been recorded in the range",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nothing read yet"
+    "tracking.empty_title": {
+      "comment": "Title when no session has been recorded in the range",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing read yet"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nada leído aún"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada leído aún"
           }
         }
       }
     },
-    "tracking.minutes" : {
-      "comment" : "A duration in minutes, shown in the stat tiles",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld min"
+    "tracking.minutes": {
+      "comment": "A duration in minutes, shown in the stat tiles",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld min"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
           }
         }
       }
     },
-    "tracking.range_days" : {
-      "comment" : "A date-range option, in days",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld days"
+    "tracking.range_days": {
+      "comment": "A date-range option, in days",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld days"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld días"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld días"
           }
         }
       }
     },
-    "tracking.total" : {
-      "comment" : "Label of the tile showing all the time read in the range",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total"
+    "tracking.total": {
+      "comment": "Label of the tile showing all the time read in the range",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total"
           }
         }
       }
     },
-    "trunk.add_book" : {
-      "comment" : "Accessibility label of the button that opens the add-book form",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add book"
+    "trunk.add_book": {
+      "comment": "Accessibility label of the button that opens the add-book form",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add book"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir libro"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añadir libro"
           }
         }
       }
     },
-    "trunk.empty_message" : {
-      "comment" : "Message shown when the trunk has no books yet",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add your first book to start your library."
+    "trunk.empty_message": {
+      "comment": "Message shown when the trunk has no books yet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first book to start your library."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añade tu primer libro para empezar tu biblioteca."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade tu primer libro para empezar tu biblioteca."
           }
         }
       }
     },
-    "trunk.empty_title" : {
-      "comment" : "Title shown when the trunk has no books yet",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No books yet"
+    "trunk.empty_title": {
+      "comment": "Title shown when the trunk has no books yet",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No books yet"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin libros"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin libros"
           }
         }
       }
     },
-    "trunk.filter_all" : {
-      "comment" : "Filter option that shows every book, whatever its status",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All"
+    "trunk.filter_all": {
+      "comment": "Filter option that shows every book, whatever its status",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Todos"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos"
           }
         }
       }
     },
-    "trunk.filter_label" : {
-      "comment" : "Accessibility label of the status filter menu",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter by status"
+    "trunk.filter_label": {
+      "comment": "Accessibility label of the status filter menu",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter by status"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtrar por estado"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrar por estado"
           }
         }
       }
     },
-    "trunk.no_results_message" : {
-      "comment" : "Message shown when a search or filter matches no book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try another search or change the filter."
+    "trunk.no_results_message": {
+      "comment": "Message shown when a search or filter matches no book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try another search or change the filter."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prueba con otra búsqueda o cambia el filtro."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prueba con otra búsqueda o cambia el filtro."
           }
         }
       }
     },
-    "trunk.no_results_title" : {
-      "comment" : "Title shown when a search or filter matches no book",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No results"
+    "trunk.no_results_title": {
+      "comment": "Title shown when a search or filter matches no book",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin resultados"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin resultados"
           }
         }
       }
     },
-    "trunk.search_prompt" : {
-      "comment" : "Placeholder in the trunk's search field",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search by title or author"
+    "trunk.search_prompt": {
+      "comment": "Placeholder in the trunk's search field",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search by title or author"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar por título o autor"
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar por título o autor"
           }
         }
       }
     }
   },
-  "version" : "1.1"
+  "version": "1.1"
 }

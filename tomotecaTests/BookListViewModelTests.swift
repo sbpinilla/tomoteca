@@ -144,15 +144,21 @@ struct BookListViewModelTests {
         #expect(viewModel.books.contains { $0.id == Book.previewOwned.id } == false)
     }
 
-    @Test("Swiping deletes the row that was swiped, even with a filter narrowing the list")
-    func deletesTheSwipedRowWhileFiltered() {
-        let repository = FakeBookRepository(books: Book.previewCatalog)
-        let viewModel = BookListViewModel(repository: repository)
+    @Test("A swipe resolves to the row that was swiped, even with a filter narrowing the list")
+    func resolvesTheSwipedRowWhileFiltered() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: Book.previewCatalog))
         viewModel.filter = .status(.reading)
 
         // Offset 0 of the *visible* list, which is not offset 0 of the catalog.
-        viewModel.delete(atOffsets: IndexSet(integer: 0))
+        let swiped = viewModel.book(atOffsets: IndexSet(integer: 0))
 
-        #expect(repository.deletedIDs == [Book.previewReading.id])
+        #expect(swiped?.id == Book.previewReading.id)
+    }
+
+    @Test("A swipe on a row that is no longer there resolves to nothing")
+    func resolvesNothingOutOfRange() {
+        let viewModel = BookListViewModel(repository: FakeBookRepository(books: [.previewOwned]))
+
+        #expect(viewModel.book(atOffsets: IndexSet(integer: 5)) == nil)
     }
 }

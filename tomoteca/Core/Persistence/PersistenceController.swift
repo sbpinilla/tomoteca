@@ -35,6 +35,11 @@ struct PersistenceController {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
 
+        // Stated rather than left to the defaults: the model has already changed once under a
+        // store holding real books, and this is the line that keeps them.
+        container.persistentStoreDescriptions.first?.shouldMigrateStoreAutomatically = true
+        container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = true
+
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 // TODO: surface this to the user instead of crashing before shipping.
@@ -43,5 +48,26 @@ struct PersistenceController {
         }
 
         container.viewContext.automaticallyMergesChangesFromParent = true
+
+        backfillSessionBookIDs()
+    }
+
+    /// Fills in the `bookID` that older sessions do not have.
+    ///
+    /// An inferred migration adds the column but leaves it empty, and the relationship it can be
+    /// recovered from is about to stop being reliable — that is the whole point of the change.
+    /// Runs once: after the first pass there is nothing left to find.
+    private func backfillSessionBookIDs() {
+        let context = container.viewContext
+        let request = NSFetchRequest<ReadingSessionEntity>(entityName: "ReadingSessionEntity")
+        request.predicate = NSPredicate(format: "bookID == nil")
+
+        guard let orphans = try? context.fetch(request), !orphans.isEmpty else { return }
+
+        for session in orphans {
+            session.bookID = session.book?.id
+        }
+
+        try? context.save()
     }
 }

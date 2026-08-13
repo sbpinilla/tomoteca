@@ -9,7 +9,7 @@ import SwiftUI
 /// The running session: countdown, pause and finish.
 struct ActiveSessionView: View {
 
-    @StateObject private var viewModel: ReadingSessionViewModel
+    @ObservedObject var viewModel: ReadingSessionViewModel
     @Environment(\.scenePhase) private var scenePhase
 
     let onFinished: () -> Void
@@ -17,11 +17,6 @@ struct ActiveSessionView: View {
     /// Only drives the redraw. The time itself always comes from the clock, so a tick that
     /// never arrives — the app was in the background — costs nothing.
     private let tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
-    init(viewModel: @autoclosure @escaping () -> ReadingSessionViewModel, onFinished: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: viewModel())
-        self.onFinished = onFinished
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -85,10 +80,17 @@ struct ActiveSessionView_Previews: PreviewProvider {
         ActiveSessionView(
             viewModel: ReadingSessionViewModel(
                 book: .previewReading,
-                plannedMinutes: 15,
+                stored: StoredSession(
+                    bookID: Book.previewReading.id,
+                    plannedMinutes: 15,
+                    startedAt: Date(),
+                    accumulated: 0,
+                    segmentStartedAt: Date()
+                ),
                 repository: PreviewBookRepository.populated,
                 sessionRepository: PreviewReadingSessionRepository(),
-                notifications: PreviewNotificationScheduler()
+                notifications: PreviewNotificationScheduler(),
+                store: InMemoryActiveSessionStore()
             ),
             onFinished: {}
         )

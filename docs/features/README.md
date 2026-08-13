@@ -260,9 +260,18 @@ Para no volver a discutirlas:
 15. La lista de géneros es la de arriba, cerrada y con "Otros" como salida.
 16. El formulario de edición **no** toca el estado: el estado solo avanza por el sheet del
     detalle, para que la regla de un solo sentido no tenga puerta trasera.
-17. Las sesiones de lectura no se pueden borrar.
+17. Las sesiones de lectura no se pueden borrar, **ni siquiera al borrar su libro**: lo que se
+    mide es el tiempo invertido en leer, no qué libros se terminaron ([C01](../cambios/C01-confirmar-borrado.md)).
 18. El baúl se ordena por fecha de creación, con los libros más recientes primero.
 19. El modo oscuro es el cálido de "Literary Warmth", no el neutro que traía el kit de diseño.
 20. El estado se muestra como punto y texto de color, sin píldora de fondo.
 21. La app se publica en español e inglés, con todos los textos localizados desde el primer
     día. Ninguna cadena visible se escribe a mano en el código.
+22. **Borrar un libro pide confirmación**, con una alerta que lo nombra. Sustituye a la regla
+    del [Hito 5](hito-5-pulido-baul.md), que no la pedía ([C01](../cambios/C01-confirmar-borrado.md)).
+23. **Solo puede haber una sesión de lectura a la vez**, y sobrevive a cerrar la app. Se retoma
+    desde un aviso sobre la barra de pestañas ([C02](../cambios/C02-retomar-sesion.md)).
+24. Una sesión que venció hace más de 24 horas se descarta sola: preguntar por su página ya no
+    tendría respuesta útil ([C02](../cambios/C02-retomar-sesion.md)).
+
+Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

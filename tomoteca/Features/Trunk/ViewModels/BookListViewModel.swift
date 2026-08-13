@@ -55,13 +55,12 @@ final class BookListViewModel: ObservableObject {
         }
     }
 
-    /// Deletes the rows at these offsets **within the visible list**, which is not the same as
+    /// The book behind a swipe, resolved **within the visible list**, which is not the same as
     /// the stored catalog whenever a search or filter is active.
-    func delete(atOffsets offsets: IndexSet) {
+    func book(atOffsets offsets: IndexSet) -> Book? {
         let visible = visibleBooks
-        for index in offsets where visible.indices.contains(index) {
-            delete(visible[index])
-        }
+        guard let index = offsets.first, visible.indices.contains(index) else { return nil }
+        return visible[index]
     }
 
     /// What the list actually shows: the catalog after the filter and then the search.

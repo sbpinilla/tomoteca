@@ -16,30 +16,43 @@ struct ReadingSessionViewModelTests {
         let notifications: FakeNotificationScheduler
         let sessions: FakeReadingSessionRepository
         let books: FakeBookRepository
+        let store: InMemoryActiveSessionStore
     }
 
     private func makeHarness(
         book: Book = .previewReading,
-        minutes: Int = 15
+        minutes: Int = 15,
+        stored: StoredSession? = nil,
+        clock: TestClock = TestClock()
     ) -> Harness {
-        let clock = TestClock()
         let notifications = FakeNotificationScheduler()
         let sessions = FakeReadingSessionRepository()
         let books = FakeBookRepository(books: [book])
 
+        let session = stored ?? StoredSession(
+            bookID: book.id,
+            plannedMinutes: minutes,
+            startedAt: clock.now,
+            accumulated: 0,
+            segmentStartedAt: clock.now
+        )
+        let store = InMemoryActiveSessionStore(session: session)
+
         return Harness(
             viewModel: ReadingSessionViewModel(
                 book: book,
-                plannedMinutes: minutes,
+                stored: session,
                 repository: books,
                 sessionRepository: sessions,
                 notifications: notifications,
+                store: store,
                 now: clock.reader
             ),
             clock: clock,
             notifications: notifications,
             sessions: sessions,
-            books: books
+            books: books,
+            store: store
         )
     }
 
@@ -137,12 +150,6 @@ struct ReadingSessionViewModelTests {
 
     // MARK: Notifications
 
-    @Test("The end-of-session alert is scheduled when the session starts")
-    func schedulesTheAlertOnStart() {
-        let h = makeHarness(minutes: 15)
-        #expect(h.notifications.scheduledIntervals == [15 * 60])
-    }
-
     @Test("Pausing cancels the alert, and resuming schedules it for the time that is left")
     func reschedulesAroundPause() {
         let h = makeHarness(minutes: 15)
@@ -155,7 +162,7 @@ struct ReadingSessionViewModelTests {
 
         h.viewModel.resume()
 
-        #expect(h.notifications.scheduledIntervals == [15 * 60, 10 * 60])
+        #expect(h.notifications.scheduledIntervals == [10 * 60])
     }
 
     @Test("Finishing early cancels the pending alert")
@@ -271,5 +278,112 @@ struct ReadingSessionViewModelTests {
 
         #expect(h.viewModel.save() == false)
         #expect(h.viewModel.phase == .askingPage)
+    }
+
+    // MARK: Surviving the app being killed
+
+    @Test("Pausing and resuming are written down, not just held in memory")
+    func persistsPauseAndResume() throws {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 120)
+        h.viewModel.refresh()
+        h.viewModel.pause()
+
+        let paused = try #require(h.store.load())
+        #expect(paused.isPaused)
+        #expect(paused.accumulated == 120)
+
+        h.clock.advance(by: 600)
+        h.viewModel.resume()
+
+        #expect(try #require(h.store.load()).isPaused == false)
+    }
+
+    @Test("A session picked up after a relaunch keeps the time it had already run")
+    func resumesFromStoredState() {
+        let clock = TestClock()
+        let started = clock.now
+        clock.advance(by: 6 * 60)  // six minutes passed with the app dead
+
+        let h = makeHarness(
+            stored: StoredSession(
+                bookID: Book.previewReading.id,
+                plannedMinutes: 15,
+                startedAt: started,
+                accumulated: 0,
+                segmentStartedAt: started
+            ),
+            clock: clock
+        )
+
+        #expect(h.viewModel.phase == .running)
+        #expect(h.viewModel.elapsed == 6 * 60)
+        #expect(h.viewModel.remaining == 9 * 60)
+    }
+
+    @Test("A session whose time ran out while the app was dead opens asking for the page")
+    func expiredSessionAsksForThePage() {
+        let clock = TestClock()
+        let started = clock.now
+        clock.advance(by: 20 * 60)  // well past a 15-minute session
+
+        let h = makeHarness(
+            stored: StoredSession(
+                bookID: Book.previewReading.id,
+                plannedMinutes: 15,
+                startedAt: started,
+                accumulated: 0,
+                segmentStartedAt: started
+            ),
+            clock: clock
+        )
+
+        #expect(h.viewModel.phase == .askingPage)
+        #expect(h.notifications.cancelCount == 1, "Its alert has already fired or is moot")
+    }
+
+    @Test("A session that ran its course records the planned time, not the hours since")
+    func expiredSessionRecordsThePlannedTime() throws {
+        let clock = TestClock()
+        let started = clock.now
+        clock.advance(by: 3 * 60 * 60)  // came back three hours later
+
+        let h = makeHarness(
+            stored: StoredSession(
+                bookID: Book.previewReading.id,
+                plannedMinutes: 15,
+                startedAt: started,
+                accumulated: 0,
+                segmentStartedAt: started
+            ),
+            clock: clock
+        )
+        h.viewModel.finalPageText = "260"
+
+        #expect(h.viewModel.save())
+        #expect(try #require(h.sessions.added.first).actualSeconds == 15 * 60)
+    }
+
+    @Test("Saving clears the stored session, so nothing is offered again next launch")
+    func savingClearsTheStoredSession() {
+        let h = makeHarness()
+
+        h.viewModel.finishEarly()
+        h.viewModel.finalPageText = "250"
+
+        #expect(h.viewModel.save())
+        #expect(h.store.load() == nil)
+    }
+
+    @Test("A session waiting for its page is kept, so killing the app now does not lose it")
+    func keepsTheSessionWhileAskingForThePage() {
+        let h = makeHarness()
+
+        h.clock.advance(by: 4 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+
+        #expect(h.store.load() != nil)
     }
 }

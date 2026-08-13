@@ -113,7 +113,7 @@ The UI is built bottom-up from **tokens → components → feature views**. Noth
 
 The status colors are deliberately not keyed by a domain type — the design system knows nothing about `Book`. Features map their own status enum onto them. Status is rendered as a colored dot plus colored text, never as a filled pill.
 
-Screen designs live in [`docs/design/README.md`](docs/design/README.md); what to build and in what order is in [`docs/features/README.md`](docs/features/README.md).
+Screen designs live in [`docs/design/README.md`](docs/design/README.md) — see "Where work is written down" for the rest of the documentation map.
 
 Banned outside `DesignSystem/Tokens/`:
 
@@ -190,6 +190,42 @@ reaches a user, so its labels stay as plain literals.
 - `PersistenceController.preview` (in-memory) is the base for previews and tests; keep it seeded with representative data.
 - The current `PersistenceController` calls `fatalError` on store-loading errors — replace it with real handling before shipping.
 - Any schema change after data exists on device requires a new model version and a lightweight migration.
+
+## Where work is written down
+
+Before adding anything to `docs/`, find the right file. There is one place for each kind of thing.
+
+| What | Where |
+|---|---|
+| How the app behaves today — product decisions, domain, statuses | `docs/features/README.md` |
+| Why it came to behave that way — one file per change | `docs/cambios/` |
+| How the v1 was built, milestone by milestone | `docs/features/hito-*.md` — **historical, never rewritten** |
+| Screen designs and mockups | `docs/design/README.md` |
+| Architecture and code rules | this file |
+
+**New work is a change, not a milestone.** The eight milestones are closed. Improvements, fixes and extra features each get a numbered file in `docs/cambios/` (`C01`, `C02`…), with its type marked, following the same shape: scope, decisions, acceptance criteria, how it was validated, findings. Add a row to the index in `docs/cambios/README.md`.
+
+**A change never redefines a product decision on its own.** When it adds or reverses one, edit the numbered list in `docs/features/README.md` — that list is the single source of truth for current behaviour — and let the change file explain why it moved.
+
+**Definition of closed**, for both milestones and changes: acceptance criteria met, seen in the simulator in both languages and both appearances, covered by tests, and committed.
+
+### Executing a change: implementation first, tests after
+
+A change is executed in **two phases, with a stop in between**. Never do both in one run.
+
+**Phase 1 — implementation.** Write the production code only: app code, model, strings, docs. Do not touch the test targets and do not run the test suite. Close the phase by building:
+
+```bash
+xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' build
+```
+
+Then **stop and report**: what changed, which files, what the acceptance criteria were, and what tests the change is going to need (new tests, and existing ones that will have to be adjusted and why). Ask for confirmation before going on.
+
+**Phase 2 — tests.** Only after that confirmation: write and adjust the tests, run the suite, and fix what comes out.
+
+Why the stop: adjusting existing tests is expensive, and it is wasted if the implementation still has to move. Confirming the implementation first means the tests are written once, against code that is already settled.
+
+If a change turns out to need no test work at all, say so at the stop and wait for the go-ahead anyway — the stop is not skipped.
 
 ## Conventions
 

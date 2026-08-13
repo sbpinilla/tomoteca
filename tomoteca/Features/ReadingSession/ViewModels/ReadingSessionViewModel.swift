@@ -9,10 +9,10 @@ import Foundation
 /// Runs a reading session: the countdown, the pause, and the page that closes it.
 ///
 /// **The clock is never counted, only read.** Elapsed time is always the difference between
-/// timestamps, so a tick missed while the app is in the background changes nothing: coming back
-/// to the foreground and asking again gives the right answer. A view that accumulated one
-/// second per tick would silently under-count exactly when someone is reading a paper book with
-/// the phone locked.
+/// timestamps, so a tick missed while the app is in the background changes nothing — and, since
+/// those timestamps are written to ``ActiveSessionStoring``, neither does the app being killed
+/// outright. A view that accumulated one second per tick would silently under-count exactly when
+/// someone is reading a paper book with the phone locked.
 @MainActor
 final class ReadingSessionViewModel: ObservableObject {
 
@@ -28,63 +28,70 @@ final class ReadingSessionViewModel: ObservableObject {
     /// The durations offered. Kept here rather than in the view so tests can rely on them.
     static let offeredMinutes = [10, 15, 30]
 
-    @Published private(set) var phase: Phase = .running
+    @Published private(set) var phase: Phase
     @Published private(set) var remaining: TimeInterval
     @Published var finalPageText = ""
 
     let book: Book
-    let plannedMinutes: Int
 
+    private var stored: StoredSession
     private let repository: BookRepository
     private let sessionRepository: ReadingSessionRepository
     private let notifications: any SessionNotificationScheduling
+    private let store: any ActiveSessionStoring
     private let now: () -> Date
 
-    private let plannedDuration: TimeInterval
-    private let startedAt: Date
-    /// Time already banked from previous run segments, in seconds.
-    private var accumulated: TimeInterval = 0
-    /// When the current run segment began, or `nil` while paused.
-    private var segmentStartedAt: Date?
-
+    /// Resumes — or starts — a session from its stored state.
+    ///
+    /// There is no separate "start" path: starting writes a `StoredSession` and comes through
+    /// here, so a fresh session and one recovered after a relaunch follow the same code.
     init(
         book: Book,
-        plannedMinutes: Int,
+        stored: StoredSession,
         repository: BookRepository,
         sessionRepository: ReadingSessionRepository,
         notifications: any SessionNotificationScheduling,
+        store: any ActiveSessionStoring,
         now: @escaping () -> Date = Date.init
     ) {
         self.book = book
-        self.plannedMinutes = plannedMinutes
+        self.stored = stored
         self.repository = repository
         self.sessionRepository = sessionRepository
         self.notifications = notifications
+        self.store = store
         self.now = now
 
-        plannedDuration = TimeInterval(plannedMinutes * 60)
-        remaining = plannedDuration
-        startedAt = now()
-        segmentStartedAt = startedAt
+        let moment = now()
+        remaining = stored.remaining(at: moment)
+
+        // A session whose time ran out while the app was closed is over: it goes straight to
+        // asking for the page, counting the full planned time it was given.
+        if stored.isExpired(at: moment) {
+            phase = .askingPage
+        } else {
+            phase = stored.isPaused ? .paused : .running
+        }
 
         // Pre-filled with where the reader already was, since most sessions move a few pages on.
         finalPageText = String(book.currentPage)
 
-        notifications.scheduleSessionEnd(in: plannedDuration, bookTitle: book.title)
+        if phase == .askingPage {
+            closeOut()
+        }
     }
+
+    var plannedMinutes: Int { stored.plannedMinutes }
 
     // MARK: Time
 
     /// Seconds actually read so far.
-    var elapsed: TimeInterval {
-        guard let segmentStartedAt else { return accumulated }
-        return accumulated + now().timeIntervalSince(segmentStartedAt)
-    }
+    var elapsed: TimeInterval { stored.elapsed(at: now()) }
 
     /// How much of the planned time has gone, from 0 to 1, for the ring.
     var progress: Double {
-        guard plannedDuration > 0 else { return 0 }
-        return min(1, max(0, elapsed / plannedDuration))
+        guard stored.plannedDuration > 0 else { return 0 }
+        return min(1, max(0, elapsed / stored.plannedDuration))
     }
 
     /// Recomputes the countdown from the clock. Called on every tick and whenever the app comes
@@ -92,7 +99,7 @@ final class ReadingSessionViewModel: ObservableObject {
     func refresh() {
         guard phase == .running else { return }
 
-        remaining = max(0, plannedDuration - elapsed)
+        remaining = stored.remaining(at: now())
 
         if remaining == 0 {
             askForPage()
@@ -104,8 +111,9 @@ final class ReadingSessionViewModel: ObservableObject {
     func pause() {
         guard phase == .running else { return }
 
-        accumulated = elapsed
-        segmentStartedAt = nil
+        stored.accumulated = elapsed
+        stored.segmentStartedAt = nil
+        store.save(stored)
         phase = .paused
 
         // The alert would fire at a time that no longer means anything.
@@ -115,7 +123,8 @@ final class ReadingSessionViewModel: ObservableObject {
     func resume() {
         guard phase == .paused else { return }
 
-        segmentStartedAt = now()
+        stored.segmentStartedAt = now()
+        store.save(stored)
         phase = .running
         notifications.scheduleSessionEnd(in: remaining, bookTitle: book.title)
     }
@@ -127,10 +136,17 @@ final class ReadingSessionViewModel: ObservableObject {
     }
 
     private func askForPage() {
-        accumulated = elapsed
-        segmentStartedAt = nil
-        remaining = max(0, plannedDuration - accumulated)
         phase = .askingPage
+        closeOut()
+    }
+
+    /// Freezes the clock and stops the pending alert. The stored session stays until the page
+    /// is answered, so killing the app at this point still leaves something to come back to.
+    private func closeOut() {
+        stored.accumulated = min(elapsed, stored.plannedDuration)
+        stored.segmentStartedAt = nil
+        store.save(stored)
+        remaining = stored.remaining(at: now())
         notifications.cancelScheduledSessionEnd()
     }
 
@@ -163,10 +179,10 @@ final class ReadingSessionViewModel: ObservableObject {
 
         let session = ReadingSession(
             bookID: book.id,
-            startedAt: startedAt,
+            startedAt: stored.startedAt,
             endedAt: now(),
-            plannedMinutes: plannedMinutes,
-            actualSeconds: Int(elapsed.rounded()),
+            plannedMinutes: stored.plannedMinutes,
+            actualSeconds: Int(stored.accumulated.rounded()),
             finalPage: finalPage
         )
 
@@ -180,6 +196,7 @@ final class ReadingSessionViewModel: ObservableObject {
             return false
         }
 
+        store.clear()
         phase = .finished
         return true
     }

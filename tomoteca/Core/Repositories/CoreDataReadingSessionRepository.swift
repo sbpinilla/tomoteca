@@ -43,15 +43,16 @@ final class CoreDataReadingSessionRepository: ReadingSessionRepository {
     }
 
     func add(_ session: ReadingSession) throws {
-        // Linked through the relationship rather than by storing a loose id, so deleting a book
-        // takes its sessions with it instead of leaving orphans behind.
         guard let book = try bookEntity(withID: session.bookID) else {
             throw RepositoryError.bookNotFound
         }
 
         let entity = ReadingSessionEntity(context: context)
         entity.id = session.id
+        // Both: the relationship for navigating from a book, and the id so the session still
+        // knows what it belonged to once that book is deleted.
         entity.book = book
+        entity.bookID = session.bookID
         entity.startedAt = session.startedAt
         entity.endedAt = session.endedAt
         entity.plannedMinutes = Int32(session.plannedMinutes)
@@ -89,7 +90,9 @@ final class CoreDataReadingSessionRepository: ReadingSessionRepository {
     private static func makeSession(from entity: ReadingSessionEntity) -> ReadingSession? {
         guard
             let id = entity.id,
-            let bookID = entity.book?.id,
+            // The stored id first: the relationship is empty for a session whose book is gone,
+            // and that session still counts towards the time read.
+            let bookID = entity.bookID ?? entity.book?.id,
             let startedAt = entity.startedAt,
             let endedAt = entity.endedAt
         else {

@@ -11,17 +11,17 @@ struct InProgressView: View {
     @StateObject private var viewModel: InProgressViewModel
 
     private let bookRepository: BookRepository
-    private let sessionRepository: ReadingSessionRepository
     private let notifications: any SessionNotificationScheduling
+    private let sessionController: ActiveSessionController
 
     init(
         bookRepository: BookRepository,
-        sessionRepository: ReadingSessionRepository,
-        notifications: any SessionNotificationScheduling
+        notifications: any SessionNotificationScheduling,
+        sessionController: ActiveSessionController
     ) {
         self.bookRepository = bookRepository
-        self.sessionRepository = sessionRepository
         self.notifications = notifications
+        self.sessionController = sessionController
         _viewModel = StateObject(wrappedValue: InProgressViewModel(repository: bookRepository))
     }
 
@@ -34,8 +34,8 @@ struct InProgressView: View {
                     BookDetailView(
                         book: book,
                         repository: bookRepository,
-                        sessionRepository: sessionRepository,
-                        notifications: notifications
+                        notifications: notifications,
+                        sessionController: sessionController
                     )
                 }
         }
@@ -72,8 +72,8 @@ struct InProgressView_Previews: PreviewProvider {
     static var previews: some View {
         InProgressView(
             bookRepository: PreviewBookRepository.populated,
-            sessionRepository: PreviewReadingSessionRepository(),
-            notifications: PreviewNotificationScheduler()
+            notifications: PreviewNotificationScheduler(),
+            sessionController: .preview
         )
     }
 }

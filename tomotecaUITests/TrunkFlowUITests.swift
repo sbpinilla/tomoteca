@@ -63,8 +63,28 @@ final class TrunkFlowUITests: XCTestCase {
         row.swipeLeft()
         app.buttons["Delete"].tap()
 
+        // Deleting now asks first, naming the book so it is clear which one is going.
+        let alert = app.alerts.firstMatch
+        XCTAssertTrue(alert.waitForExistence(timeout: 5))
+        XCTAssertTrue(alert.staticTexts["Delete “Sapiens”?"].exists)
+        alert.buttons["Delete"].tap()
+
         XCTAssertFalse(app.staticTexts["Sapiens"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["Project Hail Mary"].exists, "Only the swiped book goes")
+    }
+
+    func testCancellingTheAlertKeepsTheBook() {
+        let row = app.cells.containing(.staticText, identifier: "Sapiens").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+
+        row.swipeLeft()
+        app.buttons["Delete"].tap()
+
+        let alert = app.alerts.firstMatch
+        XCTAssertTrue(alert.waitForExistence(timeout: 5))
+        alert.buttons["Cancel"].tap()
+
+        XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))
     }
 
     func testEditingABookKeepsItsStatus() {

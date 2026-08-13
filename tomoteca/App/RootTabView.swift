@@ -3,6 +3,7 @@
 //  tomoteca
 //
 
+import Combine
 import SwiftUI
 
 /// The app's root navigation: three tabs, each owning its own navigation stack so that
@@ -19,15 +20,20 @@ struct RootTabView: View {
     let sessionRepository: ReadingSessionRepository
     let notifications: any SessionNotificationScheduling
 
+    @ObservedObject var sessionController: ActiveSessionController
+
     @State private var selection: Tab = Self.initialTab
+    /// Only drives the banner's countdown; the time itself comes from the clock.
+    private let tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         TabView(selection: $selection) {
             InProgressView(
                 bookRepository: bookRepository,
-                sessionRepository: sessionRepository,
-                notifications: notifications
+                notifications: notifications,
+                sessionController: sessionController
             )
+                .activeSessionBanner(sessionController)
                 .tag(Tab.inProgress)
                 .tabItem {
                     Label {
@@ -38,6 +44,7 @@ struct RootTabView: View {
                 }
 
             TrackingView(repository: sessionRepository)
+                .activeSessionBanner(sessionController)
                 .tag(Tab.tracking)
                 .tabItem {
                     Label {
@@ -49,9 +56,10 @@ struct RootTabView: View {
 
             TrunkView(
                 repository: bookRepository,
-                sessionRepository: sessionRepository,
-                notifications: notifications
+                notifications: notifications,
+                sessionController: sessionController
             )
+                .activeSessionBanner(sessionController)
                 .tag(Tab.trunk)
                 .tabItem {
                     Label {
@@ -62,6 +70,17 @@ struct RootTabView: View {
                 }
         }
         .tint(AppColor.brandAccent)
+        .onReceive(tick) { _ in
+            // Nudges the banner's remaining time, and notices when it runs out.
+            sessionController.objectWillChange.send()
+        }
+        .fullScreenCover(isPresented: $sessionController.isPresenting) {
+            if let viewModel = sessionController.sessionViewModel {
+                ActiveSessionView(viewModel: viewModel) {
+                    sessionController.finish()
+                }
+            }
+        }
     }
 
     /// Always the first tab, except when a debug run asks for another one with
@@ -82,7 +101,13 @@ struct RootTabView_Previews: PreviewProvider {
         RootTabView(
             bookRepository: PreviewBookRepository.populated,
             sessionRepository: PreviewReadingSessionRepository(),
-            notifications: PreviewNotificationScheduler()
+            notifications: PreviewNotificationScheduler(),
+            sessionController: ActiveSessionController(
+                bookRepository: PreviewBookRepository.populated,
+                sessionRepository: PreviewReadingSessionRepository(),
+                notifications: PreviewNotificationScheduler(),
+                store: InMemoryActiveSessionStore()
+            )
         )
         .previewDisplayName("Light")
     }
