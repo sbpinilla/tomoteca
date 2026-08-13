@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      full_suite:
+        description: "Ejecutar también los UI tests (varios minutos)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Compilar y testear
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Mostrar la versión de Xcode
+        run: xcodebuild -version
+
+      # El nombre del simulador cambia con cada versión de Xcode, así que en vez de
+      # fijar "iPhone 17" cogemos el primer iPhone disponible en el runner.
+      - name: Elegir simulador
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available --json \
+            | jq -r '[.devices[][] | select(.name | startswith("iPhone"))][0].udid')
+          NAME=$(xcrun simctl list devices available --json \
+            | jq -r '[.devices[][] | select(.name | startswith("iPhone"))][0].name')
+          if [ -z "$UDID" ] || [ "$UDID" = "null" ]; then
+            echo "No hay ningún simulador de iPhone disponible en el runner." >&2
+            exit 1
+          fi
+          echo "Usando $NAME ($UDID)"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      # Arrancarlo aquí evita que el primer xcodebuild pague el arranque en frío.
+      - name: Arrancar el simulador
+        run: xcrun simctl boot "${{ steps.sim.outputs.udid }}" || true
+
+      # Se compila una vez y luego se ejecutan los tests sin recompilar.
+      - name: Compilar para testear
+        run: |
+          xcodebuild build-for-testing \
+            -scheme tomoteca \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Tests unitarios
+        run: |
+          xcodebuild test-without-building \
+            -scheme tomoteca \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -only-testing:tomotecaTests \
+            CODE_SIGNING_ALLOWED=NO
+
+      # Solo bajo petición: cada UI test arranca la app desde cero y la suite tarda minutos.
+      - name: UI tests
+        if: github.event_name == 'workflow_dispatch' && inputs.full_suite
+        run: |
+          xcodebuild test-without-building \
+            -scheme tomoteca \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -only-testing:tomotecaUITests \
+            CODE_SIGNING_ALLOWED=NO
