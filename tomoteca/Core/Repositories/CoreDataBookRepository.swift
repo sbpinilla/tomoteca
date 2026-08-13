@@ -89,6 +89,7 @@ final class CoreDataBookRepository: BookRepository {
         entity.pageCount = Int32(book.pageCount)
         entity.currentPage = Int32(book.currentPage)
         entity.statusRawValue = book.status.rawValue
+        entity.statusChangedAt = book.statusChangedAt
         entity.coverImageData = book.coverImageData
         entity.createdAt = book.createdAt
 
@@ -142,7 +143,10 @@ final class CoreDataBookRepository: BookRepository {
             currentPage: Int(entity.currentPage),
             status: status,
             coverImageData: entity.coverImageData,
-            createdAt: createdAt
+            createdAt: createdAt,
+            // Older rows predate the field; their creation date is the best stand-in and keeps
+            // the order they already had.
+            statusChangedAt: entity.statusChangedAt ?? createdAt
         )
     }
 }

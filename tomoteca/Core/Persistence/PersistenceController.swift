@@ -50,6 +50,25 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
 
         backfillSessionBookIDs()
+        backfillStatusChangedAt()
+    }
+
+    /// Gives books written before the field existed a date to sort by.
+    ///
+    /// Their real move dates are gone, so their creation date stands in: not when they actually
+    /// changed shelves, but the best available, and it preserves the order they already had.
+    private func backfillStatusChangedAt() {
+        let context = container.viewContext
+        let request = NSFetchRequest<BookEntity>(entityName: "BookEntity")
+        request.predicate = NSPredicate(format: "statusChangedAt == nil")
+
+        guard let pending = try? context.fetch(request), !pending.isEmpty else { return }
+
+        for book in pending {
+            book.statusChangedAt = book.createdAt
+        }
+
+        try? context.save()
     }
 
     /// Fills in the `bookID` that older sessions do not have.

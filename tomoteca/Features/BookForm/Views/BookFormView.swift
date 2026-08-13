@@ -14,7 +14,15 @@ struct BookFormView: View {
     @State private var isChoosingCover = false
     @Environment(\.dismiss) private var dismiss
 
-    init(mode: BookFormMode, repository: BookRepository) {
+    /// Called with the stored book, so the screen behind can follow it to its shelf.
+    private let onSaved: (Book) -> Void
+
+    init(
+        mode: BookFormMode,
+        repository: BookRepository,
+        onSaved: @escaping (Book) -> Void = { _ in }
+    ) {
+        self.onSaved = onSaved
         _viewModel = StateObject(
             wrappedValue: BookFormViewModel(mode: mode, repository: repository)
         )
@@ -83,7 +91,9 @@ struct BookFormView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        if viewModel.save() { dismiss() }
+                        guard let saved = viewModel.save() else { return }
+                        onSaved(saved)
+                        dismiss()
                     } label: {
                         Text(.bookFormSave)
                     }

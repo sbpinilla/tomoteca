@@ -46,7 +46,8 @@ final class AddBookFlowUITests: XCTestCase {
         XCTAssertTrue(save.isEnabled, "Save must enable once title, genre and pages are filled")
         save.tap()
 
-        // Back on the trunk, with the book listed and the sheet gone.
+        // Back on the trunk, with the book listed and the sheet gone. The trunk followed it to
+        // the wishlist shelf, which is where a new book lands by default.
         XCTAssertTrue(app.staticTexts["Dune"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["No books yet"].exists)
     }

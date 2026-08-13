@@ -255,7 +255,8 @@ Para no volver a discutirlas:
 9. Se puede pausar y terminar antes de tiempo; cuenta el tiempo realmente leído.
 10. El número de páginas es obligatorio, y el modal de fin de sesión también.
 11. La gráfica muestra minutos por día más el promedio del rango.
-12. La búsqueda cubre título y autor, con filtro por estado.
+12. La búsqueda cubre título y autor, y actúa **dentro de la estantería abierta**
+    ([C06](../cambios/C06-baul-por-estado.md)).
 13. Los libros se pueden editar y borrar.
 14. Al tocar un libro se abre el detalle; el cambio de estado es un sheet dentro del detalle.
 15. La lista de géneros es la de arriba, cerrada y con "Otros" como salida.
@@ -263,7 +264,8 @@ Para no volver a discutirlas:
     detalle, para que la regla de un solo sentido no tenga puerta trasera.
 17. Las sesiones de lectura no se pueden borrar, **ni siquiera al borrar su libro**: lo que se
     mide es el tiempo invertido en leer, no qué libros se terminaron ([C01](../cambios/C01-confirmar-borrado.md)).
-18. El baúl se ordena por fecha de creación, con los libros más recientes primero.
+18. ~~El baúl se ordena por fecha de creación~~ — sustituida por la #28
+    ([C06](../cambios/C06-baul-por-estado.md)).
 19. El modo oscuro es el cálido de "Literary Warmth", no el neutro que traía el kit de diseño.
 20. El estado se muestra como punto y texto de color, sin píldora de fondo.
 21. La app se publica en español e inglés, con todos los textos localizados desde el primer
@@ -280,5 +282,10 @@ Para no volver a discutirlas:
     del archivo ([C05](../cambios/C05-perfil-importar-exportar.md)).
 27. **Una exportación cubre libros, no portadas ni sesiones de lectura.** No es una copia de
     seguridad completa, y la pantalla lo dice ([C05](../cambios/C05-perfil-importar-exportar.md)).
+28. **El baúl muestra una estantería a la vez**, elegida con chips y sin opción de verlas todas.
+    Dentro de cada una manda la fecha de la última llegada, no la de registro: lo que acabas de
+    mover encabeza la lista ([C06](../cambios/C06-baul-por-estado.md)).
+29. **La estantería elegida se recuerda**, y al guardar un libro el baúl salta a la suya: guardar
+    algo que no puedes ver parece que no hizo nada ([C06](../cambios/C06-baul-por-estado.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

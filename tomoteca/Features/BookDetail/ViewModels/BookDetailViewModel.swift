@@ -17,11 +17,13 @@ final class BookDetailViewModel: ObservableObject {
     @Published var isChangingStatus = false
 
     private let repository: BookRepository
+    private let now: () -> Date
     private var cancellables = Set<AnyCancellable>()
 
-    init(book: Book, repository: BookRepository) {
+    init(book: Book, repository: BookRepository, now: @escaping () -> Date = Date.init) {
         self.book = book
         self.repository = repository
+        self.now = now
 
         repository.books
             .compactMap { $0.first { $0.id == book.id } }
@@ -60,6 +62,8 @@ final class BookDetailViewModel: ObservableObject {
 
         var updated = book
         updated.status = nextStatus
+        // Restarts the clock: the book has to head the shelf it just arrived at.
+        updated.statusChangedAt = now()
 
         do {
             try repository.update(updated)

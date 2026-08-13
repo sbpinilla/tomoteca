@@ -75,6 +75,8 @@ final class SessionRecoveryUITests: XCTestCase {
 
         // Open another book entirely and try to start reading it.
         app.buttons["Trunk"].tap()
+        // The book being read lives on its own shelf now.
+        app.buttons["shelf-reading"].tap()
         // Scoped to the list: the banner also carries the book's title, so an unscoped query
         // matches twice.
         app.cells.containing(.staticText, identifier: "Cien años de soledad").firstMatch.tap()

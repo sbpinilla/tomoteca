@@ -6,43 +6,80 @@
 import Combine
 import Foundation
 
-/// Drives the trunk list: what is stored, narrowed by the search text and the status filter.
+/// Drives the trunk: one shelf at a time, narrowed by the search text.
 ///
 /// Knows nothing about Core Data: it receives a `BookRepository` and works off what it emits.
 @MainActor
 final class BookListViewModel: ObservableObject {
 
-    /// The status filter, with an extra option for "no filter at all".
-    enum Filter: Hashable, Identifiable, CaseIterable {
-        case all
-        case status(BookStatus)
+    /// Where the shelf choice is remembered between launches.
+    static let selectedShelfKey = "trunkSelectedShelf"
 
-        static var allCases: [Filter] { [.all] + BookStatus.allCases.map(Filter.status) }
-
-        var id: Self { self }
-
-        var title: LocalizedStringResource {
-            switch self {
-            case .all: return .trunkFilterAll
-            case .status(let status): return status.shortTitle
-            }
-        }
-    }
+    /// Opens on the bought shelf, which is where most of a library sits.
+    private static let defaultShelf = BookStatus.owned
 
     @Published var searchText = ""
-    @Published var filter: Filter = .all
+    @Published var shelf: BookStatus {
+        didSet { defaults.set(Int(shelf.rawValue), forKey: Self.selectedShelfKey) }
+    }
 
     @Published private(set) var books: [Book] = []
 
     private let repository: BookRepository
+    private let defaults: UserDefaults
     private var cancellables = Set<AnyCancellable>()
 
-    init(repository: BookRepository) {
+    init(repository: BookRepository, defaults: UserDefaults = .standard) {
         self.repository = repository
+        self.defaults = defaults
+        self.shelf = Self.storedShelf(in: defaults)
 
         repository.books
             .assign(to: \.books, on: self)
             .store(in: &cancellables)
+    }
+
+    private static func storedShelf(in defaults: UserDefaults) -> BookStatus {
+        guard
+            defaults.object(forKey: selectedShelfKey) != nil,
+            let stored = BookStatus(rawValue: Int16(defaults.integer(forKey: selectedShelfKey)))
+        else {
+            return defaultShelf
+        }
+        return stored
+    }
+
+    /// The shelves, in the order the life cycle runs.
+    var shelves: [BookStatus] { BookStatus.allCases }
+
+    /// What the list shows: the chosen shelf, narrowed by the search, newest arrival first.
+    ///
+    /// Sorted by when each book **reached this shelf**, not by when it was registered. A book
+    /// bought today belongs at the top even if it was added to the wishlist months ago.
+    var visibleBooks: [Book] {
+        books
+            .filter { $0.status == shelf }
+            .filter(matchesSearch)
+            .sorted { $0.statusChangedAt > $1.statusChangedAt }
+    }
+
+    /// How many books sit on a shelf, for its chip. Ignores the search: the count answers
+    /// "is there anything over there", which a search would keep changing underneath.
+    func count(of status: BookStatus) -> Int {
+        books.filter { $0.status == status }.count
+    }
+
+    /// Nothing stored at all, as opposed to nothing on this shelf.
+    var isEmpty: Bool { books.isEmpty }
+
+    /// The shelf is empty, and no search is hiding anything.
+    var isShelfEmpty: Bool {
+        !books.isEmpty && count(of: shelf) == 0
+    }
+
+    /// The shelf has books, but none survives the current search.
+    var hasNoResults: Bool {
+        count(of: shelf) > 0 && visibleBooks.isEmpty
     }
 
     /// Removes a book. Swipe-to-delete is deliberate enough on its own, so there is no
@@ -56,34 +93,11 @@ final class BookListViewModel: ObservableObject {
     }
 
     /// The book behind a swipe, resolved **within the visible list**, which is not the same as
-    /// the stored catalog whenever a search or filter is active.
+    /// the stored catalog whenever a shelf or a search is narrowing it.
     func book(atOffsets offsets: IndexSet) -> Book? {
         let visible = visibleBooks
         guard let index = offsets.first, visible.indices.contains(index) else { return nil }
         return visible[index]
-    }
-
-    /// What the list actually shows: the catalog after the filter and then the search.
-    ///
-    /// The two combine rather than override each other — after filtering to "reading", a search
-    /// is expected to look inside that shelf, not start over from the whole library.
-    var visibleBooks: [Book] {
-        books
-            .filter(matchesFilter)
-            .filter(matchesSearch)
-    }
-
-    /// Nothing stored at all, as opposed to nothing matching.
-    var isEmpty: Bool { books.isEmpty }
-
-    /// Books exist, but none survives the current search or filter.
-    var hasNoResults: Bool { !books.isEmpty && visibleBooks.isEmpty }
-
-    private func matchesFilter(_ book: Book) -> Bool {
-        switch filter {
-        case .all: return true
-        case .status(let status): return book.status == status
-        }
     }
 
     private func matchesSearch(_ book: Book) -> Bool {

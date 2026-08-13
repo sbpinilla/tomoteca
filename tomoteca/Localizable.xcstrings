@@ -2134,6 +2134,42 @@
         }
       }
     },
+    "trunk.empty_status_message": {
+      "comment": "Message when the selected shelf has no books",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Books with this status will show up here."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los libros con este estado aparecerán aquí."
+          }
+        }
+      }
+    },
+    "trunk.empty_status_title": {
+      "comment": "Title when the selected shelf has no books",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing on this shelf"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin libros aquí"
+          }
+        }
+      }
+    },
     "trunk.empty_title": {
       "comment": "Title shown when the trunk has no books yet",
       "extractionState": "manual",
@@ -2238,6 +2274,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Buscar por título o autor"
+          }
+        }
+      }
+    },
+    "trunk.status_filter_label": {
+      "comment": "Accessibility label of the status chips",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shelf"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estantería"
           }
         }
       }

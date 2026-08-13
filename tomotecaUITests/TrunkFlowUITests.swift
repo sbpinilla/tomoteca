@@ -34,6 +34,7 @@ final class TrunkFlowUITests: XCTestCase {
     }
 
     func testSearchIgnoresAccents() {
+        app.buttons["shelf-reading"].tap()
         app.searchFields.firstMatch.tap()
         app.typeText("garcia")
 
@@ -48,12 +49,30 @@ final class TrunkFlowUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No results"].waitForExistence(timeout: 5))
     }
 
-    func testFilterNarrowsByStatus() {
-        app.buttons["statusFilter"].tap()
-        app.buttons["Reading"].tap()
+    func testShelfChipsNarrowByStatus() {
+        // Opens on the bought shelf, so a book being read is not on screen yet.
+        XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Cien años de soledad"].exists)
+
+        app.buttons["shelf-reading"].tap()
 
         XCTAssertTrue(app.staticTexts["Cien años de soledad"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["Sapiens"].exists)
+    }
+
+    func testAnEmptyShelfSaysSo() {
+        // Nothing has been finished in the seeded library apart from one book; move to a shelf
+        // that is genuinely empty.
+        app.buttons["shelf-wishlist"].tap()
+        XCTAssertTrue(app.staticTexts["Project Hail Mary"].waitForExistence(timeout: 5))
+
+        // Delete the only book on it and the shelf reports itself empty, not the library.
+        let row = app.cells.containing(.staticText, identifier: "Project Hail Mary").firstMatch
+        row.swipeLeft()
+        app.buttons["Delete"].tap()
+        app.alerts.firstMatch.buttons["Delete"].tap()
+
+        XCTAssertTrue(app.staticTexts["Nothing on this shelf"].waitForExistence(timeout: 5))
     }
 
     func testSwipingDeletesABook() {
@@ -70,7 +89,10 @@ final class TrunkFlowUITests: XCTestCase {
         alert.buttons["Delete"].tap()
 
         XCTAssertFalse(app.staticTexts["Sapiens"].waitForExistence(timeout: 2))
-        XCTAssertTrue(app.staticTexts["Project Hail Mary"].exists, "Only the swiped book goes")
+
+        // The other shelves are untouched.
+        app.buttons["shelf-wishlist"].tap()
+        XCTAssertTrue(app.staticTexts["Project Hail Mary"].waitForExistence(timeout: 5))
     }
 
     func testCancellingTheAlertKeepsTheBook() {

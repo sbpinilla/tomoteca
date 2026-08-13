@@ -72,10 +72,15 @@ final class BookFormViewModel: ObservableObject {
             && pageCount != nil
     }
 
-    /// Stores the book. Returns `false` if the form is incomplete or the save failed, so the
-    /// caller can keep the sheet open rather than dismissing over a lost book.
-    func save() -> Bool {
-        guard let genre, let pageCount, canSave else { return false }
+    /// Stores the book and hands it back, or `nil` if the form is incomplete or the write
+    /// failed — in which case the caller keeps the sheet open rather than dismissing over a
+    /// lost book.
+    ///
+    /// Returns the book rather than a flag so the trunk can move to the shelf it landed on:
+    /// saving a book you cannot see afterwards looks like nothing happened.
+    @discardableResult
+    func save() -> Book? {
+        guard let genre, let pageCount, canSave else { return nil }
 
         let trimmedAuthor = author.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -87,16 +92,16 @@ final class BookFormViewModel: ObservableObject {
         do {
             switch mode {
             case .add:
-                try repository.add(
-                    Book(
-                        title: trimmedTitle,
-                        author: cleanAuthor,
-                        genre: genre,
-                        pageCount: pageCount,
-                        status: status,
-                        coverImageData: coverImageData
-                    )
+                let book = Book(
+                    title: trimmedTitle,
+                    author: cleanAuthor,
+                    genre: genre,
+                    pageCount: pageCount,
+                    status: status,
+                    coverImageData: coverImageData
                 )
+                try repository.add(book)
+                return book
 
             case .edit(let original):
                 // Rebuilt from the original so everything the form does not show — the id, the
@@ -108,10 +113,10 @@ final class BookFormViewModel: ObservableObject {
                 updated.pageCount = pageCount
                 updated.coverImageData = coverImageData
                 try repository.update(updated)
+                return updated
             }
-            return true
         } catch {
-            return false
+            return nil
         }
     }
 }

@@ -22,6 +22,12 @@ struct Book: Identifiable, Equatable, Hashable, Sendable {
     var status: BookStatus
     var coverImageData: Data?
     var createdAt: Date
+    /// When the book arrived at its current status.
+    ///
+    /// Set on creation and rewritten on every move, so that the shelf a book just landed on
+    /// shows it first. Without it, a book bought today would sit wherever its registration date
+    /// happened to put it.
+    var statusChangedAt: Date
 
     init(
         id: UUID = UUID(),
@@ -32,7 +38,8 @@ struct Book: Identifiable, Equatable, Hashable, Sendable {
         currentPage: Int = 0,
         status: BookStatus = .wishlist,
         coverImageData: Data? = nil,
-        createdAt: Date = Date()
+        createdAt: Date = Date(),
+        statusChangedAt: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -43,6 +50,8 @@ struct Book: Identifiable, Equatable, Hashable, Sendable {
         self.status = status
         self.coverImageData = coverImageData
         self.createdAt = createdAt
+        // A book that has never moved counts as having arrived when it was registered.
+        self.statusChangedAt = statusChangedAt ?? createdAt
     }
 
     /// How far through the book the reader is, from 0 to 1.

@@ -53,7 +53,11 @@ struct TrunkView: View {
                     }
                 }
                 .sheet(isPresented: $isAddingBook) {
-                    BookFormView(mode: .add, repository: repository)
+                    // Follows the new book to wherever it landed: saving something you then
+                    // cannot see reads as a button that did nothing.
+                    BookFormView(mode: .add, repository: repository) { saved in
+                        viewModel.shelf = saved.status
+                    }
                 }
                 .alert(item: $bookPendingDeletion) { book in
                     Alert(
@@ -96,9 +100,17 @@ struct TrunkView: View {
             }
         } else {
             VStack(spacing: 0) {
-                filterMenu
+                shelfChips
 
-                if viewModel.hasNoResults {
+                if viewModel.isShelfEmpty {
+                    centered {
+                        TMEmptyState(
+                            systemImage: "books.vertical",
+                            title: .trunkEmptyStatusTitle,
+                            message: .trunkEmptyStatusMessage
+                        )
+                    }
+                } else if viewModel.hasNoResults {
                     centered {
                         TMEmptyState(
                             systemImage: "magnifyingglass",
@@ -132,34 +144,29 @@ struct TrunkView: View {
         .scrollContentBackground(.hidden)
     }
 
-    /// Five options counting "All" — too many for a segmented control, so a menu it is.
-    private var filterMenu: some View {
-        HStack {
-            Menu {
-                Picker(selection: $viewModel.filter) {
-                    ForEach(BookListViewModel.Filter.allCases) { filter in
-                        Text(filter.title).tag(filter)
+    /// One chip per shelf, always with one chosen. There is no "everything" — that is what made
+    /// the list unreadable once the library grew.
+    ///
+    /// Scrolls sideways because four chips with their counts do not fit across a phone, and fit
+    /// even less at accessibility text sizes.
+    private var shelfChips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: Spacing.sm) {
+                ForEach(viewModel.shelves) { status in
+                    TMShelfChip(
+                        title: status.shortTitle,
+                        count: viewModel.count(of: status),
+                        color: status.color,
+                        isSelected: viewModel.shelf == status
+                    ) {
+                        viewModel.shelf = status
                     }
-                } label: {
-                    EmptyView()
+                    .accessibilityIdentifier("shelf-\(status.archiveName)")
                 }
-            } label: {
-                HStack(spacing: Spacing.xs) {
-                    TMText(viewModel.filter.title, style: .body)
-                    Image(systemName: "chevron.down")
-                        .foregroundColor(AppColor.textSecondary)
-                }
-                .padding(.horizontal, Spacing.md)
-                .padding(.vertical, Spacing.sm)
-                .background(AppColor.surface)
-                .clipShape(Capsule())
             }
-            .accessibilityLabel(Text(.trunkFilterLabel))
-            .accessibilityIdentifier("statusFilter")
-
-            Spacer()
+            .padding(.horizontal, Spacing.md)
         }
-        .padding(.horizontal, Spacing.md)
+        .accessibilityLabel(Text(.trunkStatusFilterLabel))
         .padding(.bottom, Spacing.sm)
     }
 

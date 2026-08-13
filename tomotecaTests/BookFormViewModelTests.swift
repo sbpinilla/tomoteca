@@ -71,7 +71,7 @@ struct BookFormViewModelTests {
         viewModel.pageCountText = "512"
         viewModel.status = .owned
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
 
         let book = try #require(repository.added.first)
         #expect(book.title == "Sapiens")
@@ -90,7 +90,7 @@ struct BookFormViewModelTests {
         viewModel.genre = .history
         viewModel.pageCountText = " 512 "
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
 
         let book = try #require(repository.added.first)
         #expect(book.title == "Sapiens")
@@ -106,8 +106,21 @@ struct BookFormViewModelTests {
         viewModel.genre = .history
         viewModel.pageCountText = "512"
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
         #expect(try #require(repository.added.first).author == nil)
+    }
+
+    @Test("Saving hands back the stored book, so the trunk can follow it to its shelf")
+    func savingReturnsTheStoredBook() throws {
+        let (viewModel, _) = makeViewModel()
+        viewModel.title = "Dune"
+        viewModel.genre = .scienceFiction
+        viewModel.pageCountText = "412"
+        viewModel.status = .owned
+
+        let saved = try #require(viewModel.save())
+        #expect(saved.title == "Dune")
+        #expect(saved.status == .owned)
     }
 
     @Test("A new book defaults to the wishlist")
@@ -121,7 +134,7 @@ struct BookFormViewModelTests {
         let (viewModel, repository) = makeViewModel()
         viewModel.title = "Sapiens"
 
-        #expect(viewModel.save() == false)
+        #expect(viewModel.save() == nil)
         #expect(repository.added.isEmpty)
     }
 
@@ -133,7 +146,7 @@ struct BookFormViewModelTests {
         viewModel.genre = .history
         viewModel.pageCountText = "512"
 
-        #expect(viewModel.save() == false)
+        #expect(viewModel.save() == nil)
     }
 
     // MARK: Editing
@@ -163,7 +176,7 @@ struct BookFormViewModelTests {
         let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
         viewModel.title = "Cien años de soledad (edición revisada)"
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
 
         #expect(repository.added.isEmpty)
         let stored = try #require(repository.updated.first)
@@ -176,7 +189,7 @@ struct BookFormViewModelTests {
         let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
         viewModel.title = "Otro título"
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
 
         let stored = try #require(repository.updated.first)
         #expect(stored.status == Book.previewReading.status)
@@ -190,7 +203,7 @@ struct BookFormViewModelTests {
         let (viewModel, repository) = makeViewModel(mode: .edit(.previewReading))
         viewModel.coverImageData = Data([0x09])
 
-        #expect(viewModel.save())
+        #expect(viewModel.save() != nil)
 
         let stored = try #require(repository.updated.first)
         #expect(stored.coverImageData == Data([0x09]))

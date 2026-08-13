@@ -23,6 +23,12 @@ struct tomotecaApp: App {
         if CommandLine.arguments.contains(PersistenceController.seedArgument) {
             persistenceController.seedSampleDataIfNeeded()
         }
+
+        // The remembered shelf outlives the app, so without this one UI test would decide
+        // where the next one opens.
+        if CommandLine.arguments.contains("-useInMemoryStore") {
+            UserDefaults.standard.removeObject(forKey: BookListViewModel.selectedShelfKey)
+        }
         #endif
 
         bookRepository = CoreDataBookRepository(persistence: persistenceController)

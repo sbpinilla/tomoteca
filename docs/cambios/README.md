@@ -27,5 +27,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C03 · Campos más cómodos de enfocar](C03-campos-comodos.md) | Mejora | ✅ Cerrado |
 | [C04 · Tests más rápidos de ejecutar](C04-tests-mas-rapidos.md) | Mejora | ✅ Cerrado |
 | [C05 · Perfil, con importar y exportar libros](C05-perfil-importar-exportar.md) | Feature | ✅ Cerrado |
+| [C06 · El baúl, una estantería por estado](C06-baul-por-estado.md) | Mejora | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado

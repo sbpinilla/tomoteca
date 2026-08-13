@@ -59,13 +59,15 @@ final class BookDetailFlowUITests: XCTestCase {
         // The detail reflects it without being rebuilt.
         XCTAssertTrue(app.staticTexts["Reading"].waitForExistence(timeout: 5))
 
-        // And so does the row behind it.
+        // And so does the row behind it — on the shelf the book moved to.
         app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["shelf-reading"].tap()
         XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Reading"].exists)
     }
 
     func testFinishedBookOffersNoAdvance() {
+        app.buttons["shelf-finished"].tap()
         app.staticTexts["El nombre de la rosa"].tap()
         XCTAssertTrue(app.staticTexts["Page 624 of 624"].waitForExistence(timeout: 5))
 

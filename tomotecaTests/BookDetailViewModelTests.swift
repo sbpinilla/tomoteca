@@ -10,9 +10,16 @@ import Testing
 @MainActor
 struct BookDetailViewModelTests {
 
+    private static let moment = Date(timeIntervalSince1970: 9_999)
+
     private func makeViewModel(for book: Book) -> (BookDetailViewModel, FakeBookRepository) {
         let repository = FakeBookRepository(books: [book])
-        return (BookDetailViewModel(book: book, repository: repository), repository)
+        let viewModel = BookDetailViewModel(
+            book: book,
+            repository: repository,
+            now: { Self.moment }
+        )
+        return (viewModel, repository)
     }
 
     @Test("Offers the next status in the cycle")
@@ -60,6 +67,17 @@ struct BookDetailViewModelTests {
 
         #expect(viewModel.book.status == .finished)
         #expect(repository.updateCount == 0, "Nothing should be written for a finished book")
+    }
+
+    @Test("Advancing restarts the clock, so the book heads the shelf it just reached")
+    func advancingRestartsTheArrivalClock() throws {
+        let (viewModel, repository) = makeViewModel(for: .previewOwned)
+
+        viewModel.advanceStatus()
+
+        let stored = try #require(repository.updated.first)
+        #expect(stored.statusChangedAt == Self.moment)
+        #expect(stored.createdAt == Book.previewOwned.createdAt, "Registration date is untouched")
     }
 
     @Test("Advancing keeps everything except the status")
