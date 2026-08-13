@@ -244,12 +244,44 @@ If a change turns out to need no test work at all, say so at the stop and wait f
 # Build
 xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' build
 
-# Tests
+# Every test
 xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' test
 
 # Available schemes and targets
 xcodebuild -list -project tomoteca.xcodeproj
 ```
+
+### Running tests without waiting five minutes
+
+The full suite takes minutes, and nearly all of it is the UI tests: each one launches the app
+from scratch. Running it after every edit is what makes a one-file change feel expensive.
+
+**Run only what the change touched.** The unit suite is the cheap one — the whole of it finishes
+in about a second, so there is no reason to skip it:
+
+```bash
+# Just the unit tests
+xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' \
+  -only-testing:tomotecaTests test
+
+# One UI class, or one test inside it
+xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' \
+  -only-testing:tomotecaUITests/AddBookFlowUITests test
+```
+
+**Compile once, then re-run as often as needed.** `test` rebuilds all three targets every time;
+splitting it skips that on every run after the first:
+
+```bash
+xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' build-for-testing
+xcodebuild -scheme tomoteca -destination 'platform=iOS Simulator,name=iPhone 17' test-without-building
+```
+
+**Keep the simulator booted.** A cold boot adds around two minutes of device migration before a
+single test runs.
+
+The full suite still runs before a change is called closed — the point is not to run it after
+every keystroke on the way there.
 
 ## Project skills
 

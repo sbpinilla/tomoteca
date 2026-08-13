@@ -25,5 +25,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C01 · Confirmar antes de borrar](C01-confirmar-borrado.md) | Mejora | ✅ Cerrado |
 | [C02 · Retomar una sesión interrumpida](C02-retomar-sesion.md) | Corrección | ✅ Cerrado |
 | [C03 · Campos más cómodos de enfocar](C03-campos-comodos.md) | Mejora | ✅ Cerrado |
+| [C04 · Tests más rápidos de ejecutar](C04-tests-mas-rapidos.md) | Mejora | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado
