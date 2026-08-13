@@ -19,14 +19,26 @@ concurrency:
 jobs:
   test:
     name: Compilar y testear
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 45
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Mostrar la versión de Xcode
-        run: xcodebuild -version
+      # El proyecto necesita Xcode 26 o superior: los símbolos generados del String
+      # Catalog (STRING_CATALOG_GENERATE_SYMBOLS) no existen antes, y sin ellos no
+      # compila una sola vista. Se elige el Xcode más nuevo de la imagen y se
+      # comprueba la versión, para que un cambio de runner falle diciendo por qué.
+      - name: Seleccionar Xcode
+        run: |
+          LATEST=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+          sudo xcode-select -s "$LATEST"
+          xcodebuild -version
+          MAJOR=$(xcodebuild -version | head -1 | sed -E 's/Xcode ([0-9]+).*/\1/')
+          if [ "$MAJOR" -lt 26 ]; then
+            echo "::error::Se necesita Xcode 26 o superior (hay $MAJOR). Sin él no se generan los símbolos del String Catalog."
+            exit 1
+          fi
 
       # El nombre del simulador cambia con cada versión de Xcode, así que en vez de
       # fijar "iPhone 17" cogemos el primer iPhone disponible en el runner.
