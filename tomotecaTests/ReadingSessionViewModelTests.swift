@@ -255,6 +255,21 @@ struct ReadingSessionViewModelTests {
         #expect(stored.id == Book.previewReading.id)
     }
 
+    @Test("The session records the page it started on, which is where the bookmark was")
+    func recordsTheStartingPage() throws {
+        let h = makeHarness()
+
+        h.viewModel.finishEarly()
+        h.viewModel.finalPageText = "260"
+
+        #expect(h.viewModel.save())
+
+        let session = try #require(h.sessions.added.first)
+        #expect(session.startPage == Book.previewReading.currentPage)
+        #expect(session.finalPage == 260)
+        #expect(session.pagesRead == 260 - Book.previewReading.currentPage)
+    }
+
     @Test("Saving does not touch the book's status: finishing a book stays a deliberate act")
     func savingDoesNotAdvanceTheStatus() throws {
         let h = makeHarness()

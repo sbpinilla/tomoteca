@@ -287,5 +287,12 @@ Para no volver a discutirlas:
     mover encabeza la lista ([C06](../cambios/C06-baul-por-estado.md)).
 29. **La estantería elegida se recuerda**, y al guardar un libro el baúl salta a la suya: guardar
     algo que no puedes ver parece que no hizo nada ([C06](../cambios/C06-baul-por-estado.md)).
+30. **Cada sesión guarda la página en la que empezó**, además de la final. Es lo que permite
+    contar páginas leídas sin deducirlas encadenando sesiones, que falla en un libro importado
+    con progreso ya hecho ([C08](../cambios/C08-historial-de-sesiones.md)).
+31. **El seguimiento lista las sesiones bajo la gráfica**, cinco de entrada y cinco más por cada
+    "ver más", dentro del rango elegido. Las sesiones de libros borrados no salen en la lista
+    aunque sigan contando en la gráfica: una fila sin nombre no informa de nada
+    ([C08](../cambios/C08-historial-de-sesiones.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

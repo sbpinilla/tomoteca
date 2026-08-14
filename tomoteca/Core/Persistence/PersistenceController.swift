@@ -51,6 +51,40 @@ struct PersistenceController {
 
         backfillSessionBookIDs()
         backfillStatusChangedAt()
+        backfillSessionStartPages()
+    }
+
+    /// Reconstructs the starting page of sessions recorded before it was stored.
+    ///
+    /// Each book's sessions are walked oldest first, and each one starts where the previous one
+    /// ended — which is what the starting page has always been. The first session of a book
+    /// starts at page 0: there is nothing earlier to chain from, and inside the app that is where
+    /// a book begins. A book imported with progress already made is the case this gets wrong, and
+    /// it is unknowable from what was stored.
+    ///
+    /// Not private, unlike the other two: this one reconstructs a number rather than copying one
+    /// across, and it runs over reading that is already on the phone, so it is worth a test.
+    func backfillSessionStartPages() {
+        let context = container.viewContext
+        let request = NSFetchRequest<ReadingSessionEntity>(entityName: "ReadingSessionEntity")
+        request.predicate = NSPredicate(format: "startPage == nil")
+        request.sortDescriptors = [NSSortDescriptor(key: "startedAt", ascending: true)]
+
+        guard let pending = try? context.fetch(request), !pending.isEmpty else { return }
+
+        var lastPage: [UUID: Int] = [:]
+
+        for session in pending {
+            guard let bookID = session.bookID ?? session.book?.id else {
+                session.startPage = 0
+                continue
+            }
+
+            session.startPage = NSNumber(value: lastPage[bookID] ?? 0)
+            lastPage[bookID] = Int(session.finalPage)
+        }
+
+        try? context.save()
     }
 
     /// Gives books written before the field existed a date to sort by.

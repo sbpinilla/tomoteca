@@ -11,8 +11,12 @@ struct TrackingView: View {
 
     @StateObject private var viewModel: TrackingViewModel
 
-    init(repository: ReadingSessionRepository) {
-        _viewModel = StateObject(wrappedValue: TrackingViewModel(repository: repository))
+    /// Takes the book repository only to name the sessions in the history: the chart and the
+    /// totals are built from sessions alone.
+    init(repository: ReadingSessionRepository, bookRepository: BookRepository) {
+        _viewModel = StateObject(
+            wrappedValue: TrackingViewModel(repository: repository, bookRepository: bookRepository)
+        )
     }
 
     var body: some View {
@@ -45,6 +49,7 @@ struct TrackingView: View {
                         .padding(.top, Spacing.xl)
                     } else {
                         chart
+                        history
                     }
                 }
                 .padding(Spacing.md)
@@ -84,6 +89,42 @@ struct TrackingView: View {
         .accessibilityLabel(Text(.trackingChartLabel))
     }
 
+    /// The sessions behind the chart, newest first.
+    ///
+    /// Hidden outright when there is nothing to list — which happens with bars on the chart, if
+    /// every session in the range belonged to a book that has since been deleted.
+    @ViewBuilder
+    private var history: some View {
+        if !viewModel.visibleEntries.isEmpty {
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                TMText(.trackingHistoryTitle, style: .headline)
+                    .padding(.top, Spacing.sm)
+
+                VStack(spacing: 0) {
+                    ForEach(Array(viewModel.visibleEntries.enumerated()), id: \.element.id) { index, entry in
+                        if index > 0 {
+                            Divider().overlay(AppColor.borderSubtle)
+                        }
+
+                        SessionHistoryRow(entry: entry)
+                    }
+                }
+                .padding(.horizontal, Spacing.md)
+                .padding(.vertical, Spacing.sm)
+                .background(AppColor.surface)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.md, style: .continuous))
+
+                if viewModel.canShowMore {
+                    TMButton(title: .trackingHistoryMore, style: .secondary) {
+                        viewModel.showMore()
+                    }
+                    .accessibilityIdentifier("showMoreSessions")
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
     /// Enough to read the shape of the week, faint enough that today still stands out.
     private static let mutedBarOpacity = 0.35
 
@@ -107,11 +148,17 @@ struct TrackingView: View {
 #if DEBUG
 struct TrackingView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackingView(repository: PreviewReadingSessionRepository(sessions: .previewWeek))
-            .previewDisplayName("Con sesiones")
+        TrackingView(
+            repository: PreviewReadingSessionRepository(sessions: .previewWeek),
+            bookRepository: PreviewBookRepository.populated
+        )
+        .previewDisplayName("Con sesiones")
 
-        TrackingView(repository: PreviewReadingSessionRepository())
-            .previewDisplayName("Vacío")
+        TrackingView(
+            repository: PreviewReadingSessionRepository(),
+            bookRepository: PreviewBookRepository.populated
+        )
+        .previewDisplayName("Vacío")
     }
 }
 #endif

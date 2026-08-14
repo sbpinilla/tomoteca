@@ -183,6 +183,9 @@ final class ReadingSessionViewModel: ObservableObject {
             endedAt: now(),
             plannedMinutes: stored.plannedMinutes,
             actualSeconds: Int(stored.accumulated.rounded()),
+            // Where the book stood when this session opened: `book` is the snapshot taken then,
+            // and nothing but a session moves the bookmark.
+            startPage: book.currentPage,
             finalPage: finalPage
         )
 

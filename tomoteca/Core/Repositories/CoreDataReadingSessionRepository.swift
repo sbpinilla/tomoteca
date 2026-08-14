@@ -57,6 +57,7 @@ final class CoreDataReadingSessionRepository: ReadingSessionRepository {
         entity.endedAt = session.endedAt
         entity.plannedMinutes = Int32(session.plannedMinutes)
         entity.actualSeconds = Int32(session.actualSeconds)
+        entity.startPage = NSNumber(value: session.startPage)
         entity.finalPage = Int32(session.finalPage)
 
         do {
@@ -106,6 +107,8 @@ final class CoreDataReadingSessionRepository: ReadingSessionRepository {
             endedAt: endedAt,
             plannedMinutes: Int(entity.plannedMinutes),
             actualSeconds: Int(entity.actualSeconds),
+            // Nil only until the backfill has run; after that every row has one.
+            startPage: entity.startPage?.intValue ?? 0,
             finalPage: Int(entity.finalPage)
         )
     }

@@ -41,7 +41,7 @@ struct RootTabView: View {
                     }
                 }
 
-            TrackingView(repository: sessionRepository)
+            TrackingView(repository: sessionRepository, bookRepository: bookRepository)
                 .activeSessionBanner(sessionController)
                 .tag(Tab.tracking)
                 .tabItem {
