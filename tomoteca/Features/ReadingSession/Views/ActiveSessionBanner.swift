@@ -3,6 +3,7 @@
 //  tomoteca
 //
 
+import Combine
 import SwiftUI
 
 /// Sits above the tab bar while a session is in progress, and reopens it when tapped.
@@ -88,9 +89,31 @@ extension View {
     /// Applied to each tab's content rather than to the `TabView` itself: an inset on the
     /// TabView lands across the tab bar, covering it. Inside a tab, the banner stops where the
     /// tab bar begins — above it, not on it.
-    @ViewBuilder
     func activeSessionBanner(_ controller: ActiveSessionController) -> some View {
         safeAreaInset(edge: .bottom) {
+            LiveSessionBanner(controller: controller)
+        }
+    }
+}
+
+/// Keeps the banner's countdown moving, and nothing else with it.
+///
+/// The tick lives here rather than at the root on purpose. Refreshing the banner by invalidating
+/// the whole app once a second repainted the four tabs — and, worse, rebuilt the running
+/// session's screen, whose own one-second timer was restarted before it could ever fire.
+private struct LiveSessionBanner: View {
+
+    @ObservedObject var controller: ActiveSessionController
+
+    /// In `@State` so the subscription survives an update of this view: rebuilt each time, the
+    /// timer would restart its one-second window instead of firing.
+    @State private var tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    /// Changed on every tick for the sole purpose of redrawing. The time shown is still read
+    /// from the clock below, so it can never be a stale copy.
+    @State private var redraws = 0
+
+    var body: some View {
+        Group {
             if let book = controller.book {
                 ActiveSessionBanner(
                     bookTitle: book.title,
@@ -103,6 +126,10 @@ extension View {
                 .padding(.horizontal, Spacing.md)
                 .padding(.bottom, Spacing.sm)
             }
+        }
+        .onReceive(tick) { _ in
+            guard controller.hasActiveSession else { return }
+            redraws &+= 1
         }
     }
 }

@@ -16,7 +16,11 @@ struct ActiveSessionView: View {
 
     /// Only drives the redraw. The time itself always comes from the clock, so a tick that
     /// never arrives — the app was in the background — costs nothing.
-    private let tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    ///
+    /// Held in `@State` so it is created once. Built as a plain property it would be a different
+    /// publisher on every update of this view, `onReceive` would resubscribe to it every time,
+    /// and a one-second timer that restarts before it fires never fires at all.
+    @State private var tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {

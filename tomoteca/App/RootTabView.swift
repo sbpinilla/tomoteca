@@ -3,7 +3,6 @@
 //  tomoteca
 //
 
-import Combine
 import SwiftUI
 
 /// The app's root navigation: three tabs, each owning its own navigation stack so that
@@ -24,8 +23,6 @@ struct RootTabView: View {
     @ObservedObject var sessionController: ActiveSessionController
 
     @State private var selection: Tab = Self.initialTab
-    /// Only drives the banner's countdown; the time itself comes from the clock.
-    private let tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         TabView(selection: $selection) {
@@ -82,10 +79,6 @@ struct RootTabView: View {
                 }
         }
         .tint(AppColor.brandAccent)
-        .onReceive(tick) { _ in
-            // Nudges the banner's remaining time, and notices when it runs out.
-            sessionController.objectWillChange.send()
-        }
         .fullScreenCover(isPresented: $sessionController.isPresenting) {
             if let viewModel = sessionController.sessionViewModel {
                 ActiveSessionView(viewModel: viewModel) {

@@ -82,6 +82,74 @@ final class ReadingSessionFlowUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
     }
 
+    /// The countdown froze on screen while the session ran perfectly well underneath: the number
+    /// was correct at every point, it just never got redrawn. Only a test that reads it **twice**
+    /// catches that — asserting it exists, or that it starts near ten minutes, passed throughout.
+    func testTheCountdownRunsDownOnScreen() {
+        startSession()
+
+        let remaining = app.staticTexts["remainingTime"]
+        XCTAssertTrue(remaining.waitForExistence(timeout: 5))
+
+        let first = remaining.label
+        let second = waitForCountdown(toChangeFrom: first)
+
+        XCTAssertNotEqual(second, first, "The countdown is frozen at \(first)")
+        // Zero-padded mm:ss, so plain string order is time order within a session.
+        XCTAssertLessThan(second, first, "The countdown moved the wrong way")
+    }
+
+    func testPausingFreezesTheCountdownAndResumingMovesItAgain() {
+        startSession()
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+
+        app.buttons["Pause"].tap()
+        XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
+
+        // Read after the pause has settled, so what is compared is time spent paused.
+        let frozen = app.staticTexts["remainingTime"].label
+        let whilePaused = waitForCountdown(toChangeFrom: frozen, timeout: 3)
+        XCTAssertEqual(whilePaused, frozen, "A paused session must not keep counting down")
+
+        app.buttons["Resume"].tap()
+
+        let afterResuming = waitForCountdown(toChangeFrom: frozen)
+        XCTAssertNotEqual(afterResuming, frozen, "The countdown did not pick up again")
+    }
+
+    /// Opens the book being read and starts a ten-minute session on it.
+    private func startSession() {
+        app.staticTexts["Cien años de soledad"].tap()
+
+        let start = app.buttons["Start reading session"]
+        XCTAssertTrue(start.waitForExistence(timeout: 5))
+        start.tap()
+
+        XCTAssertTrue(app.staticTexts["New session"].waitForExistence(timeout: 5))
+        app.buttons["10 min"].tap()
+        app.buttons["Start session"].tap()
+    }
+
+    /// The countdown as soon as it differs from `label`, or as it stands once the wait is over.
+    ///
+    /// Polled rather than slept through, so a running countdown is confirmed in about a second
+    /// and only a frozen one pays the whole timeout.
+    private func waitForCountdown(
+        toChangeFrom label: String,
+        timeout: TimeInterval = 6
+    ) -> String {
+        let element = app.staticTexts["remainingTime"]
+        let deadline = Date().addingTimeInterval(timeout)
+
+        while Date() < deadline {
+            let current = element.label
+            if current != label { return current }
+            Thread.sleep(forTimeInterval: 0.25)
+        }
+
+        return element.label
+    }
+
     private func attach(_ screenshot: XCUIScreenshot, named name: String) {
         let attachment = XCTAttachment(screenshot: screenshot)
         attachment.name = name
