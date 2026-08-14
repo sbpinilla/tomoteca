@@ -31,5 +31,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C07 · El cronómetro de la sesión se quedaba congelado](C07-cronometro-congelado.md) | Corrección | ✅ Cerrado |
 | [C08 · Historial de sesiones bajo la gráfica](C08-historial-de-sesiones.md) | Feature | ✅ Cerrado |
 | [C09 · Empezar a leer sin entrar al libro](C09-iniciar-sesion-desde-en-curso.md) | Mejora | ✅ Cerrado |
+| [C10 · El buscador del baúl desaparecía al volver de un libro](C10-buscador-desaparece.md) | Corrección | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado

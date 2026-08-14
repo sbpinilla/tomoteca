@@ -49,6 +49,34 @@ final class TrunkFlowUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No results"].waitForExistence(timeout: 5))
     }
 
+    /// Coming back from a book used to leave the trunk with no way to search: the field was gone
+    /// until the tab was left and entered again.
+    func testTheSearchFieldSurvivesAVisitToABook() {
+        XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 5))
+
+        app.staticTexts["Sapiens"].tap()
+        XCTAssertTrue(app.staticTexts["Page 0 of 512"].waitForExistence(timeout: 5))
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.searchFields.firstMatch.exists, "The search field did not come back")
+    }
+
+    /// And it still works, not just exists.
+    func testSearchingAfterComingBackFromABook() {
+        app.staticTexts["Sapiens"].tap()
+        XCTAssertTrue(app.staticTexts["Page 0 of 512"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 5))
+        app.searchFields.firstMatch.tap()
+        app.typeText("sapiens")
+
+        XCTAssertTrue(app.staticTexts["Sapiens"].exists)
+        XCTAssertFalse(app.staticTexts["Project Hail Mary"].exists)
+    }
+
     func testShelfChipsNarrowByStatus() {
         // Opens on the bought shelf, so a book being read is not on screen yet.
         XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))

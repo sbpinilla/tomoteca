@@ -72,8 +72,13 @@ struct TrunkView: View {
         }
         // Attached outside the branch so the field does not disappear when a search empties the
         // list — which would leave no way to undo the search.
+        //
+        // Pinned with `.always` because the default drawer is allowed to collapse into the
+        // navigation bar, and coming back from a book it never came out again: the field was
+        // gone for good until the tab was left and re-entered.
         .searchable(
             text: $viewModel.searchText,
+            placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text(.trunkSearchPrompt)
         )
     }
