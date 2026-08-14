@@ -30,5 +30,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C06 · El baúl, una estantería por estado](C06-baul-por-estado.md) | Mejora | ✅ Cerrado |
 | [C07 · El cronómetro de la sesión se quedaba congelado](C07-cronometro-congelado.md) | Corrección | ✅ Cerrado |
 | [C08 · Historial de sesiones bajo la gráfica](C08-historial-de-sesiones.md) | Feature | ✅ Cerrado |
+| [C09 · Empezar a leer sin entrar al libro](C09-iniciar-sesion-desde-en-curso.md) | Mejora | ✅ Cerrado |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado

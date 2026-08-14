@@ -294,5 +294,8 @@ Para no volver a discutirlas:
     "ver más", dentro del rango elegido. Las sesiones de libros borrados no salen en la lista
     aunque sigan contando en la gráfica: una fila sin nombre no informa de nada
     ([C08](../cambios/C08-historial-de-sesiones.md)).
+32. **Con un solo libro en curso, la sesión se empieza desde la pestaña**, sin entrar al libro:
+    con uno no hay nada que elegir. Con dos o más el botón desaparece y hay que entrar, porque
+    ahí la elección sí decide algo ([C09](../cambios/C09-iniciar-sesion-desde-en-curso.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

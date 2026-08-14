@@ -55,11 +55,26 @@ struct InProgressView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
-            List(viewModel.books) { book in
-                NavigationLink(value: book) {
-                    InProgressRowView(book: book)
+            List {
+                ForEach(viewModel.books) { book in
+                    NavigationLink(value: book) {
+                        InProgressRowView(book: book)
+                    }
+                    .listRowBackground(AppColor.surface)
                 }
-                .listRowBackground(AppColor.surface)
+
+                // Reading is what this tab is for, and with a single book there is nothing to
+                // pick: going into it to press a button is a step that decides nothing.
+                if let book = viewModel.onlyBook {
+                    SessionStartButton(
+                        book: book,
+                        sessionController: sessionController,
+                        notifications: notifications
+                    )
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: Spacing.md, leading: 0, bottom: 0, trailing: 0))
+                    .listRowSeparator(.hidden)
+                }
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)

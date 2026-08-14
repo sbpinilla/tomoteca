@@ -22,4 +22,12 @@ final class InProgressViewModel: ObservableObject {
     }
 
     var isEmpty: Bool { books.isEmpty }
+
+    /// The one book being read, when there is exactly one.
+    ///
+    /// With a single book there is nothing to choose, so the tab can offer the session itself.
+    /// With two the choice is real, and making it is what entering the book is for.
+    var onlyBook: Book? {
+        books.count == 1 ? books.first : nil
+    }
 }

@@ -117,6 +117,53 @@ final class ReadingSessionFlowUITests: XCTestCase {
         XCTAssertNotEqual(afterResuming, frozen, "The countdown did not pick up again")
     }
 
+    // MARK: Starting from the tab
+
+    /// The seeded library has a single book being read, which is the case this shortcut is for.
+    func testASingleBookStartsItsSessionFromTheTab() {
+        let start = app.buttons["Start reading session"]
+        XCTAssertTrue(start.waitForExistence(timeout: 5))
+
+        attach(app.screenshot(), named: "in-progress-single")
+
+        start.tap()
+
+        // The same duration sheet the detail opens, and the same session behind it.
+        XCTAssertTrue(app.staticTexts["New session"].waitForExistence(timeout: 5))
+        app.buttons["10 min"].tap()
+        app.buttons["Start session"].tap()
+
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Cien años de soledad"].exists, "The session is on that book")
+    }
+
+    func testTheRowStillLeadsToTheBook() {
+        app.staticTexts["Cien años de soledad"].tap()
+
+        // The detail, not the session: the shortcut adds a way in, it does not replace one.
+        XCTAssertTrue(app.staticTexts["Page 210 of 340"].waitForExistence(timeout: 5))
+    }
+
+    func testASecondBookBeingReadTakesTheShortcutAway() {
+        XCTAssertTrue(app.buttons["Start reading session"].waitForExistence(timeout: 5))
+
+        // Put a second book on this shelf, which is what makes the choice a real one.
+        app.buttons["Trunk"].tap()
+        app.staticTexts["Sapiens"].tap()
+        app.buttons["statusRow"].tap()
+        app.buttons["Start reading"].tap()
+        XCTAssertTrue(app.staticTexts["Reading"].waitForExistence(timeout: 5))
+
+        app.buttons["In progress"].tap()
+
+        XCTAssertTrue(app.staticTexts["Sapiens"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Cien años de soledad"].exists)
+        XCTAssertFalse(
+            app.buttons["Start reading session"].exists,
+            "With two books, which one to read is a choice the tab cannot make"
+        )
+    }
+
     /// Opens the book being read and starts a ten-minute session on it.
     private func startSession() {
         app.staticTexts["Cien años de soledad"].tap()
