@@ -84,6 +84,13 @@ struct RootTabView: View {
         // session too: they are presented from inside and inherit this. Applied screen by screen
         // it would miss one, and the one it would miss is the session.
         .preferredColorScheme(themeController.theme.colorScheme)
+        // Keeps the tab bar and the back button in step. `.preferredColorScheme` alone repaints
+        // SwiftUI content but leaves that UIKit chrome stale until an unrelated layout pass —
+        // see AppAppearance.apply(_:).
+        .onAppear { AppAppearance.apply(themeController.theme.colorScheme) }
+        .onChange(of: themeController.theme) { _ in
+            AppAppearance.apply(themeController.theme.colorScheme)
+        }
         .fullScreenCover(isPresented: $sessionController.isPresenting) {
             if let viewModel = sessionController.sessionViewModel {
                 ActiveSessionView(viewModel: viewModel) {
