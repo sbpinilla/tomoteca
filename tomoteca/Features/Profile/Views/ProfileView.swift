@@ -13,9 +13,11 @@ import SwiftUI
 struct ProfileView: View {
 
     private let repository: BookRepository
+    @ObservedObject private var themeController: ThemeController
 
-    init(repository: BookRepository) {
+    init(repository: BookRepository, themeController: ThemeController) {
         self.repository = repository
+        self.themeController = themeController
     }
 
     var body: some View {
@@ -25,6 +27,13 @@ struct ProfileView: View {
                     BookArchiveView(repository: repository)
                 } label: {
                     TMText(.profileBooksRow, style: .body)
+                }
+                .listRowBackground(AppColor.surface)
+
+                NavigationLink {
+                    SettingsView(themeController: themeController)
+                } label: {
+                    TMText(.profileSettingsRow, style: .body)
                 }
                 .listRowBackground(AppColor.surface)
             }
@@ -39,7 +48,10 @@ struct ProfileView: View {
 #if DEBUG
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(repository: PreviewBookRepository.populated)
+        ProfileView(
+            repository: PreviewBookRepository.populated,
+            themeController: ThemeController.preview
+        )
     }
 }
 #endif

@@ -14,6 +14,7 @@ struct tomotecaApp: App {
     private let bookRepository: BookRepository
     private let sessionRepository: ReadingSessionRepository
     private let sessionController: ActiveSessionController
+    private let themeController: ThemeController
     private let notifications: any SessionNotificationScheduling = Self.makeNotificationScheduler()
 
     init() {
@@ -24,12 +25,15 @@ struct tomotecaApp: App {
             persistenceController.seedSampleDataIfNeeded()
         }
 
-        // The remembered shelf outlives the app, so without this one UI test would decide
-        // where the next one opens.
+        // The remembered shelf and theme outlive the app, so without this one UI test would
+        // decide where the next one opens, and in which appearance.
         if CommandLine.arguments.contains("-useInMemoryStore") {
             UserDefaults.standard.removeObject(forKey: BookListViewModel.selectedShelfKey)
+            UserDefaults.standard.removeObject(forKey: ThemeController.storageKey)
         }
         #endif
+
+        themeController = ThemeController()
 
         bookRepository = CoreDataBookRepository(persistence: persistenceController)
         let sessions = CoreDataReadingSessionRepository(persistence: persistenceController)
@@ -72,7 +76,8 @@ struct tomotecaApp: App {
                 bookRepository: bookRepository,
                 sessionRepository: sessionRepository,
                 notifications: notifications,
-                sessionController: sessionController
+                sessionController: sessionController,
+                themeController: themeController
             )
         }
     }

@@ -21,6 +21,7 @@ struct RootTabView: View {
     let notifications: any SessionNotificationScheduling
 
     @ObservedObject var sessionController: ActiveSessionController
+    @ObservedObject var themeController: ThemeController
 
     @State private var selection: Tab = Self.initialTab
 
@@ -67,7 +68,7 @@ struct RootTabView: View {
                     }
                 }
 
-            ProfileView(repository: bookRepository)
+            ProfileView(repository: bookRepository, themeController: themeController)
                 .activeSessionBanner(sessionController)
                 .tag(Tab.profile)
                 .tabItem {
@@ -79,6 +80,10 @@ struct RootTabView: View {
                 }
         }
         .tint(AppColor.brandAccent)
+        // Applied here, on the whole tab bar, so it reaches the sheets and the full-screen
+        // session too: they are presented from inside and inherit this. Applied screen by screen
+        // it would miss one, and the one it would miss is the session.
+        .preferredColorScheme(themeController.theme.colorScheme)
         .fullScreenCover(isPresented: $sessionController.isPresenting) {
             if let viewModel = sessionController.sessionViewModel {
                 ActiveSessionView(viewModel: viewModel) {
@@ -112,7 +117,8 @@ struct RootTabView_Previews: PreviewProvider {
                 sessionRepository: PreviewReadingSessionRepository(),
                 notifications: PreviewNotificationScheduler(),
                 store: InMemoryActiveSessionStore()
-            )
+            ),
+            themeController: ThemeController.preview
         )
         .previewDisplayName("Light")
     }

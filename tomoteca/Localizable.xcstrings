@@ -1432,6 +1432,24 @@
         }
       }
     },
+    "profile.settings_row": {
+      "comment": "Row in the profile tab that opens the settings screen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuración"
+          }
+        }
+      }
+    },
     "session.active_title": {
       "comment": "Title of the running session screen",
       "extractionState": "manual",
@@ -1644,6 +1662,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "Iniciar sesión de lectura"
+          }
+        }
+      }
+    },
+    "settings.appearance": {
+      "comment": "Header of the appearance setting, where the theme is chosen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apariencia"
+          }
+        }
+      }
+    },
+    "settings.appearance_hint": {
+      "comment": "Explains what the automatic theme option does",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic follows your phone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automático sigue al teléfono."
+          }
+        }
+      }
+    },
+    "settings.title": {
+      "comment": "Title of the settings screen",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuración"
           }
         }
       }
@@ -1968,6 +2040,60 @@
           "stringUnit": {
             "state": "translated",
             "value": "Baúl"
+          }
+        }
+      }
+    },
+    "theme.dark": {
+      "comment": "Theme option: always dark",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oscuro"
+          }
+        }
+      }
+    },
+    "theme.light": {
+      "comment": "Theme option: always light",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claro"
+          }
+        }
+      }
+    },
+    "theme.system": {
+      "comment": "Theme option: follow the phone's appearance",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automático"
           }
         }
       }

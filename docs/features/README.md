@@ -297,5 +297,8 @@ Para no volver a discutirlas:
 32. **Con un solo libro en curso, la sesión se empieza desde la pestaña**, sin entrar al libro:
     con uno no hay nada que elegir. Con dos o más el botón desaparece y hay que entrar, porque
     ahí la elección sí decide algo ([C09](../cambios/C09-iniciar-sesion-desde-en-curso.md)).
+33. **El tema se elige en Configuración**, dentro del perfil: automático —que es lo predeterminado
+    y sigue al teléfono—, claro u oscuro. Se recuerda entre arranques
+    ([C11](../cambios/C11-tema-configurable.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).
