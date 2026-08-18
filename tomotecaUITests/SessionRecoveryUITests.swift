@@ -26,17 +26,26 @@ final class SessionRecoveryUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = launchArguments
         app.launch()
+        dismissOnboardingIfShown()
     }
 
     override func tearDown() {
         // Leave no session behind for the next run to trip over.
         app.launchArguments = launchArguments
         app.launch()
+        dismissOnboardingIfShown()
         if app.buttons["activeSessionBanner"].waitForExistence(timeout: 3) {
             app.buttons["activeSessionBanner"].tap()
             app.buttons["Finish"].tap()
             app.buttons["Save progress"].tap()
         }
+    }
+
+    /// This suite runs without `-useInMemoryStore`, so a truly first-ever launch on a given
+    /// simulator would show the welcome screens before anything else — not what this is about.
+    private func dismissOnboardingIfShown() {
+        let skip = app.buttons["onboardingSkip"]
+        if skip.waitForExistence(timeout: 3) { skip.tap() }
     }
 
     func testASessionSurvivesTheAppBeingKilled() {

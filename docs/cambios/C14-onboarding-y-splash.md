@@ -1,6 +1,6 @@
 # C14 · Pantalla de bienvenida, y el arranque en negro
 
-**Tipo:** Feature · **Estado:** 🟡 En curso
+**Tipo:** Feature · **Estado:** ✅ Cerrado
 
 Tres pantallas que presentan la app la primera vez que se abre, y el instante en negro al
 arrancar.
@@ -93,17 +93,36 @@ dos formas, no se vuelve a mostrar.
 
 ## Criterios de aceptación
 
-- [ ] La primera vez que se abre la app, aparecen las tres pantallas
-- [ ] Se puede deslizar entre ellas, con los puntos de página marcando dónde se está
-- [ ] "Saltar" cierra la bienvenida desde cualquiera de las tres
-- [ ] "Comenzar" en la tercera hace lo mismo
-- [ ] Cerrada una vez —de cualquiera de las dos formas— no vuelve a aparecer
-- [ ] El arranque ya no se ve negro en modo oscuro
-- [ ] Se ve bien en español e inglés, en claro y en oscuro
+- [x] La primera vez que se abre la app, aparecen las tres pantallas
+- [x] Se puede deslizar entre ellas, con los puntos de página marcando dónde se está
+- [x] "Saltar" cierra la bienvenida desde cualquiera de las tres
+- [x] "Comenzar" en la tercera hace lo mismo
+- [x] Cerrada una vez —de cualquiera de las dos formas— no vuelve a aparecer
+- [x] El arranque ya no se ve negro en modo oscuro
+- [x] Se ve bien en español e inglés, en claro y en oscuro
 
 ## Cómo se validó
 
-Pendiente (fase 2).
+**`OnboardingControllerTests`, archivo nuevo:** arranca sin ver la bienvenida; `complete()`
+escribe; y que un controlador nuevo sobre los mismos defaults —lo que hace el siguiente
+arranque— sigue viéndola como completada.
+
+**`OnboardingFlowUITests`, con `-useInMemoryStore` (que da la bienvenida por vista salvo que se
+pida lo contrario) y el nuevo `-showOnboarding` para forzarla:** las tres páginas al deslizar;
+que "Comenzar" **no existe** —no solo que esté oculto— antes de la última página; que aparece en
+la tercera y entra a la app; y que "Saltar" cierra desde la primera página y desde una del medio.
+
+**`OnboardingPersistenceUITests`, sin `-useInMemoryStore`, como `ThemePersistenceUITests` y
+`SessionRecoveryUITests`:** que ni saltarla ni terminarla la traen de vuelta tras matar la app y
+volver a abrir de verdad — la única forma de probar que "solo una vez" no es dar por vencida la
+palabra ajena.
+
+Al escribir esto se encontró que las dos suites existentes que también renuncian a
+`-useInMemoryStore` (`ThemePersistenceUITests`, `SessionRecoveryUITests`) quedaban expuestas a
+la bienvenida en un simulador realmente nuevo, sin haberlo probado nunca antes; se les añadió el
+mismo gesto defensivo de saltarla si aparece.
+
+Suite completa: 199 tests unitarios (eran 196) y 43 de UI, todos en verde.
 
 ## Hallazgos
 
@@ -111,10 +130,21 @@ Pendiente (fase 2).
   Ya era exactamente "ícono + título + frase"; la bienvenida solo necesitaba una versión más
   grande de lo mismo. Todo lo que ya lo usaba —el baúl, en curso, seguimiento— sigue igual, sin
   tocar una línea, porque `.compact` quedó como valor por defecto.
-- **El botón "Comenzar" vive fuera del `TabView`, no dentro de la última página.** Puesto dentro,
-  quedaba justo encima de los puntos de página que el sistema fija al fondo del `TabView` —
-  encimados, no uno junto al otro. Sacado afuera y con su espacio siempre reservado (oculto en
-  vez de ausente en las dos primeras páginas), no hay solape ni salto al llegar a la tercera.
+- **A ese mismo componente le faltaba `.multilineTextAlignment(.center)` en el título** — lo tenía
+  el mensaje, pero no el título. Con una sola línea nunca se notaba; en la bienvenida, con
+  títulos más largos que en cualquier otro uso del componente, dos de las tres pantallas
+  saltaban de línea y el título quedaba alineado a la izquierda, descuadrado bajo el ícono
+  centrado. Lo reportó Sergio después de la fase 1; una línea lo arregla, y arregla también
+  cualquier otro sitio que llegue a usar el componente con un título largo.
+- **`.accessibilityHidden(true)` no bastó para sacar el botón "Comenzar" del árbol de
+  accesibilidad** en las dos primeras páginas — seguía apareciendo en las consultas de XCUITest,
+  solo que marcado "Disabled", así que un test que esperaba `.exists == false` fallaba. El primer
+  intento lo mantenía siempre montado (oculto con opacidad + deshabilitado + accessibilityHidden)
+  para reservarle el mismo espacio en las tres páginas y que los puntos de página del sistema no
+  quedaran debajo de él. La solución fue sacarlo del `TabView` con `.safeAreaInset(edge: .bottom)`
+  y montarlo solo cuando `isOnLastPage` — genuinamente ausente, no oculto — a cambio de un
+  pequeño reacomodo al llegar a la última página, que es exactamente cuándo se espera que algo
+  nuevo aparezca.
 - **La build setting del plan —`INFOPLIST_KEY_UILaunchScreen_UIColorName`— no funcionó, y no fue
   por escribirla mal.** Combinada con `UILaunchScreen_Generation` (lo que ya traía el proyecto),
   el Info.plist generado terminaba con `UILaunchScreen: { UILaunchScreen: {} }` — una clave

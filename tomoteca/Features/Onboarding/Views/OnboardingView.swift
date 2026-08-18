@@ -31,31 +31,31 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            VStack(spacing: 0) {
-                TabView(selection: $page) {
-                    ForEach(Array(Self.pages.enumerated()), id: \.offset) { index, item in
-                        TMEmptyState(
-                            systemImage: item.systemImage,
-                            title: item.title,
-                            message: item.message,
-                            style: .hero
-                        )
-                        .tag(index)
-                    }
+            TabView(selection: $page) {
+                ForEach(Array(Self.pages.enumerated()), id: \.offset) { index, item in
+                    TMEmptyState(
+                        systemImage: item.systemImage,
+                        title: item.title,
+                        message: item.message,
+                        style: .hero
+                    )
+                    .tag(index)
                 }
-                .tabViewStyle(.page)
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-
-                // Outside the paged content and always given the same space, so the page dots —
-                // which the system pins to the bottom of the TabView itself — never end up
-                // underneath it, and reaching the last page does not shift anything above it.
-                TMButton(title: .onboardingGetStarted) { onFinished() }
-                    .padding(.horizontal, Spacing.xl)
-                    .padding(.top, Spacing.md)
-                    .padding(.bottom, Spacing.xl)
-                    .opacity(isOnLastPage ? 1 : 0)
-                    .disabled(!isOnLastPage)
-                    .accessibilityHidden(!isOnLastPage)
+            }
+            .tabViewStyle(.page)
+            .indexViewStyle(.page(backgroundDisplayMode: .always))
+            // Outside the paged content, so the page dots — which the system pins to the bottom
+            // of the TabView itself — sit above it rather than underneath it. Only mounted at
+            // all on the last page: an always-present button merely hidden via `.opacity` and
+            // `.accessibilityHidden` still turned up in the accessibility tree on every page, so
+            // "not offered yet" has to mean genuinely absent, not just invisible.
+            .safeAreaInset(edge: .bottom) {
+                if isOnLastPage {
+                    TMButton(title: .onboardingGetStarted) { onFinished() }
+                        .padding(.horizontal, Spacing.xl)
+                        .padding(.top, Spacing.md)
+                        .padding(.bottom, Spacing.xl)
+                }
             }
 
             Button { onFinished() } label: { Text(.onboardingSkip) }

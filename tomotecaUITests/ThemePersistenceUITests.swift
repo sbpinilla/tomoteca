@@ -26,6 +26,7 @@ final class ThemePersistenceUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = launchArguments
         app.launch()
+        dismissOnboardingIfShown()
     }
 
     override func tearDown() {
@@ -33,10 +34,18 @@ final class ThemePersistenceUITests: XCTestCase {
         // using it by hand.
         app.launchArguments = launchArguments
         app.launch()
+        dismissOnboardingIfShown()
         openSettings()
         if app.buttons["Automatic"].waitForExistence(timeout: 5) {
             app.buttons["Automatic"].tap()
         }
+    }
+
+    /// This suite runs without `-useInMemoryStore`, so a truly first-ever launch on a given
+    /// simulator would show the welcome screens before anything else — not what this is about.
+    private func dismissOnboardingIfShown() {
+        let skip = app.buttons["onboardingSkip"]
+        if skip.waitForExistence(timeout: 3) { skip.tap() }
     }
 
     func testTheChosenThemeSurvivesTheAppBeingKilled() {
