@@ -307,5 +307,9 @@ Para no volver a discutirlas:
     sola**, con el tiempo que llevaba al salir — no el que pasó mientras la app estaba fuera. Una
     sesión con plan no lo necesita: ya se limita sola al llegar a su tiempo
     ([C13](../cambios/C13-sesion-libre.md)).
+36. **La primera vez que se abre la app aparecen tres pantallas de bienvenida**, deslizables, con
+    un botón de saltar siempre visible y uno de comenzar en la última. Saltarla o terminarla
+    hacen lo mismo: no se vuelven a mostrar después
+    ([C14](../cambios/C14-onboarding-y-splash.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

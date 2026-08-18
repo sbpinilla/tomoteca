@@ -35,5 +35,6 @@ features, y el cambio que la movió queda enlazado desde allí.
 | [C11 · Elegir el tema desde Configuración](C11-tema-configurable.md) | Feature | ✅ Cerrado |
 | [C12 · La tab bar y el back no seguían el tema al cambiarlo](C12-cromado-no-refresca-tema.md) | Corrección | ⬜ Pendiente — aparcado |
 | [C13 · Sesión de lectura sin tiempo fijo](C13-sesion-libre.md) | Feature | ✅ Cerrado |
+| [C14 · Pantalla de bienvenida, y el arranque en negro](C14-onboarding-y-splash.md) | Feature | 🟡 En curso |
 
 Estados: ⬜ Pendiente · 🟡 En curso · ✅ Cerrado

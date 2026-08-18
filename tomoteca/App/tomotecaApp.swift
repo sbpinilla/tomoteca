@@ -15,6 +15,7 @@ struct tomotecaApp: App {
     private let sessionRepository: ReadingSessionRepository
     private let sessionController: ActiveSessionController
     private let themeController: ThemeController
+    private let onboardingController: OnboardingController
     private let notifications: any SessionNotificationScheduling = Self.makeNotificationScheduler()
 
     init() {
@@ -30,10 +31,20 @@ struct tomotecaApp: App {
         if CommandLine.arguments.contains("-useInMemoryStore") {
             UserDefaults.standard.removeObject(forKey: BookListViewModel.selectedShelfKey)
             UserDefaults.standard.removeObject(forKey: ThemeController.storageKey)
+
+            // Onboarding is not what nearly any UI test is about, and none of them wait for it —
+            // without this, it would intercept every one of them. Marked seen by default; a run
+            // that actually wants to see it passes `-showOnboarding` to ask for it back.
+            UserDefaults.standard.set(true, forKey: OnboardingController.storageKey)
+        }
+
+        if CommandLine.arguments.contains("-showOnboarding") {
+            UserDefaults.standard.set(false, forKey: OnboardingController.storageKey)
         }
         #endif
 
         themeController = ThemeController()
+        onboardingController = OnboardingController()
 
         bookRepository = CoreDataBookRepository(persistence: persistenceController)
         let sessions = CoreDataReadingSessionRepository(persistence: persistenceController)
@@ -72,12 +83,13 @@ struct tomotecaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootTabView(
+            RootView(
                 bookRepository: bookRepository,
                 sessionRepository: sessionRepository,
                 notifications: notifications,
                 sessionController: sessionController,
-                themeController: themeController
+                themeController: themeController,
+                onboardingController: onboardingController
             )
         }
     }

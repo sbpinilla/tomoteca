@@ -1414,6 +1414,150 @@
         }
       }
     },
+    "onboarding.get_started": {
+      "comment": "Button on the last welcome screen that dismisses onboarding into the app",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comenzar"
+          }
+        }
+      }
+    },
+    "onboarding.page1_message": {
+      "comment": "Message of the first welcome screen, about organizing the book catalog",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track what you want to buy, what you own, what you are reading, and what you have finished."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marca qué quieres comprar, qué ya compraste, qué estás leyendo y qué terminaste."
+          }
+        }
+      }
+    },
+    "onboarding.page1_title": {
+      "comment": "Title of the first welcome screen, about organizing the book catalog",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organize your library"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organiza tu biblioteca"
+          }
+        }
+      }
+    },
+    "onboarding.page2_message": {
+      "comment": "Message of the second welcome screen, about timed reading sessions",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a session with a fixed time, or a free one that just counts up until you stop."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia una sesión con tiempo fijo, o una libre que solo cuenta hasta que la termines."
+          }
+        }
+      }
+    },
+    "onboarding.page2_title": {
+      "comment": "Title of the second welcome screen, about timed reading sessions",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read with a timer"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lee con un cronómetro"
+          }
+        }
+      }
+    },
+    "onboarding.page3_message": {
+      "comment": "Title of the third welcome screen, about tracking reading progress",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every session is recorded, so you can see how much you have read over time."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada sesión queda registrada, para que veas cuánto has leído con el tiempo."
+          }
+        }
+      }
+    },
+    "onboarding.page3_title": {
+      "comment": "Title of the third welcome screen, about tracking reading progress",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See how much you read"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue tu progreso"
+          }
+        }
+      }
+    },
+    "onboarding.skip": {
+      "comment": "Button that dismisses the welcome screens from any page",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltar"
+          }
+        }
+      }
+    },
     "profile.books_row": {
       "comment": "Row in Profile that opens import and export",
       "extractionState": "manual",
