@@ -34,6 +34,9 @@ final class ActiveSessionController: ObservableObject {
     private let store: any ActiveSessionStoring
     private let now: () -> Date
     private var cancellables = Set<AnyCancellable>()
+    /// Type-erased: the concrete type needs iOS 16.2, and this controller's floor is 16.0. Every
+    /// touch of it goes through `#available` and casts back — see the `LiveActivity` section.
+    private var liveActivity: Any?
 
     init(
         bookRepository: BookRepository,
@@ -170,13 +173,20 @@ final class ActiveSessionController: ObservableObject {
         }
 
         sessionViewModel = makeViewModel()
+        observeLiveActivityUpdates()
+        startLiveActivity(book: book, stored: session)
         isPresenting = true
     }
 
     /// Prepares the ViewModel for a session recovered from storage, once its book is known.
+    ///
+    /// Deliberately does **not** start a Live Activity: one already exists from whenever the
+    /// session actually began, unless the app itself was killed, and `Activity.request` cannot
+    /// be called for a session that is not new — the activity survives on its own regardless.
     func prepareViewModelIfNeeded() {
         guard sessionViewModel == nil else { return }
         sessionViewModel = makeViewModel()
+        observeLiveActivityUpdates()
     }
 
     private func makeViewModel() -> ReadingSessionViewModel? {
@@ -199,6 +209,7 @@ final class ActiveSessionController: ObservableObject {
         sessionViewModel = nil
         isPresenting = false
         store.clear()
+        endLiveActivity()
     }
 
     /// Drops a session without recording it, and takes its pending alert with it.
@@ -208,6 +219,44 @@ final class ActiveSessionController: ObservableObject {
         isPresenting = false
         store.clear()
         notifications.cancelScheduledSessionEnd()
+        endLiveActivity()
+    }
+
+    // MARK: Live Activity
+
+    /// Pauses and resumes are the only phase changes worth telling the Island about — a session
+    /// that is simply running counts itself down on the system's own clock, and re-pushing an
+    /// update on every one-second tick would be exactly the busywork `Text(timerInterval:)`
+    /// exists to avoid.
+    private func observeLiveActivityUpdates() {
+        sessionViewModel?.$phase
+            .dropFirst()
+            .sink { [weak self] _ in
+                guard let self, let stored = self.store.load() else { return }
+                self.updateLiveActivity(stored)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func startLiveActivity(book: Book, stored: StoredSession) {
+        if #available(iOS 16.2, *) {
+            let controller = ReadingSessionLiveActivityController()
+            controller.start(book: book, stored: stored)
+            liveActivity = controller
+        }
+    }
+
+    private func updateLiveActivity(_ stored: StoredSession) {
+        if #available(iOS 16.2, *), let controller = liveActivity as? ReadingSessionLiveActivityController {
+            controller.update(stored: stored)
+        }
+    }
+
+    private func endLiveActivity() {
+        if #available(iOS 16.2, *), let controller = liveActivity as? ReadingSessionLiveActivityController {
+            controller.end()
+        }
+        liveActivity = nil
     }
 }
 

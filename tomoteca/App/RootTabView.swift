@@ -110,6 +110,15 @@ struct RootTabView: View {
             @unknown default: break
             }
         }
+        // The one link this app answers to: "Stop" on the Live Activity. Opens straight to the
+        // same page prompt "Finish" already shows from inside the session screen — the Island's
+        // button is a second door into the same room, not a different one.
+        .onOpenURL { url in
+            guard url == SessionActivityLink.stop else { return }
+            sessionController.prepareViewModelIfNeeded()
+            sessionController.isPresenting = true
+            sessionController.sessionViewModel?.finishEarly()
+        }
     }
 
     /// Always the first tab, except when a debug run asks for another one with

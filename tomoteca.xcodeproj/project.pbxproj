@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3DC880FE4CE96332F764BE9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 318EC8CD949E4A2F4ECDDC6C /* Foundation.framework */; };
+		822D14C7CB6E134A686126AA /* tomotecaWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5AA1FFEEAAE9C23424D8AC5C /* tomotecaWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		91EE9B7732A0564E0A5A6B66 /* ReadingSessionActivityAttributes.swift (shared) in Sources */ = {isa = PBXBuildFile; fileRef = A72DA71040E874F52B3BD480 /* ReadingSessionActivityAttributes.swift (shared) */; };
+		C81D07905755A2337D21C875 /* TomotecaWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95C1E61E389FCCD383D5362 /* TomotecaWidgetBundle.swift */; };
+		DFC1C76DD3AE9F387B3C0C47 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0A6485FD05CB978A22DA379D /* Localizable.xcstrings */; };
+		FAE2876EDEACB28C72CC6E8B /* ReadingSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6633B430C829E3D8720218 /* ReadingSessionLiveActivity.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		49C2EDF5302C0B0D004536B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,17 +30,58 @@
 			remoteGlobalIDString = 49C2EDE1302C0B0B004536B1;
 			remoteInfo = tomoteca;
 		};
+		FFA2C82CF1A4DA911D32AC29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49C2EDDA302C0B0B004536B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E475E92F976A35FCF51350F4;
+			remoteInfo = tomotecaWidget;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		47CA7341BD9AA60BF6A30FD6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				822D14C7CB6E134A686126AA /* tomotecaWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0A6485FD05CB978A22DA379D /* Localizable.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		318EC8CD949E4A2F4ECDDC6C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3A6633B430C829E3D8720218 /* ReadingSessionLiveActivity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingSessionLiveActivity.swift; sourceTree = "<group>"; };
 		49C2EDE2302C0B0B004536B1 /* tomoteca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomoteca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C2EDF4302C0B0D004536B1 /* tomotecaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tomotecaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C2EDFE302C0B0D004536B1 /* tomotecaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tomotecaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AA1FFEEAAE9C23424D8AC5C /* tomotecaWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = tomotecaWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A300B67D62E996E1F0F46E3E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A72DA71040E874F52B3BD480 /* ReadingSessionActivityAttributes.swift (shared) */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ReadingSessionActivityAttributes.swift (shared)"; path = ../tomoteca/Core/Domain/ReadingSessionActivityAttributes.swift; sourceTree = "<group>"; };
+		A95C1E61E389FCCD383D5362 /* TomotecaWidgetBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomotecaWidgetBundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		87E75075EC8AFC72001AEF03 /* Exceptions for "tomoteca" folder in "tomoteca" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 49C2EDE1302C0B0B004536B1 /* tomoteca */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		49C2EDE4302C0B0B004536B1 /* tomoteca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				87E75075EC8AFC72001AEF03 /* Exceptions for "tomoteca" folder in "tomoteca" target */,
+			);
 			path = tomoteca;
 			sourceTree = "<group>";
 		};
@@ -48,6 +98,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0698BDCFD2D97086FA4EA424 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DC880FE4CE96332F764BE9E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49C2EDDF302C0B0B004536B1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -79,6 +137,8 @@
 				49C2EDF7302C0B0D004536B1 /* tomotecaTests */,
 				49C2EE01302C0B0D004536B1 /* tomotecaUITests */,
 				49C2EDE3302C0B0B004536B1 /* Products */,
+				E26A480C22AD0F4D8B58427B /* Frameworks */,
+				8EA53DD883047435C77E6044 /* tomotecaWidget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,8 +148,37 @@
 				49C2EDE2302C0B0B004536B1 /* tomoteca.app */,
 				49C2EDF4302C0B0D004536B1 /* tomotecaTests.xctest */,
 				49C2EDFE302C0B0D004536B1 /* tomotecaUITests.xctest */,
+				5AA1FFEEAAE9C23424D8AC5C /* tomotecaWidget.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8EA53DD883047435C77E6044 /* tomotecaWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A95C1E61E389FCCD383D5362 /* TomotecaWidgetBundle.swift */,
+				3A6633B430C829E3D8720218 /* ReadingSessionLiveActivity.swift */,
+				0A6485FD05CB978A22DA379D /* Localizable.xcstrings */,
+				A300B67D62E996E1F0F46E3E /* Info.plist */,
+				A72DA71040E874F52B3BD480 /* ReadingSessionActivityAttributes.swift (shared) */,
+			);
+			path = tomotecaWidget;
+			sourceTree = "<group>";
+		};
+		D0DC16B178765B79DA08507F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				318EC8CD949E4A2F4ECDDC6C /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		E26A480C22AD0F4D8B58427B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0DC16B178765B79DA08507F /* iOS */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,17 +191,17 @@
 				49C2EDDE302C0B0B004536B1 /* Sources */,
 				49C2EDDF302C0B0B004536B1 /* Frameworks */,
 				49C2EDE0302C0B0B004536B1 /* Resources */,
+				47CA7341BD9AA60BF6A30FD6 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3B08256734ADB246A2AE7722 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				49C2EDE4302C0B0B004536B1 /* tomoteca */,
 			);
 			name = tomoteca;
-			packageProductDependencies = (
-			);
 			productName = tomoteca;
 			productReference = 49C2EDE2302C0B0B004536B1 /* tomoteca.app */;
 			productType = "com.apple.product-type.application";
@@ -134,8 +223,6 @@
 				49C2EDF7302C0B0D004536B1 /* tomotecaTests */,
 			);
 			name = tomotecaTests;
-			packageProductDependencies = (
-			);
 			productName = tomotecaTests;
 			productReference = 49C2EDF4302C0B0D004536B1 /* tomotecaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -157,11 +244,26 @@
 				49C2EE01302C0B0D004536B1 /* tomotecaUITests */,
 			);
 			name = tomotecaUITests;
-			packageProductDependencies = (
-			);
 			productName = tomotecaUITests;
 			productReference = 49C2EDFE302C0B0D004536B1 /* tomotecaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E475E92F976A35FCF51350F4 /* tomotecaWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50231273AC4C4857457DC651 /* Build configuration list for PBXNativeTarget "tomotecaWidget" */;
+			buildPhases = (
+				B92D752E3C6897E74B6A4C13 /* Sources */,
+				0698BDCFD2D97086FA4EA424 /* Frameworks */,
+				BC0E6DAC6C6B1D3A99532FF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tomotecaWidget;
+			productName = tomotecaWidget;
+			productReference = 5AA1FFEEAAE9C23424D8AC5C /* tomotecaWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -204,6 +306,7 @@
 				49C2EDE1302C0B0B004536B1 /* tomoteca */,
 				49C2EDF3302C0B0D004536B1 /* tomotecaTests */,
 				49C2EDFD302C0B0D004536B1 /* tomotecaUITests */,
+				E475E92F976A35FCF51350F4 /* tomotecaWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -227,6 +330,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC0E6DAC6C6B1D3A99532FF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFC1C76DD3AE9F387B3C0C47 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,9 +365,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B92D752E3C6897E74B6A4C13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C81D07905755A2337D21C875 /* TomotecaWidgetBundle.swift in Sources */,
+				FAE2876EDEACB28C72CC6E8B /* ReadingSessionLiveActivity.swift in Sources */,
+				91EE9B7732A0564E0A5A6B66 /* ReadingSessionActivityAttributes.swift (shared) in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3B08256734ADB246A2AE7722 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = tomotecaWidget;
+			target = E475E92F976A35FCF51350F4 /* tomotecaWidget */;
+			targetProxy = FFA2C82CF1A4DA911D32AC29 /* PBXContainerItemProxy */;
+		};
 		49C2EDF6302C0B0D004536B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 49C2EDE1302C0B0B004536B1 /* tomoteca */;
@@ -270,6 +397,34 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		40A123012BE5D5C3D2E8A74C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 94E5LXMNHC;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tomotecaWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sergiorodriguez.tomoteca.tomotecaWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		49C2EE06302C0B0D004536B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -398,19 +553,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Tomoteca;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Tomoteca uses the camera to photograph your book covers.";
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tomoteca/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -445,19 +589,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Tomoteca;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Tomoteca uses the camera to photograph your book covers.";
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tomoteca/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -582,6 +715,33 @@
 			};
 			name = Release;
 		};
+		B73018BB65A81A5A2516F378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 94E5LXMNHC;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tomotecaWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sergiorodriguez.tomoteca.tomotecaWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -617,6 +777,15 @@
 			buildConfigurations = (
 				49C2EE0F302C0B0D004536B1 /* Debug */,
 				49C2EE10302C0B0D004536B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50231273AC4C4857457DC651 /* Build configuration list for PBXNativeTarget "tomotecaWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40A123012BE5D5C3D2E8A74C /* Release */,
+				B73018BB65A81A5A2516F378 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

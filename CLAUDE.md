@@ -25,11 +25,12 @@ Native iOS app to manage a personal library: track books I want to read or buy, 
 
 ## Stack
 
-- **Swift 5** / SwiftUI. App target deploys to **iOS 16.0**, iPhone only, portrait only.
+- **Swift 5** / SwiftUI. App target deploys to **iOS 16.2**, iPhone only, portrait only. Raised from 16.0 deliberately in C15, for the exact form of ActivityKit's Live Activity API the Dynamic Island needs — not a side effect of wanting some other API.
 - **Combine** for the reactive flow between layers.
 - **Core Data** as the only storage (local). No backend for now.
-- **Swift Testing** (`import Testing`, `@Test`, `#expect`) for unit tests. XCTest only in UI tests. Test targets deploy to iOS 16.0 as well — that is also Swift Testing's own floor, so the target cannot go lower without dropping the framework.
+- **Swift Testing** (`import Testing`, `@Test`, `#expect`) for unit tests. XCTest only in UI tests. Test targets deploy to iOS 16.2 as well — that is also Swift Testing's own floor, so the target cannot go lower without dropping the framework.
 - No third-party dependencies: Apple SDKs only.
+- **`tomotecaWidget`**, a Widget Extension target, hosts the reading session's Live Activity (Dynamic Island + Lock Screen). Its own deployment target is 16.2 too. `ReadingSessionActivityAttributes` (`Core/Domain/`) is the one file compiled into both the app and the extension — not a framework, just dual target membership. Everything that touches `ActivityKit` on the app side is behind `if #available(iOS 16.2, *)` and held as `Any?` by `ActiveSessionController` (see `ReadingSessionLiveActivityController`), so the app target's own code never assumes ActivityKit is present.
 
 ### iOS 16 constraints
 
