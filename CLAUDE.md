@@ -25,12 +25,12 @@ Native iOS app to manage a personal library: track books I want to read or buy, 
 
 ## Stack
 
-- **Swift 5** / SwiftUI. App target deploys to **iOS 16.2**, iPhone only, portrait only. Raised from 16.0 deliberately in C15, for the exact form of ActivityKit's Live Activity API the Dynamic Island needs — not a side effect of wanting some other API.
+- **Swift 5** / SwiftUI. App target deploys to **iOS 16.0**, iPhone only, portrait only. Deliberately *not* raised for C15's Dynamic Island work — the app keeps its original floor, and only `tomotecaWidget` (see below) carries the higher one the Live Activity API needs.
 - **Combine** for the reactive flow between layers.
 - **Core Data** as the only storage (local). No backend for now.
-- **Swift Testing** (`import Testing`, `@Test`, `#expect`) for unit tests. XCTest only in UI tests. Test targets deploy to iOS 16.2 as well — that is also Swift Testing's own floor, so the target cannot go lower without dropping the framework.
+- **Swift Testing** (`import Testing`, `@Test`, `#expect`) for unit tests. XCTest only in UI tests. Test targets deploy to iOS 16.0, same as the app — Swift Testing's own floor is 16.0 too, so nothing forces it any higher. A test that exercises `iOS 16.2`-only code (the Live Activity controller) carries its own `@available(iOS 16.2, *)` on the function, same as any other call site would.
 - No third-party dependencies: Apple SDKs only.
-- **`tomotecaWidget`**, a Widget Extension target, hosts the reading session's Live Activity (Dynamic Island + Lock Screen). Its own deployment target is 16.2 too. `ReadingSessionActivityAttributes` (`Core/Domain/`) is the one file compiled into both the app and the extension — not a framework, just dual target membership. Everything that touches `ActivityKit` on the app side is behind `if #available(iOS 16.2, *)` and held as `Any?` by `ActiveSessionController` (see `ReadingSessionLiveActivityController`), so the app target's own code never assumes ActivityKit is present.
+- **`tomotecaWidget`**, a Widget Extension target, hosts the reading session's Live Activity (Dynamic Island + Lock Screen). Its own deployment target is **16.2** — the one exception to the app's 16.0 floor, needed for the exact form of ActivityKit's API this uses (`ActivityContent`), and safe to isolate here since a Live Activity extension is never loaded on an OS below what it declares. `ReadingSessionActivityAttributes` (`Core/Domain/`) is the one file compiled into both the app and the extension — not a framework, just dual target membership, itself marked `@available(iOS 16.2, *)`. Everything that touches `ActivityKit` on the app side is behind `if #available(iOS 16.2, *)` and held through the `ReadingSessionLiveActivityUpdating` protocol by `ActiveSessionController` (see `ReadingSessionLiveActivityController`, the concrete `@available(iOS 16.2, *)` implementation, injected via a factory closure so a test can substitute a fake), so the app target's own code never assumes ActivityKit is present and stays buildable at 16.0.
 
 ### iOS 16 constraints
 

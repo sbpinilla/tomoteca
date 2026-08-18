@@ -46,6 +46,33 @@ final class FakeNotificationScheduler: SessionNotificationScheduling {
     }
 }
 
+/// Records what `ActiveSessionController` asks of the reading session's Live Activity, instead
+/// of touching real ActivityKit — which a unit test has no capable device to drive.
+@MainActor
+final class FakeLiveActivityUpdating: ReadingSessionLiveActivityUpdating {
+
+    private(set) var started: [(book: Book, stored: StoredSession)] = []
+    private(set) var attached: [StoredSession] = []
+    private(set) var updates: [StoredSession] = []
+    private(set) var endCount = 0
+
+    func start(book: Book, stored: StoredSession) {
+        started.append((book, stored))
+    }
+
+    func attach(stored: StoredSession) {
+        attached.append(stored)
+    }
+
+    func update(stored: StoredSession) {
+        updates.append(stored)
+    }
+
+    func end() {
+        endCount += 1
+    }
+}
+
 /// In-memory session store for tests.
 final class FakeReadingSessionRepository: ReadingSessionRepository {
 

@@ -34,28 +34,40 @@ final class ActiveSessionController: ObservableObject {
     private let store: any ActiveSessionStoring
     private let now: () -> Date
     private var cancellables = Set<AnyCancellable>()
-    /// Type-erased: the concrete type needs iOS 16.2, and this controller's floor is 16.0. Every
-    /// touch of it goes through `#available` and casts back — see the `LiveActivity` section.
-    private var liveActivity: Any?
+    private var liveActivity: (any ReadingSessionLiveActivityUpdating)?
+    /// Builds the Live Activity controller, or `nil` on a phone too old for one. A `let` closure
+    /// rather than always constructing `ReadingSessionLiveActivityController` directly, so a
+    /// test can substitute a fake and see what this type asks of it without touching real
+    /// ActivityKit.
+    private let makeLiveActivity: () -> (any ReadingSessionLiveActivityUpdating)?
 
     init(
         bookRepository: BookRepository,
         sessionRepository: ReadingSessionRepository,
         notifications: any SessionNotificationScheduling,
         store: any ActiveSessionStoring,
-        now: @escaping () -> Date = Date.init
+        now: @escaping () -> Date = Date.init,
+        makeLiveActivity: @escaping () -> (any ReadingSessionLiveActivityUpdating)? = ActiveSessionController.defaultLiveActivity
     ) {
         self.bookRepository = bookRepository
         self.sessionRepository = sessionRepository
         self.notifications = notifications
         self.store = store
         self.now = now
+        self.makeLiveActivity = makeLiveActivity
 
         bookRepository.books
             .assign(to: \.books, on: self)
             .store(in: &cancellables)
 
         restore()
+    }
+
+    private static func defaultLiveActivity() -> (any ReadingSessionLiveActivityUpdating)? {
+        if #available(iOS 16.2, *) {
+            return ReadingSessionLiveActivityController()
+        }
+        return nil
     }
 
     /// How long a free session can sit with the app backgrounded before it is paused on its own.
@@ -180,13 +192,15 @@ final class ActiveSessionController: ObservableObject {
 
     /// Prepares the ViewModel for a session recovered from storage, once its book is known.
     ///
-    /// Deliberately does **not** start a Live Activity: one already exists from whenever the
-    /// session actually began, unless the app itself was killed, and `Activity.request` cannot
-    /// be called for a session that is not new — the activity survives on its own regardless.
+    /// Deliberately does **not** start a *new* Live Activity: one already exists from whenever
+    /// the session actually began, and `Activity.request` cannot be called for a session that
+    /// is not new — the activity survives on its own regardless. It does reconnect to that
+    /// existing activity, so a pause or resume from here still has something to update.
     func prepareViewModelIfNeeded() {
         guard sessionViewModel == nil else { return }
         sessionViewModel = makeViewModel()
         observeLiveActivityUpdates()
+        attachLiveActivity()
     }
 
     private func makeViewModel() -> ReadingSessionViewModel? {
@@ -239,23 +253,24 @@ final class ActiveSessionController: ObservableObject {
     }
 
     private func startLiveActivity(book: Book, stored: StoredSession) {
-        if #available(iOS 16.2, *) {
-            let controller = ReadingSessionLiveActivityController()
-            controller.start(book: book, stored: stored)
-            liveActivity = controller
-        }
+        let controller = makeLiveActivity()
+        controller?.start(book: book, stored: stored)
+        liveActivity = controller
+    }
+
+    private func attachLiveActivity() {
+        guard let stored else { return }
+        let controller = makeLiveActivity()
+        controller?.attach(stored: stored)
+        liveActivity = controller
     }
 
     private func updateLiveActivity(_ stored: StoredSession) {
-        if #available(iOS 16.2, *), let controller = liveActivity as? ReadingSessionLiveActivityController {
-            controller.update(stored: stored)
-        }
+        liveActivity?.update(stored: stored)
     }
 
     private func endLiveActivity() {
-        if #available(iOS 16.2, *), let controller = liveActivity as? ReadingSessionLiveActivityController {
-            controller.end()
-        }
+        liveActivity?.end()
         liveActivity = nil
     }
 }
