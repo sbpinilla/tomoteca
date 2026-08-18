@@ -300,5 +300,12 @@ Para no volver a discutirlas:
 33. **El tema se elige en Configuración**, dentro del perfil: automático —que es lo predeterminado
     y sigue al teléfono—, claro u oscuro. Se recuerda entre arranques
     ([C11](../cambios/C11-tema-configurable.md)).
+34. **Junto a las duraciones fijas hay una sesión "Libre"**, sin plan: el cronómetro cuenta hacia
+    arriba desde cero hasta que el lector marca "Terminar", sin aviso a mitad de camino porque no
+    hay una hora fijada a la que avisar ([C13](../cambios/C13-sesion-libre.md)).
+35. **Una sesión libre dejada corriendo con la app en segundo plano más de 30 minutos se pausa
+    sola**, con el tiempo que llevaba al salir — no el que pasó mientras la app estaba fuera. Una
+    sesión con plan no lo necesita: ya se limita sola al llegar a su tiempo
+    ([C13](../cambios/C13-sesion-libre.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

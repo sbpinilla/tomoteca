@@ -1540,6 +1540,24 @@
         }
       }
     },
+    "session.duration_free": {
+      "comment": "A duration option that counts up instead of down, with no fixed length",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Libre"
+          }
+        }
+      }
+    },
     "session.duration_minutes": {
       "comment": "A duration option, in minutes",
       "extractionState": "manual",
@@ -1554,6 +1572,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld min"
+          }
+        }
+      }
+    },
+    "session.elapsed": {
+      "comment": "Label under the counter in a free session, which counts up instead of down",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "elapsed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "transcurrido"
           }
         }
       }

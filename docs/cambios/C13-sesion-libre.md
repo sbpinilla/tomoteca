@@ -1,6 +1,6 @@
 # C13 · Sesión de lectura sin tiempo fijo
 
-**Tipo:** Feature · **Estado:** ⬜ Pendiente
+**Tipo:** Feature · **Estado:** 🟡 En curso
 
 Junto a 10, 15 y 30 minutos, una cuarta opción — **Libre** — arranca un cronómetro que cuenta
 hacia arriba desde cero hasta que el lector marca "Terminar".

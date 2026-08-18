@@ -25,7 +25,7 @@ struct SessionDurationSheet: View {
 
                 TMSegmentedPicker(
                     options: ReadingSessionViewModel.offeredMinutes,
-                    title: { LocalizedStringResource.sessionDurationMinutes($0) },
+                    title: { $0 == 0 ? .sessionDurationFree : .sessionDurationMinutes($0) },
                     selection: $minutes
                 )
             }

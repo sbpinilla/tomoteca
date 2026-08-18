@@ -25,11 +25,17 @@ final class ReadingSessionViewModel: ObservableObject {
         case finished
     }
 
-    /// The durations offered. Kept here rather than in the view so tests can rely on them.
-    static let offeredMinutes = [10, 15, 30]
+    /// The durations offered, in minutes. Kept here rather than in the view so tests can rely on
+    /// them. `0` stands for a free session — the duration sheet shows it as "Free" rather than
+    /// "0 min", and everywhere else in this type treats it as no plan at all.
+    static let offeredMinutes = [10, 15, 30, 0]
 
     @Published private(set) var phase: Phase
+    /// Time left before the plan runs out. Meaningless for a free session — always `0` — read
+    /// ``elapsedTime`` instead.
     @Published private(set) var remaining: TimeInterval
+    /// Time read so far. What a free session's clock counts up to; unused by a planned one.
+    @Published private(set) var elapsedTime: TimeInterval
     @Published var finalPageText = ""
 
     let book: Book
@@ -64,9 +70,11 @@ final class ReadingSessionViewModel: ObservableObject {
 
         let moment = now()
         remaining = stored.remaining(at: moment)
+        elapsedTime = stored.elapsed(at: moment)
 
         // A session whose time ran out while the app was closed is over: it goes straight to
-        // asking for the page, counting the full planned time it was given.
+        // asking for the page, counting the full planned time it was given. A free session never
+        // triggers this — it has no planned time to have run out of.
         if stored.isExpired(at: moment) {
             phase = .askingPage
         } else {
@@ -82,6 +90,7 @@ final class ReadingSessionViewModel: ObservableObject {
     }
 
     var plannedMinutes: Int { stored.plannedMinutes }
+    var isFree: Bool { stored.isFree }
 
     // MARK: Time
 
@@ -99,11 +108,26 @@ final class ReadingSessionViewModel: ObservableObject {
     func refresh() {
         guard phase == .running else { return }
 
-        remaining = stored.remaining(at: now())
+        let moment = now()
+        remaining = stored.remaining(at: moment)
+        elapsedTime = stored.elapsed(at: moment)
 
-        if remaining == 0 {
+        // A free session has no remaining time to hit zero: it only ends when the reader says so.
+        if !stored.isFree, remaining == 0 {
             askForPage()
         }
+    }
+
+    /// Brings this ViewModel's published state back in line with a `StoredSession` that changed
+    /// from outside it — namely `ActiveSessionController` pausing a free session left running in
+    /// the background too long. Without this, the screen would keep counting a clock the store
+    /// no longer agrees with.
+    func reload(from updated: StoredSession) {
+        stored = updated
+        let moment = now()
+        remaining = stored.remaining(at: moment)
+        elapsedTime = stored.elapsed(at: moment)
+        phase = stored.isPaused ? .paused : .running
     }
 
     // MARK: Controls
@@ -126,7 +150,11 @@ final class ReadingSessionViewModel: ObservableObject {
         stored.segmentStartedAt = now()
         store.save(stored)
         phase = .running
-        notifications.scheduleSessionEnd(in: remaining, bookTitle: book.title)
+
+        // A free session has no time to schedule an alert for.
+        if !stored.isFree {
+            notifications.scheduleSessionEnd(in: remaining, bookTitle: book.title)
+        }
     }
 
     /// Ends the session early. The time already read still counts.
@@ -143,10 +171,15 @@ final class ReadingSessionViewModel: ObservableObject {
     /// Freezes the clock and stops the pending alert. The stored session stays until the page
     /// is answered, so killing the app at this point still leaves something to come back to.
     private func closeOut() {
-        stored.accumulated = min(elapsed, stored.plannedDuration)
+        // Capped at the plan for a planned session, so a tick that lands a moment past its end
+        // never credits more than what was asked. A free session has no plan to cap against —
+        // capping at `plannedDuration` there would mean capping at zero.
+        stored.accumulated = stored.isFree ? elapsed : min(elapsed, stored.plannedDuration)
         stored.segmentStartedAt = nil
         store.save(stored)
-        remaining = stored.remaining(at: now())
+        let moment = now()
+        remaining = stored.remaining(at: moment)
+        elapsedTime = stored.elapsed(at: moment)
         notifications.cancelScheduledSessionEnd()
     }
 

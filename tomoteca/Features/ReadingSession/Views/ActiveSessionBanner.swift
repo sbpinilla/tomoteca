@@ -16,6 +16,9 @@ struct ActiveSessionBanner: View {
     let bookTitle: String
     let remaining: TimeInterval
     let isExpired: Bool
+    /// A free session shows time read instead of time left — "restante" means nothing for one.
+    let isFree: Bool
+    let elapsed: TimeInterval
     let action: () -> Void
 
     var body: some View {
@@ -38,7 +41,7 @@ struct ActiveSessionBanner: View {
                 Spacer(minLength: Spacing.sm)
 
                 if !isExpired {
-                    TMText(verbatim: formattedRemaining, style: .footnote, color: AppColor.brandAccent)
+                    TMText(verbatim: formattedTime, style: .footnote, color: AppColor.brandAccent)
                 }
 
                 Image(systemName: "chevron.right")
@@ -54,8 +57,8 @@ struct ActiveSessionBanner: View {
         .accessibilityIdentifier("activeSessionBanner")
     }
 
-    private var formattedRemaining: String {
-        let total = Int(remaining.rounded(.up))
+    private var formattedTime: String {
+        let total = Int((isFree ? elapsed : remaining).rounded(.up))
         return String(format: "%02d:%02d", total / 60, total % 60)
     }
 }
@@ -67,13 +70,25 @@ struct ActiveSessionBanner_Previews: PreviewProvider {
             ActiveSessionBanner(
                 bookTitle: "Cien años de soledad",
                 remaining: 452,
-                isExpired: false
+                isExpired: false,
+                isFree: false,
+                elapsed: 0
             ) {}
 
             ActiveSessionBanner(
                 bookTitle: "Cien años de soledad",
                 remaining: 0,
-                isExpired: true
+                isExpired: true,
+                isFree: false,
+                elapsed: 0
+            ) {}
+
+            ActiveSessionBanner(
+                bookTitle: "Cien años de soledad",
+                remaining: 0,
+                isExpired: false,
+                isFree: true,
+                elapsed: 754
             ) {}
         }
         .padding(Spacing.md)
@@ -118,7 +133,9 @@ private struct LiveSessionBanner: View {
                 ActiveSessionBanner(
                     bookTitle: book.title,
                     remaining: controller.remaining,
-                    isExpired: controller.isExpired
+                    isExpired: controller.isExpired,
+                    isFree: controller.isFree,
+                    elapsed: controller.elapsed
                 ) {
                     controller.prepareViewModelIfNeeded()
                     controller.isPresenting = true

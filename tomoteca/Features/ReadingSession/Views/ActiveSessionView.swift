@@ -29,9 +29,13 @@ struct ActiveSessionView: View {
             VStack(spacing: Spacing.md) {
                 TMProgressRing(value: viewModel.progress) {
                     VStack(spacing: Spacing.xs) {
-                        TMText(verbatim: formattedRemaining, style: .largeTitle)
+                        TMText(verbatim: formattedTime, style: .largeTitle)
                             .accessibilityIdentifier("remainingTime")
-                        TMText(.sessionRemaining, style: .footnote, color: AppColor.textSecondary)
+                        TMText(
+                            viewModel.isFree ? .sessionElapsed : .sessionRemaining,
+                            style: .footnote,
+                            color: AppColor.textSecondary
+                        )
                     }
                 }
                 .frame(width: 240, height: 240)
@@ -71,9 +75,11 @@ struct ActiveSessionView: View {
         }
     }
 
-    /// Remaining time as mm:ss.
-    private var formattedRemaining: String {
-        let total = Int(viewModel.remaining.rounded(.up))
+    /// The big number, as mm:ss — counting down to the plan for a planned session, counting up
+    /// from zero for a free one.
+    private var formattedTime: String {
+        let seconds = viewModel.isFree ? viewModel.elapsedTime : viewModel.remaining
+        let total = Int(seconds.rounded(.up))
         return String(format: "%02d:%02d", total / 60, total % 60)
     }
 }
@@ -98,6 +104,26 @@ struct ActiveSessionView_Previews: PreviewProvider {
             ),
             onFinished: {}
         )
+        .previewDisplayName("Con plan")
+
+        ActiveSessionView(
+            viewModel: ReadingSessionViewModel(
+                book: .previewReading,
+                stored: StoredSession(
+                    bookID: Book.previewReading.id,
+                    plannedMinutes: 0,
+                    startedAt: Date(),
+                    accumulated: 754,
+                    segmentStartedAt: Date()
+                ),
+                repository: PreviewBookRepository.populated,
+                sessionRepository: PreviewReadingSessionRepository(),
+                notifications: PreviewNotificationScheduler(),
+                store: InMemoryActiveSessionStore()
+            ),
+            onFinished: {}
+        )
+        .previewDisplayName("Libre")
     }
 }
 

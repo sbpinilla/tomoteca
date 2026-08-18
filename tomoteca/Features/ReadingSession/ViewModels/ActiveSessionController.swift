@@ -55,9 +55,16 @@ final class ActiveSessionController: ObservableObject {
         restore()
     }
 
+    /// How long a free session can sit with the app backgrounded before it is paused on its own.
+    ///
+    /// A planned session needs nothing like this — it already stops crediting time once it hits
+    /// its plan. A free session has no plan to stop at, so left running by accident it would
+    /// otherwise credit however long the phone sat untouched as time spent reading.
+    static let freeSessionAutoPauseAfter: TimeInterval = 30 * 60
+
     /// Picks up a session left behind by a previous launch, unless it is past saving.
     func restore() {
-        guard let saved = store.load() else { return }
+        guard var saved = store.load() else { return }
 
         // Long overdue: asking which page it reached would only get a guess, and the banner
         // would sit there for good.
@@ -66,7 +73,52 @@ final class ActiveSessionController: ObservableObject {
             return
         }
 
+        // The app backgrounding is what precedes it being killed, so a free session left running
+        // when it was, and reopened only now, goes through the same check `appDidBecomeActive()`
+        // does for a plain background-and-return.
+        if pauseIfLeftRunningTooLong(&saved) {
+            store.save(saved)
+        }
+
         stored = saved
+    }
+
+    /// Marks the moment, so a free session left running can be told apart from one genuinely
+    /// being read the whole time the app was away.
+    func appDidEnterBackground() {
+        guard var current = stored, current.isFree, !current.isPaused else { return }
+
+        current.backgroundedAt = now()
+        stored = current
+        store.save(current)
+    }
+
+    /// Pauses a free session that sat backgrounded past ``freeSessionAutoPauseAfter``, crediting
+    /// it only up to the moment it left the foreground — not the moment it came back.
+    func appDidBecomeActive() {
+        guard var current = stored else { return }
+
+        if pauseIfLeftRunningTooLong(&current) {
+            store.save(current)
+            sessionViewModel?.reload(from: current)
+        }
+
+        stored = current
+    }
+
+    /// Pauses `session` in place if it is a free one that was left running past the threshold,
+    /// and always clears its background marker — leaving a stale one behind would confuse the
+    /// next check. Returns whether anything changed, so callers only write to storage when there
+    /// was something to write.
+    private func pauseIfLeftRunningTooLong(_ session: inout StoredSession) -> Bool {
+        guard session.isFree, let backgroundedAt = session.backgroundedAt else { return false }
+
+        if !session.isPaused, now().timeIntervalSince(backgroundedAt) > Self.freeSessionAutoPauseAfter {
+            session.accumulated = session.elapsed(at: backgroundedAt)
+            session.segmentStartedAt = nil
+        }
+        session.backgroundedAt = nil
+        return true
     }
 
     /// The book the session belongs to, once the catalog has it.
@@ -84,6 +136,13 @@ final class ActiveSessionController: ObservableObject {
 
     var remaining: TimeInterval {
         stored?.remaining(at: now()) ?? 0
+    }
+
+    var isFree: Bool { stored?.isFree ?? false }
+
+    /// Time read so far. What the banner shows for a free session, in place of `remaining`.
+    var elapsed: TimeInterval {
+        stored?.elapsed(at: now()) ?? 0
     }
 
     /// Begins a session, unless one is already running — in which case the existing one is
@@ -104,7 +163,12 @@ final class ActiveSessionController: ObservableObject {
 
         store.save(session)
         stored = session
-        notifications.scheduleSessionEnd(in: session.plannedDuration, bookTitle: book.title)
+
+        // A free session has no end time to schedule an alert for.
+        if !session.isFree {
+            notifications.scheduleSessionEnd(in: session.plannedDuration, bookTitle: book.title)
+        }
+
         sessionViewModel = makeViewModel()
         isPresenting = true
     }

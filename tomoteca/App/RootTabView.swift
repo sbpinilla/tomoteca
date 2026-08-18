@@ -24,6 +24,7 @@ struct RootTabView: View {
     @ObservedObject var themeController: ThemeController
 
     @State private var selection: Tab = Self.initialTab
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         TabView(selection: $selection) {
@@ -96,6 +97,17 @@ struct RootTabView: View {
                 ActiveSessionView(viewModel: viewModel) {
                     sessionController.finish()
                 }
+            }
+        }
+        // Watched here rather than only inside the session screen: a free session left running
+        // is just as much "left running" from the banner, with the session screen closed, as it
+        // is from inside it — and this is the one view alive for as long as the app is.
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .background: sessionController.appDidEnterBackground()
+            case .active: sessionController.appDidBecomeActive()
+            case .inactive: break
+            @unknown default: break
             }
         }
     }
