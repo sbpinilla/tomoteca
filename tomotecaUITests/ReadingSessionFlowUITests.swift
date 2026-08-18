@@ -164,6 +164,61 @@ final class ReadingSessionFlowUITests: XCTestCase {
         )
     }
 
+    // MARK: A free session
+
+    func testFreeSessionCountsUpAndRecordsTheFinalPage() {
+        app.staticTexts["Cien años de soledad"].tap()
+        app.buttons["Start reading session"].tap()
+
+        XCTAssertTrue(app.staticTexts["New session"].waitForExistence(timeout: 5))
+        app.buttons["Free"].tap()
+        app.buttons["Start session"].tap()
+
+        let elapsed = app.staticTexts["remainingTime"]
+        XCTAssertTrue(elapsed.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["elapsed"].exists, "Not \"remaining\" — there is no plan")
+
+        let first = elapsed.label
+        let second = waitForCountdown(toChangeFrom: first)
+        XCTAssertNotEqual(second, first, "The clock is not moving")
+        XCTAssertGreaterThan(second, first, "A free session counts up, not down")
+
+        attach(app.screenshot(), named: "free-session-active")
+
+        app.buttons["Finish"].tap()
+        XCTAssertTrue(app.staticTexts["What page are you on?"].waitForExistence(timeout: 5))
+
+        let field = app.textFields["finalPageField"]
+        field.tap()
+        field.press(forDuration: 1.2)
+        app.menuItems["Select All"].tap()
+        field.typeText("230")
+        app.buttons["Save progress"].tap()
+
+        XCTAssertTrue(app.staticTexts["Page 230 of 340"].waitForExistence(timeout: 5))
+    }
+
+    func testFreeSessionPausingFreezesElapsedAndResumingContinues() {
+        app.staticTexts["Cien años de soledad"].tap()
+        app.buttons["Start reading session"].tap()
+        app.buttons["Free"].tap()
+        app.buttons["Start session"].tap()
+
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+
+        app.buttons["Pause"].tap()
+        XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
+
+        let frozen = app.staticTexts["remainingTime"].label
+        let whilePaused = waitForCountdown(toChangeFrom: frozen, timeout: 3)
+        XCTAssertEqual(whilePaused, frozen, "A paused free session must not keep counting")
+
+        app.buttons["Resume"].tap()
+
+        let afterResuming = waitForCountdown(toChangeFrom: frozen)
+        XCTAssertNotEqual(afterResuming, frozen, "Resuming did not pick the clock back up")
+    }
+
     /// Opens the book being read and starts a ten-minute session on it.
     private func startSession() {
         app.staticTexts["Cien años de soledad"].tap()

@@ -1,6 +1,6 @@
 # C13 · Sesión de lectura sin tiempo fijo
 
-**Tipo:** Feature · **Estado:** 🟡 En curso
+**Tipo:** Feature · **Estado:** ✅ Cerrado
 
 Junto a 10, 15 y 30 minutos, una cuarta opción — **Libre** — arranca un cronómetro que cuenta
 hacia arriba desde cero hasta que el lector marca "Terminar".
@@ -106,25 +106,58 @@ sobre sesiones libres.
 
 ## Criterios de aceptación
 
-- [ ] La hoja de duración ofrece Libre junto a 10, 15 y 30 minutos
-- [ ] Elegida Libre, el cronómetro sube desde 00:00
-- [ ] Pausar detiene el conteo; reanudar lo continúa donde iba
-- [ ] Terminar pide la página y guarda tiempo y páginas leídas
-- [ ] No llega ninguna notificación durante una sesión libre
-- [ ] Matar la app y volver recupera la sesión libre corriendo, sin darla por vencida
-- [ ] El aviso sobre la barra de pestañas muestra el tiempo transcurrido, no "00:00"
-- [ ] Una sesión libre con la app en segundo plano más de 30 minutos aparece pausada al volver,
+- [x] La hoja de duración ofrece Libre junto a 10, 15 y 30 minutos
+- [x] Elegida Libre, el cronómetro sube desde 00:00
+- [x] Pausar detiene el conteo; reanudar lo continúa donde iba
+- [x] Terminar pide la página y guarda tiempo y páginas leídas
+- [x] No llega ninguna notificación durante una sesión libre
+- [x] Matar la app y volver recupera la sesión libre corriendo, sin darla por vencida
+- [x] El aviso sobre la barra de pestañas muestra el tiempo transcurrido, no "00:00"
+- [x] Una sesión libre con la app en segundo plano más de 30 minutos aparece pausada al volver,
       con el tiempo que llevaba al salir — no con el tiempo que pasó mientras estaba fuera
-- [ ] Un segundo plano corto (menos de 30 minutos) no pausa nada; la sesión sigue corriendo
-- [ ] Lo mismo si la app se mata en vez de solo pasar a segundo plano
-- [ ] Una sesión con plan no se ve afectada por nada de esto
-- [ ] Las tres duraciones fijas siguen funcionando exactamente igual que antes
-- [ ] Se ve bien en español e inglés, en claro y en oscuro
+- [x] Un segundo plano corto (menos de 30 minutos) no pausa nada; la sesión sigue corriendo
+- [x] Lo mismo si la app se mata en vez de solo pasar a segundo plano
+- [x] Una sesión con plan no se ve afectada por nada de esto
+- [x] Las tres duraciones fijas siguen funcionando exactamente igual que antes
+- [x] Se ve bien en español e inglés, en claro y en oscuro
 
 ## Cómo se validó
 
-Pendiente (fase 2).
+**`StoredSessionTests`, archivo nuevo:** `isFree`, que `remaining`/`isExpired` son siempre
+0/`false` para una libre, que `isStale` sigue funcionando igual (24h) porque `plannedDuration`
+es 0 para una libre, y que una pausada nunca caduca.
+
+**En `ReadingSessionViewModel`:** que el cronómetro sube en vez de bajar y nunca pide la página
+por sí solo; que pausar congela `elapsedTime` y reanudar lo continúa; que no se programa ninguna
+alerta; que `closeOut()` **no recorta a cero** — el error que encontré revisando el plan, cubierto
+ahora con un test que lo habría cazado; que una sesión libre recuperada tras matar la app sigue
+corriendo, nunca "vencida"; y que `reload(from:)` trae al ViewModel una pausa aplicada desde
+fuera.
+
+**En `ActiveSessionController`, donde está lo que más importaba probar:** que `appDidEnterBackground()`
+solo marca la hora en una sesión libre y corriendo — ni en una con plan (ya se limita sola), ni
+en una ya pausada; que un hueco corto no pausa nada; que uno de más de 30 minutos pausa
+**con el tiempo que llevaba al salir**, no el que pasó fuera; que `restore()` aplica la misma
+regla si la app se mató en vez de solo pasar a segundo plano; y que una sesión con plan queda
+completamente al margen de todo esto.
+
+**De extremo a extremo, en UI:** duración Libre completa — arrancar, ver que el número sube y
+que dice "elapsed" en vez de "remaining", pausar, reanudar, terminar y comprobar que la página
+quedó guardada. Corrida junto a toda `ReadingSessionFlowUITests` y `SessionRecoveryUITests`
+para confirmar que las duraciones fijas no se vieron tocadas.
+
+Suite completa: 196 tests unitarios (eran 173) y 37 de UI, todos en verde. Visto en el simulador
+en español/oscuro, inglés/oscuro y español/claro — la hoja de duración con cuatro opciones cabe
+bien en los tres.
 
 ## Hallazgos
 
-Pendiente (fase 2).
+- **El recorte a cero en `closeOut()` era real**, tal como se sospechó en el plan: sin arreglarlo,
+  toda sesión libre habría guardado 0 segundos leídos sin importar cuánto hubiera durado.
+- **Limpiar `backgroundedAt` siempre que existe, no solo cuando se cumple el umbral**, fue un
+  ajuste que no estaba en el plan y que hizo falta al escribir el código: sin él, una marca vieja
+  de un hueco corto se habría quedado ahí confundiendo la siguiente comprobación.
+- **El orden entre el `.onChange(of: scenePhase)` de `RootTabView` y el de `ActiveSessionView`
+  no está garantizado**, y no hace falta que lo esté: los tests de `ActiveSessionController`
+  cubren la lógica de pausa en sí, aislada de la vista, así que a cuál de los dos le toque
+  disparar primero no cambia el resultado final.

@@ -401,4 +401,109 @@ struct ReadingSessionViewModelTests {
 
         #expect(h.store.load() != nil)
     }
+
+    // MARK: A free session
+
+    @Test("A free session starts at zero, counting up")
+    func freeSessionStartsAtZero() {
+        let h = makeHarness(minutes: 0)
+
+        #expect(h.viewModel.isFree)
+        #expect(h.viewModel.elapsedTime == 0)
+        #expect(h.viewModel.remaining == 0, "Nothing to count down to")
+        #expect(h.viewModel.progress == 0, "No plan for the ring to be a fraction of")
+    }
+
+    @Test("A free session's clock counts up, and never asks for the page on its own")
+    func freeSessionCountsUp() {
+        let h = makeHarness(minutes: 0)
+
+        h.clock.advance(by: 40 * 60)  // well past any of the fixed durations
+        h.viewModel.refresh()
+
+        #expect(h.viewModel.elapsedTime == 40 * 60)
+        #expect(h.viewModel.phase == .running, "Only the reader ends a free session")
+    }
+
+    @Test("Pausing a free session freezes elapsed time; resuming continues it")
+    func freeSessionPauseAndResume() {
+        let h = makeHarness(minutes: 0)
+
+        h.clock.advance(by: 120)
+        h.viewModel.refresh()
+        h.viewModel.pause()
+
+        h.clock.advance(by: 600)
+        h.viewModel.refresh()
+        #expect(h.viewModel.elapsedTime == 120, "Paused time must not count as read")
+
+        h.viewModel.resume()
+        h.clock.advance(by: 30)
+        h.viewModel.refresh()
+
+        #expect(h.viewModel.elapsedTime == 150)
+    }
+
+    @Test("Starting or resuming a free session schedules no alert")
+    func freeSessionSchedulesNoAlert() {
+        let h = makeHarness(minutes: 0)
+
+        h.clock.advance(by: 60)
+        h.viewModel.pause()
+        h.viewModel.resume()
+
+        #expect(h.notifications.scheduledIntervals.isEmpty)
+    }
+
+    @Test("Finishing a free session credits every second read, uncapped")
+    func freeSessionClosesOutWithoutCapping() throws {
+        let h = makeHarness(minutes: 0)
+
+        h.clock.advance(by: 47 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+        h.viewModel.finalPageText = "260"
+
+        #expect(h.viewModel.save())
+
+        let session = try #require(h.sessions.added.first)
+        #expect(session.actualSeconds == 47 * 60, "A free session has no plan to be capped at")
+        #expect(session.plannedMinutes == 0)
+    }
+
+    @Test("A free session recovered after a relaunch keeps counting up, never expired")
+    func freeSessionResumesFromStoredState() {
+        let clock = TestClock()
+        let started = clock.now
+        clock.advance(by: 3 * 60 * 60)  // three hours with the app dead
+
+        let h = makeHarness(
+            stored: StoredSession(
+                bookID: Book.previewReading.id,
+                plannedMinutes: 0,
+                startedAt: started,
+                accumulated: 0,
+                segmentStartedAt: started
+            ),
+            clock: clock
+        )
+
+        #expect(h.viewModel.phase == .running, "A free session never opens straight to asking for the page")
+        #expect(h.viewModel.elapsedTime == 3 * 60 * 60)
+    }
+
+    @Test("reload(from:) brings the ViewModel back in line with a session paused from outside it")
+    func reloadPicksUpAnExternalPause() throws {
+        let h = makeHarness(minutes: 0)
+
+        h.clock.advance(by: 90)
+        var pausedElsewhere = try #require(h.store.load())
+        pausedElsewhere.accumulated = 90
+        pausedElsewhere.segmentStartedAt = nil
+
+        h.viewModel.reload(from: pausedElsewhere)
+
+        #expect(h.viewModel.phase == .paused)
+        #expect(h.viewModel.elapsedTime == 90)
+    }
 }
