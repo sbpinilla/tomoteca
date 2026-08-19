@@ -253,7 +253,7 @@ Para no volver a discutirlas:
 7. Puede haber varios libros en *leyendo* a la vez.
 8. El cronómetro sobrevive a salir de la app y avisa con notificación local.
 9. Se puede pausar y terminar antes de tiempo; cuenta el tiempo realmente leído.
-10. El número de páginas es obligatorio, y el modal de fin de sesión también.
+10. El número de páginas es obligatorio: sin él no se puede guardar una sesión de lectura.
 11. La gráfica muestra minutos por día más el promedio del rango.
 12. La búsqueda cubre título y autor, y actúa **dentro de la estantería abierta**
     ([C06](../cambios/C06-baul-por-estado.md)).
@@ -311,5 +311,12 @@ Para no volver a discutirlas:
     un botón de saltar siempre visible y uno de comenzar en la última. Saltarla o terminarla
     hacen lo mismo: no se vuelven a mostrar después
     ([C14](../cambios/C14-onboarding-y-splash.md)).
+37. **El modal de fin de sesión ("¿En qué página vas?") se puede cerrar con una X**, sin
+    confirmación. Cerrar no descarta la sesión: vuelve a ella tal como estaba, corriendo o
+    pausada, para responder la página más tarde
+    ([C16](../cambios/C16-cerrar-modal-pagina-final.md)).
+38. **La fila de "En curso" muestra la página actual debajo de la barra de progreso**, además del
+    porcentaje que ya iba junto a la barra — los dos conviven, ninguno reemplaza al otro
+    ([C17](../cambios/C17-pagina-en-curso.md)).
 
 Los cambios posteriores a la v1 viven en [`../cambios/README.md`](../cambios/README.md).

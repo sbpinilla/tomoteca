@@ -726,6 +726,24 @@
         }
       }
     },
+    "final_page.close": {
+      "comment": "Accessibility label for the button that closes the final-page sheet without saving",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar"
+          }
+        }
+      }
+    },
     "final_page.hint": {
       "comment": "Explains why the page cannot be skipped",
       "extractionState": "manual",

@@ -28,6 +28,12 @@ struct InProgressRowView: View {
                     TMProgressBar(value: book.progress, color: AppColor.Status.reading)
                     TMText(verbatim: formattedProgress, style: .footnote, color: AppColor.textSecondary)
                 }
+
+                TMText(
+                    .bookDetailPageProgress(book.currentPage, book.pageCount),
+                    style: .footnote,
+                    color: AppColor.textSecondary
+                )
             }
 
             Spacer(minLength: 0)

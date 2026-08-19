@@ -46,6 +46,10 @@ final class ReadingSessionViewModel: ObservableObject {
     private let notifications: any SessionNotificationScheduling
     private let store: any ActiveSessionStoring
     private let now: () -> Date
+    /// Seconds read, captured the moment the page was asked for — not the moment it is actually
+    /// answered. Filling in a page can take a while; without this, a slow answer would credit
+    /// that time as reading, and a planned session could overshoot its own plan.
+    private var accumulatedAtFinish: TimeInterval?
 
     /// Resumes — or starts — a session from its stored state.
     ///
@@ -85,7 +89,7 @@ final class ReadingSessionViewModel: ObservableObject {
         finalPageText = String(book.currentPage)
 
         if phase == .askingPage {
-            closeOut()
+            freezeForFinish()
         }
     }
 
@@ -165,21 +169,27 @@ final class ReadingSessionViewModel: ObservableObject {
 
     private func askForPage() {
         phase = .askingPage
-        closeOut()
-    }
-
-    /// Freezes the clock and stops the pending alert. The stored session stays until the page
-    /// is answered, so killing the app at this point still leaves something to come back to.
-    private func closeOut() {
-        // Capped at the plan for a planned session, so a tick that lands a moment past its end
-        // never credits more than what was asked. A free session has no plan to cap against —
-        // capping at `plannedDuration` there would mean capping at zero.
-        stored.accumulated = stored.isFree ? elapsed : min(elapsed, stored.plannedDuration)
-        stored.segmentStartedAt = nil
-        store.save(stored)
+        freezeForFinish()
+        // One last read of the clock, for the ring behind the sheet to land on the exact number
+        // being credited rather than whatever the last per-second tick happened to catch.
         let moment = now()
         remaining = stored.remaining(at: moment)
         elapsedTime = stored.elapsed(at: moment)
+    }
+
+    /// Snapshots the seconds read so far and stops the pending alert — but, deliberately,
+    /// touches neither `stored` nor `store`. The session is only actually finalized by ``save()``:
+    /// leaving the persisted copy alone means that abandoning this screen — backgrounding, or the
+    /// app being killed, without ever tapping "save" — leaves the session exactly as it was
+    /// (still running or paused), recoverable and ticking again on the next launch, rather than
+    /// stuck forever with a clock that no longer moves and no way to start a new one in its
+    /// place.
+    ///
+    /// Capped at the plan for a planned session, so filling in the page slowly never credits more
+    /// than what was asked. A free session has no plan to cap against — capping at
+    /// `plannedDuration` there would mean capping at zero.
+    private func freezeForFinish() {
+        accumulatedAtFinish = stored.isFree ? elapsed : min(elapsed, stored.plannedDuration)
         notifications.cancelScheduledSessionEnd()
     }
 
@@ -199,6 +209,29 @@ final class ReadingSessionViewModel: ObservableObject {
 
     var canSave: Bool { finalPage != nil }
 
+    /// Backs out of "what page are you on?" without saving anything.
+    ///
+    /// `freezeForFinish()` never touched `stored`, so the underlying session is exactly as it
+    /// was before it was asked for — this just re-derives the screen's phase from it, the same
+    /// way ``reload(from:)`` does, and re-arms the alert a resumed planned session needs.
+    ///
+    /// If the plan had already run out on its own, this puts the reader right back where they
+    /// started: `refresh()` will ask again within the second, honestly, because there really is
+    /// no time left — not a bug, just nothing left to cancel out of.
+    func cancelFinishing() {
+        guard phase == .askingPage else { return }
+
+        accumulatedAtFinish = nil
+        let moment = now()
+        remaining = stored.remaining(at: moment)
+        elapsedTime = stored.elapsed(at: moment)
+        phase = stored.isPaused ? .paused : .running
+
+        if phase == .running, !stored.isFree {
+            notifications.scheduleSessionEnd(in: remaining, bookTitle: book.title)
+        }
+    }
+
     /// True once something is typed that is not a valid page, so the screen can explain why
     /// saving is blocked instead of leaving a dead button.
     var showsPageOutOfRange: Bool {
@@ -210,12 +243,17 @@ final class ReadingSessionViewModel: ObservableObject {
     func save() -> Bool {
         guard let finalPage else { return false }
 
+        // `accumulatedAtFinish` is set by `freezeForFinish()`, which every path into
+        // `.askingPage` goes through — the fallback only guards against a future call site that
+        // forgets to.
+        let actualSeconds = accumulatedAtFinish ?? (stored.isFree ? elapsed : min(elapsed, stored.plannedDuration))
+
         let session = ReadingSession(
             bookID: book.id,
             startedAt: stored.startedAt,
             endedAt: now(),
             plannedMinutes: stored.plannedMinutes,
-            actualSeconds: Int(stored.accumulated.rounded()),
+            actualSeconds: Int(actualSeconds.rounded()),
             // Where the book stood when this session opened: `book` is the snapshot taken then,
             // and nothing but a session moves the bookmark.
             startPage: book.currentPage,
