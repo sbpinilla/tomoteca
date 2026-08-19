@@ -204,6 +204,104 @@ struct ReadingSessionViewModelTests {
         #expect(session.plannedMinutes == 15)
     }
 
+    // MARK: Cancelling out of the final page
+
+    @Test("Cancelling out of the final page returns to the running session, clock intact")
+    func cancellingReturnsToRunning() {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 6 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+        #expect(h.viewModel.phase == .askingPage)
+
+        h.viewModel.cancelFinishing()
+
+        #expect(h.viewModel.phase == .running)
+        #expect(h.viewModel.elapsed == 6 * 60)
+    }
+
+    @Test("Cancelling out of the final page respects a session that was paused, not resuming it")
+    func cancellingReturnsToPausedWhenItWasPaused() {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 6 * 60)
+        h.viewModel.pause()
+        h.viewModel.finishEarly()
+        #expect(h.viewModel.phase == .askingPage)
+
+        h.viewModel.cancelFinishing()
+
+        #expect(h.viewModel.phase == .paused)
+    }
+
+    @Test("Cancelling reschedules the alert, since finishing had cancelled it")
+    func cancellingReschedulesTheAlert() {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 6 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+
+        h.viewModel.cancelFinishing()
+
+        #expect(h.notifications.scheduledIntervals == [9 * 60])
+    }
+
+    @Test("Cancelling a paused session schedules no alert — it is still paused")
+    func cancellingAPausedSessionSchedulesNothing() {
+        let h = makeHarness(minutes: 15)
+
+        h.viewModel.pause()
+        h.viewModel.finishEarly()
+
+        h.viewModel.cancelFinishing()
+
+        #expect(h.notifications.scheduledIntervals.isEmpty)
+    }
+
+    @Test("Cancelling touches nothing in storage: the session recovers exactly as it was")
+    func cancellingLeavesStorageUntouched() {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 6 * 60)
+        h.viewModel.refresh()
+        let beforeFinish = h.store.load()
+        h.viewModel.finishEarly()
+        h.viewModel.cancelFinishing()
+
+        #expect(h.store.load() == beforeFinish)
+    }
+
+    @Test("Cancelling forgets the frozen number: finishing again later credits the full time")
+    func cancellingLetsARealFinishCreditFreshTime() throws {
+        let h = makeHarness(minutes: 15)
+
+        h.clock.advance(by: 6 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+        h.viewModel.cancelFinishing()
+
+        h.clock.advance(by: 4 * 60)
+        h.viewModel.refresh()
+        h.viewModel.finishEarly()
+        h.viewModel.finalPageText = "250"
+        #expect(h.viewModel.save())
+
+        let session = try #require(h.sessions.added.first)
+        #expect(session.actualSeconds == 10 * 60)
+    }
+
+    @Test("Cancelling does nothing outside the final page")
+    func cancellingIsANoOpElsewhere() {
+        let h = makeHarness(minutes: 15)
+
+        h.viewModel.cancelFinishing()
+
+        #expect(h.viewModel.phase == .running)
+        #expect(h.notifications.scheduledIntervals.isEmpty)
+    }
+
     // MARK: The final page
 
     @Test("The page starts at wherever the reader already was")

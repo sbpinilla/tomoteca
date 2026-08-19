@@ -1,6 +1,6 @@
 # C16 · Cerrar el modal de página final
 
-**Tipo:** Corrección · **Estado:** 🟡 En curso
+**Tipo:** Corrección · **Estado:** ✅ Cerrado
 
 El modal "¿En qué página vas?" no tenía ninguna forma de cerrarse: ni deslizar, ni una X, ni un
 botón de cancelar. Una vez ahí, la única salida era escribir una página válida y guardar.
@@ -62,10 +62,9 @@ salida deliberada es la X.
       curso, con el cronómetro corriendo, sin ninguna alerta de por medio
 - [x] La X respeta el mismo margen que el resto del contenido, y el título se corre hacia abajo
       para dejarle espacio — no queda pegada a la esquina ni tapando nada
-- [ ] Con una sesión libre pausada: tocar "Terminar", luego la X — vuelve pausada, no corriendo
-      — no revive algo que el lector había parado a propósito (verificado en la primera vuelta
-      con confirmación; pendiente re-verificar en la versión sin ella)
-- [ ] Visto en ambos idiomas y ambas apariencias — pendiente, ver la fase de tests
+- [x] Con una sesión libre pausada: tocar "Terminar", luego la X — vuelve pausada, no corriendo
+      — no revive algo que el lector había parado a propósito
+- [x] Visto en español y en oscuro, además de inglés y claro
 
 ## Cómo se validó
 
@@ -76,6 +75,24 @@ posición de la X. Segunda vuelta: sin alerta, X reposicionada — verificada de
 con captura, que la X ya no está pegada al borde y que tocarla vuelve directo a la sesión en
 curso. Build limpio de la app completa (con la extensión embebida) tras cada vuelta.
 
+**Fase 2 — tests unitarios y de UI:**
+
+- `ReadingSessionViewModelTests`, sección "Cancelling out of the final page": siete casos —
+  vuelve a `.running` con el reloj intacto; respeta una sesión que estaba pausada, sin
+  reanudarla; reprograma el aviso solo si vuelve a corriendo; no programa nada si vuelve a
+  pausada; no toca el `StoredSession` guardado; olvida el número congelado, así que terminar de
+  verdad más tarde acredita el tiempo real, no el de la primera vez; y no hace nada fuera de
+  `.askingPage`.
+- `ReadingSessionFlowUITests`: cerrar con una sesión con plan vuelve corriendo, sin alerta de por
+  medio; cerrar con una sesión libre pausada vuelve pausada.
+- `testInProgressRowShowsTheCurrentPageBelowTheBar` (mismo archivo): la fila de "En curso"
+  muestra "Page 210 of 340" — cubre también C17.
+
+**Suite completa:** 216 tests unitarios (7 nuevos) y toda la de UI, verde
+(`** TEST EXECUTE SUCCEEDED **`), tras reiniciar el simulador — ver hallazgo. Verificado también
+en español y apariencia oscura, con capturas: la X y la línea de página se ven correctas en
+ambas.
+
 ## Hallazgos
 
 - **La primera versión de la X, en un `overlay`, se sentía mal aunque compilaba y funcionaba.**
@@ -83,3 +100,10 @@ curso. Build limpio de la app completa (con la extensión embebida) tras cada vu
   captura lo mostró: el botón más cerca del borde que el resto del contenido, y nada
   desplazándose para darle espacio. Vale la pena recordarlo para la próxima vez que un botón se
   agregue por encima del contenido en vez de dentro de él.
+- **La suite completa de UI falló una vez con `** TEST EXECUTE FAILED **`, con todas las suites
+  individuales en 0 fallos** — el mismo patrón ya documentado en C15 (`tomoteca (PID) encountered
+  an error (The test runner hung before establishing connection.)`), pero esta vez con el arreglo
+  del esquema (cobertura acotada al target de la app) ya en su sitio. No era ese problema de
+  vuelta: reiniciar el simulador antes de repetir la corrida bastó para que pasara limpio —
+  cansancio del simulador tras una sesión de automatización larga, la misma causa que ya se había
+  visto y resuelto así en C15.

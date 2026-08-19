@@ -30,6 +30,13 @@ final class ReadingSessionFlowUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["El nombre de la rosa"].exists)
     }
 
+    /// The row shows both the percentage next to the bar and the page below it — one does not
+    /// replace the other.
+    func testInProgressRowShowsTheCurrentPageBelowTheBar() {
+        XCTAssertTrue(app.staticTexts["Cien años de soledad"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Page 210 of 340"].exists)
+    }
+
     func testRunningASessionRecordsTheFinalPage() {
         app.staticTexts["Cien años de soledad"].tap()
 
@@ -217,6 +224,43 @@ final class ReadingSessionFlowUITests: XCTestCase {
 
         let afterResuming = waitForCountdown(toChangeFrom: frozen)
         XCTAssertNotEqual(afterResuming, frozen, "Resuming did not pick the clock back up")
+    }
+
+    // MARK: Closing the final page without saving
+
+    func testClosingTheFinalPageReturnsDirectlyToTheRunningSession() {
+        startSession()
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+
+        app.buttons["Finish"].tap()
+        XCTAssertTrue(app.staticTexts["What page are you on?"].waitForExistence(timeout: 5))
+        attach(app.screenshot(), named: "final-page-close-button")
+
+        app.buttons["finalPageCloseButton"].tap()
+
+        // Straight back, no alert in the way.
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Finish"].exists)
+        XCTAssertFalse(app.staticTexts["What page are you on?"].exists)
+    }
+
+    func testClosingTheFinalPageOfAPausedSessionReturnsItPaused() {
+        app.staticTexts["Cien años de soledad"].tap()
+        app.buttons["Start reading session"].tap()
+        app.buttons["Free"].tap()
+        app.buttons["Start session"].tap()
+        XCTAssertTrue(app.staticTexts["remainingTime"].waitForExistence(timeout: 5))
+
+        app.buttons["Pause"].tap()
+        XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
+
+        app.buttons["Finish"].tap()
+        XCTAssertTrue(app.staticTexts["What page are you on?"].waitForExistence(timeout: 5))
+
+        app.buttons["finalPageCloseButton"].tap()
+
+        // Paused, not silently resumed.
+        XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
     }
 
     /// Opens the book being read and starts a ten-minute session on it.

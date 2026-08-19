@@ -1,6 +1,6 @@
 # C17 · La página actual en "En curso"
 
-**Tipo:** Mejora · **Estado:** 🟡 En curso
+**Tipo:** Mejora · **Estado:** ✅ Cerrado
 
 La fila de un libro en la pestaña "En curso" mostraba la barra de progreso y el porcentaje, pero
 no la página en la que va — había que entrar al detalle del libro para verla.
@@ -32,12 +32,19 @@ porcentaje, dentro del mismo `VStack` — no un componente nuevo.
 
 - [x] La fila de un libro en "En curso" muestra "Página X de Y" debajo de la barra
 - [x] El porcentaje junto a la barra sigue ahí, sin cambios
-- [ ] Visto en ambos idiomas y ambas apariencias — pendiente, ver la fase de tests
+- [x] Visto en español y en oscuro, además de inglés y claro
 
 ## Cómo se validó
 
 Fase 1: build limpio y una captura de pantalla real de la pestaña "En curso" con un libro
 sembrado — confirma la línea nueva bajo la barra y el porcentaje intacto junto a ella.
+
+**Fase 2:** cubierto por `testInProgressRowShowsTheCurrentPageBelowTheBar` en
+`ReadingSessionFlowUITests` (fila de "En curso" muestra "Page 210 of 340"). Sin lógica propia que
+cubrir a nivel unitario — `book.currentPage`/`book.pageCount` ya estaban probados, y este cambio
+es solo layout. Suite completa verde (216 unitarios, toda la de UI). Verificado también en
+español y apariencia oscura, con captura: la línea de página y el porcentaje conviven bien en las
+dos.
 
 ## Hallazgos
 
